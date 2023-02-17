@@ -11,9 +11,9 @@ This guide describes how to enable BF16 mixed precision via those two options.
 ## Keras mixed precision API
 
 ### Introduction
-This session describes how to use the Keras mixed precision API to speed up your models by using a Simple MNIST convnet instead.
+This session describes how to use the Keras mixed precision API to speed up your models by using a [Simple MNIST convnet](https://keras.io/examples/vision/mnist_convnet/) instead.
 
-Official Tensorflow* supports this feature from TensorFlow 2.9. And starting from TensorFlow 2.4, Intel Optimized TensorFlow supports the experimental Keras mixed precision API.
+Official Tensorflow* supports this feature from TensorFlow 2.9. And starting from TensorFlow 2.4, [Intel Optimized TensorFlow](https://www.intel.com/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html) supports the experimental Keras mixed precision API.
 
 ### Steps to prepare a FP32 Model
 By using an existing sample, users can easily understand how to change their own Keras* model.
@@ -49,7 +49,7 @@ By following below command, users will get a oneDNN verbose log file "dnnl_log.c
 ONEDNN_VERBOSE=1 python mnist_convnet.py > dnnl_log.csv
 ```
 
-  By following Analyze Verbose Logs section in this Tutorial, users can parse this dnnl_log.csv and get a oneDNN JIT kernel breakdown.
+  By following **Analyze Verbose Logs** section in this [Tutorial](https://github.com/oneapi-src/oneAPI-samples/blob/master/Libraries/oneDNN/tutorials/profiling/README.md), users can parse this dnnl_log.csv and get a oneDNN JIT kernel breakdown.
 
 Here is the result from modified mnist_convnet.py on Sapphie Rapids Xeon Scalable Processors. 
 
@@ -78,7 +78,7 @@ Please use Python 3.8 or above for the best performance on Sapphire Rapids Xeon 
 This session describes how to enable the auto-mixed precision using the tf.config API. Enabling this API will automatically convert the pre-trained model to use the bfloat16 datatype for computation resulting in an increased training throughput on the latest Intel® Xeon® scalable processor how to enable the auto-mixed precision using the tf.config API. Enabling this API will automatically convert the pre-trained model to use the bfloat16 datatype for computation resulting in an increased training throughput on the latest Intel® Xeon® scalable processor.
 
 ### Steps to do Transfer Learning with Mixed Precision on a Saved Model
-Please refer to this Transfer Learning sample which uses a headless ResNet50v1.5 pretrained model from TensorFlow Hub with ImageNet dataset.
+Please refer to [this Transfer Learning sample](https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Features-and-Functionality/IntelTensorFlow_Enabling_Auto_Mixed_Precision_for_TransferLearning) which uses a headless ResNet50v1.5 pretrained model from [TensorFlow Hub](https://www.tensorflow.org/hub) with ImageNet dataset.
 
 By applying below experimental option "auto_mixed_precision_onednn_bfloat16" via tf.config API, auto mixed precision with bfloat16 will be enabled on the saved model.
 
@@ -97,7 +97,7 @@ How to convert a pre-trained fp32 model to BFloat16
 
 Let’s consider a simple neural network consisting of a typical pattern of Conv2D with addition of bias and output of Conv2D clipped using ReLU. Inputs x and w of Conv2D and input b of bias_add are TensorFlow* Variables. Notice that the default type of Variable in TensorFlow* is FP32, so this neural network model operates completely in FP32 data type. TensorFlow* data-flow graph corresponding to this model looks like below.
 
-
+![amp-mkl](/content/dam/develop/external/us/en/images/automixedprecisionmkl-1.png)
 
 ### Steps to set up the runtime environment
 Before running the examples build or install the latest TensorFlow* with BFloat16 support
@@ -147,7 +147,7 @@ graph_options=tf.compat.v1.GraphOptions(
         rewrite_options=rewriter_config_pb2.RewriterConfig( 
             auto_mixed_precision_onednn_bfloat16=rewriter_config_pb2.RewriterConfig.ON)) 
 ```
-Note: auto_mixed_precision_onednn_bfloat16 was known as auto_mixed_precision_mkl since Tensorflow 2.3 till Tensorflow 2.9. However, auto_mixed_precision_mkl is deprecated and will be removed in future.
+> Note: auto_mixed_precision_onednn_bfloat16 was known as auto_mixed_precision_mkl since Tensorflow 2.3 till Tensorflow 2.9. However, auto_mixed_precision_mkl is deprecated and > will be removed in future.
 
 In a nutshell, Auto Mixed Precision grappler pass can be controlled using RewriterConfig proto of GraphOptions proto. Possible values to initialize auto_mixed_precision_onednn_bloat16 are rewriter_config_pb2.RewriterConfig.ON and rewriter_config_pb2.RewriterConfig.OFF.
 
@@ -186,13 +186,13 @@ with tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(
 
 Notice that graph_options variable created by turning Auto Mixed Precision ON is passed to ConfigProto that is eventually passed to tf.Session API.
 
-Create and run the Python* file with the above code conv2D_bf16.py
+Create and run the Python* file with the above code **conv2D_bf16.py**
 
 ```bash
 python conv2D_bf16.py 
 ```
 
-Console output
+**Console output**
 ```bash
 2022-08-19 00:06:08.735706: I tensorflow/core/grappler/optimizers/auto_mixed_precision.cc:2303] Running auto_mixed_precision_onednn_bfloat16 graph optimizer
 2022-08-19 00:06:08.735941: I tensorflow/core/grappler/optimizers/auto_mixed_precision.cc:1488] No allowlist ops found, nothing to do
@@ -201,7 +201,7 @@ Console output
 ```
 The data-flow graph after porting the model to BFloat16 type looks like below.
 
-
+![amp-mkl2](/content/dam/develop/external/us/en/images/automixedprecisionmkl-2.png)
 
 Notice that 2 operators, Conv2D+BiasAdd and ReLU in the graph are automatically converted to operate in BFloat16 type. Also note that appropriate Cast nodes are inserted in the graph to convert TensorFlow* tensors from FP32 type to BFloat16 type and vice-versa.
 
