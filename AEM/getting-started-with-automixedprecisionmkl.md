@@ -4,8 +4,9 @@ Mixed precision is the use of both 16-bit and 32-bit floating-point types in a m
 
 There are two options to enable BF16 mixed precision in Intel Optimized TensorFlow.
 
-Keras mixed precision API
-AutoMixedPrecision oneDNN BFloat16 grappler pass through low level session configuration
+    1. Keras mixed precision API
+    2. AutoMixedPrecision oneDNN BFloat16 grappler pass through low level session configuration
+    
 This guide describes how to enable BF16 mixed precision via those two options.
 
 ## Keras mixed precision API
@@ -91,9 +92,9 @@ tf.config.optimizer.set_experimental_options({'auto_mixed_precision_onednn_bfloa
 ### Introduction
 Auto Mixed Precision is a grappler pass that automatically converts a model written in FP32 data type to operate in BFloat16 data type. To be precise, it scans the data-flow graph corresponding to the model, and looks for nodes in the graph (also called as operators) that can operate in BFloat16 type, and inserts FP32ToBFloat16 and vice-versa Cast nodes in the graph appropriately. This feature is available in official TensorFlow* since TensorFlow* 2.9, however, it has been available in Intel* Optimized TensorFlow* since TensorFlow* 2.3. We will demonstrate this with examples illustrating:
 
-How to convert the graph to BFloat16 on-the-fly as you train the model
+    - How to convert the graph to BFloat16 on-the-fly as you train the model
 
-How to convert a pre-trained fp32 model to BFloat16
+    - How to convert a pre-trained fp32 model to BFloat16
 
 Let’s consider a simple neural network consisting of a typical pattern of Conv2D with addition of bias and output of Conv2D clipped using ReLU. Inputs x and w of Conv2D and input b of bias_add are TensorFlow* Variables. Notice that the default type of Variable in TensorFlow* is FP32, so this neural network model operates completely in FP32 data type. TensorFlow* data-flow graph corresponding to this model looks like below.
 
