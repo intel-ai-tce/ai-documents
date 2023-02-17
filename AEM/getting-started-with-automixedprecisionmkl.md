@@ -72,7 +72,7 @@ brgconv_bwd_w:avx512_core_amx_bf16    150781.885700
 
  
 
-Please use Python 3.8 or above for the best performance on Sapphire Rapids Xeon Scalable Processors.
+> Please use Python 3.8 or above for the best performance on Sapphire Rapids Xeon Scalable Processors.
 
 ## Enable Mixed Precision on a Saved Model for Transfer Learning
 ### Introduction
