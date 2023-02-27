@@ -163,415 +163,125 @@ Usage (shell)
 </details>
 
 ## OpenMP Technical Performance Considerations for Intel® Optimization for TensorFlow
-> **Note**: This section is only for Intel® Optimization for TensorFlow, and it does not apply to official TensorFlow release.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br>
-***
-
-## General text styling
-```markdown
-*This text will be italic*
-_This will also be italic_
-
-**This text will be bold**
-__This will also be bold__
-
-_You **can** combine them_
-```
-
-*This text will be italic*
-_This will also be italic_
-
-**This text will be bold**
-__This will also be bold__
-
-_You **can** combine them_
-
-Superscript and Subscript doesn't seem to work at the moment.
-```markdown
-Superscript
-H~2~O
-
-Subscript
-X^2^
-```
-
-Superscript example: H~2~O
-
-Subscript example: X^2^
-
-:bulb: 🖥️ :d
-
-<br><br>
-***
-### Links
-```markdown
-[Intel](https://www.intel.com).
-```
-Example:
-My favorite company is [Intel](https://www.intel.com).
-
-mailto:
-(note for spam reasons, we discourage use of email links)
-[example@gitlab.com](mailto:example@gitlab.com)
-
-
-<br><br>
-***
-### Block quotes
-This doesn't work with our template. We have requested some code updates so that block quotes actually render properly on articles. I will update this file once that is done.
-
-```markdown
-> We're living the future so
-> the present is our past.
-```
-
-> We're living the future so
-> the present is our past.
-> 
-<br><br>
-***
-### CSS Attribution - Requested
-
-Another Item we are exploring is the ability to call the css that is used on the site. This isn't working yet. I will update once we have the functionality in place. There are two options IT is exploring. 
-We have requested that IT add this feature so we can call certain css properties into markdown.
-
-{: .greyHighlight}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-
-<br><br>
-***
-### Footnotes 
-Footnotes aren't working as expected. I have raised a ticket with IT to see if they can enable this feature.
-```markdown
-Here's a sentence with a footnote. [^1]  
-  
-[^1]: This is the footnote.
-```
-Here's a sentence with a footnote. [^2]  
-  
-[^2]: This is another footnote to go with the first.
-
-<br><br>
-***
-## Examples of math in .md
-
-This expression $\sum_{i=1}^n X_i$ is inlined but doesn't work at the moment.
-
-When this is a full expression, it works fine.
-$$
-\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-$$
-
-
-<br><br>
-***
-## Code on your page
-Adding code into your sentence is simple. 
-```markdown
-`this is your code`
-```
-
-Example
-Some `inline code` if you need to put inside a sentence.
-
-
-If you have javascript:
-```javascript
-// An highlighted block
-var foo = 'bar';
-```
-
-A very common one on the DevZone is bash
-```bash
-export I_MPI_ROOT=/opt/intel/oneapi/lib/intel64
-export PATH=${I_MPI_ROOT}/libfabric/bin:${I_MPI_ROOT}/bin:$PATH
-export LD_LIBRARY_PATH=${I_MPI_ROOT}/libfabric:${I_MPI_ROOT}:$LD_LIBRARY_PATH
-export FI_PROVIDER_PATH=${I_MPI_ROOT}/libfabric
-```
-
-<details>
-  <summary>Expand to see the full list of available skins</summary>
-  <br>
-
-* plaintext
-* abap
-* actionscript
-* apacheconf
-* applescript
-* aspnet
-* bash
-* basic
-* c
-* coffeescript
-* cpp
-* csharp
-* css
-* d
-* dart
-* diff
-* docker
-* erlang
-* fortran
-* fsharp
-* git
-* go
-* groovy
-* haskell
-* html
-* http
-* ini
-* java
-* javascript
-* lua
-* makefile
-* markdown
-* matlab
-* nginx
-* objectivec
-* pascal
-* perl
-* php
-* prolog
-* python
-* puppet
-* r
-* ruby
-* rust
-* sas
-* scala
-* scheme
-* sql
-* swift
-* twig
-* vim
-* xmlxhtml
-* yaml
-</details>
-
-
-<br><br>
-***
-## Lists
-### Creating an ordered list
-1. First item  
-2. Second item  
-3. Third item  
-4. Fourth item
-
-This will also do the same thing
-1. First item  
-1. Second item  
-1. Third item  
-1. Fourth item
-
-This will also do the same thing
-1. First item  
-8. Second item  
-3. Third item  
-5. Fourth item
-
-Most of the time a MD editor will try to fix your list numbering
-You can also indent by adding a few spaces.
-
-
-An example of a horizontal rule
-```markdown
-***
-```
-***
-
-
-<br><br>
-***
-### Creating Unordered Lists
-- First item  
-- Second item  
-- Third item  
-- Fourth item
-
-**Split Lists**
-- list one - item 1
-- list one - item 2
-     - sub item 1
-     - sub item 2
-- list one - item 3
-<br><br>
-- list two - item A
-- list two - item B
-
-
-<br><br>
-***
-## Tables
-
-```markdown
-| Syntax | Description |  
-| ----------- | ----------- |  
-| Header | Title |  
-| Paragraph | Text |
-```
-
-| Syntax | Description |  
-| ----------- | ----------- |  
-| Header | Title |  
-| Paragraph | Text |
-
-
-<br><br>
-***
-## A collapsible section with markdown
-This does work within the article template. THe arrow is a bit large, but I will see if there is a way to get it updated.
-Code:
-```markdown
-<details>
-  <summary>Click to expand!</summary>
-  <br>
-  1. A numbered
-  2. list
-     * With some
-     * Sub bullets
-</details>
-```
-Example
-<details>
-  <summary>Click to expand!</summary>
-  <br>
-  1. A numbered
-  2. list
-     * With some
-     * Sub bullets
-</details>
-
-
-<br><br>
-***
-
-## Images
-
-To include an image from intel.com, you can do a relative link. Make sure you put all stock imagery, marketing imagery, logos, and photos of people in intel.com where we monitor licensing and expiry dates. You can use the relative path to your image.
-
-```markdown
-![This is your Alt Text](/content/dam/www/central-libraries/us/en/images/oneapi-kits20211-4x3-rwd.png)
-```
-
-![This is your Alt Text](/content/dam/www/central-libraries/us/en/images/oneapi-kits20211-4x3-rwd.png)
-
+> This section is only for Intel® Optimization for TensorFlow, and it does not apply to official TensorFlow release.  
 <br>
-You can also choose to host your screenshots, diagrams, terminal window images in your repo. Just remember, you are now supporting the live site. Don't move or delete images without updating your article. Also, make sure to use the full github URL and not a relative path.
-
-![This is your Alt Text](https://raw.githubusercontent.com/tracyjohnsonidz/devzone-articles/main/diagram-full-workflow-16x9.webp)
-
+Intel® Optimization for TensorFlow utilizes OpenMP to parallelize deep learnng model execution among CPU cores.
 <br><br>
-code graphis are not available for IDZ articles.
-```plantuml
-!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.1.0
-skinparam defaultTextAlignment center
-!include ICONURL/common.puml
-!include ICONURL/font-awesome-5/gitlab.puml
-!include ICONURL/font-awesome-5/java.puml
-!include ICONURL/font-awesome-5/rocket.puml
-!include ICONURL/font-awesome/newspaper_o.puml
-FA_NEWSPAPER_O(news,good news!,node) #White {
-FA5_GITLAB(gitlab,GitLab.com,node) #White
-FA5_JAVA(java,PlantUML,node) #White
-FA5_ROCKET(rocket,Integrated,node) #White
-}
-gitlab ..> java
-java ..> rocket
-```
+Users can use the following environment variables to be able to tune Intel® optimized TensorFlow performance . Thus, changing values of these environment variables affects performance of the framework. These environment variables will be described in detail in the following sections. We highly recommend users tuning these values for their specific neural network model and platform.
 <br><br>
-***
-## Videos
-Go to the youtube video and copy the embed code. Just replace the iframe src url with your youtube video URL.
-
-```markdown
-<div>
-  <div style="position:relative;padding-top:56.25%;">
-    <iframe src="https://www.youtube.com/embed/c7st0drv54U" frameborder="0" allowfullscreen
-      style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-  </div>
-</div>
-```
-
-<div>
-  <div style="position:relative;padding-top:56.25%;">
-    <iframe src="https://www.youtube.com/embed/c7st0drv54U" frameborder="0" allowfullscreen
-      style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-  </div>
-</div>
-
+<li>KMP_AFFINITY</li>  
+<li>KMP_BLOCKTIME</li>
+<li>OMP_NUM_THREADS</li>
+<li>KMP_SETTINGS</li>
 <br>
+<details>
+  <summary>OMP_NUM_THREADS</summary>
+  <br>
+  Recommended settings for CNN→ OMP_NUM_THREADS = num physical cores
+  <br><br>
+  Usage (shell)
+  <br><br>
+  <pre>export OMP_NUM_THREADS=num physical cores</pre>
+  This environment variable sets the maximum number of threads to use for OpenMP parallel regions if no other value is specified in the application.
+  <br><br>
+  With Hyperthreading enabled, there are more than one hardware threads for a physical CPU core, but we recommend to use only one hardware thread for a physical CPU core to avoid cache miss problems. 
+  <br><br>
+  tf_cnn_benchmarks usage (shell)
+  <br>
+  <pre>OMP_NUM_THREADS=&lt;number of physical cores per socket&gt; python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt; --num_inter_threads=&lt;number of sockets&gt; --data_format=NCHW</pre>
 
-You can also use this embed code for brightcove videos. Just replace the videoid= # in the embed code below
-To find the video ID, simply right click on the video on developer.intel.com and select **Player Information**. Video ID value is listed under Source.
+  Users can bind OpenMP threads to physical processing units. KMP_AFFINITY is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
+<br><br>
+The value can be a single integer, in which case it specifies the number of threads for all parallel regions. The value can also be a comma-separated list of integers, in which case each integer specifies the number of threads for a parallel region at a nesting level.
+<br><br>
+The first position in the list represents the outer-most parallel nesting level, the second position represents the next-inner parallel nesting level, and so on. At any level, the integer can be left out of the list. If the first integer in a list is left out, it implies the normal default value for threads is used at the outer-most level. If the integer is left out of any other level, the number of threads for that level is inherited from the previous level.
+<br><br>
+The default value is the number of logical processors visible to the operating system on which the program is executed. This value is recommended to be set to the number of physical cores.
+</details>
 
-```markdown
-<div style="position: relative; display: block; max-width: 900px;">
-    <div style="padding-top: 56.25%;">
-      <iframe src="https://players.brightcove.net/740838651001/default_default/index.html?videoId=6286027295001" allowfullscreen="" allow="encrypted-media" style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%;"></iframe>
-  </div>
-</div>
-```
+<details>
+  <summary>KMP_AFFINITY</summary>
+  <br>
+  <b>Recommended settings → KMP_AFFINITY=granularity=fine,verbose,compact,1,0</b>
+  <pre>export KMP_AFFINITY=granularity=fine,compact,1,0</pre>
+  tf_cnn_benchmarks usage (shell)
+  <pre>OMP_NUM_THREADS=&lt;number of physical cores per socket&gt; python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt; --num_inter_threads=&lt;number of sockets&gt; --data_format=NCHW --kmp_affinity=granularity=fine,compact,1,0</pre>
+  
+  Users can bind OpenMP threads to physical processing units. KMP_AFFINITY is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
+<br><br>
+Usage of this environment variable is as below.
+<br><br>
+KMP_AFFINITY=[,...][,][,]
+<br><br>
+Modifier is a string consisting of keyword and specifier. type is a string indicating the thread affinity to use. permute is a positive integer value, controls which levels are most significant when sorting the machine topology map. The value forces the mappings to make the specified number of most significant levels of the sort the least significant, and it inverts the order of significance. The root node of the tree is not considered a separate level for the sort operations. offset is a positive integer value, indicates the starting position for thread assignment. We will use the recommended setting of KMP_AFFINITY as an example to explain basic content of this environment variable.
+<br><br>
+KMP_AFFINITY=granularity=fine,verbose,compact,1,0
+<br><br>
+The modifier is granularity=fine,verbose. Fine causes each OpenMP thread to be bound to a single thread context. Verbose prints messages at runtime concerning the supported affinity, and this is optional. These messages include information about the number of packages, number of cores in each package, number of thread contexts for each core, and OpenMP thread bindings to physical thread contexts. Compact is value of type, assigning the OpenMP thread +1 to a free thread context as close as possible to the thread context where the OpenMP thread was placed.
+<br><br>
+NOTE The recommendation changes if Hyperthreading is disabled on your machine. In that case, the recommendation is:   KMP_AFFINITY=granularity=fine,verbose,compact if hyperthreading is disabled.
+<br><br>
+Fig. 2 shows the machine topology map when KMP_AFFINITY is set to these values. The OpenMP thread +1 is bound to a thread context as close as possible to OpenMP thread , but on a different core. Once each core has been assigned one OpenMP thread, the subsequent OpenMP threads are assigned to the available cores in the same order, but they are assigned on different thread contexts.
+<br><br>
+![OpenMP Global Thread Pool IDs](https://www.intel.com/content/dam/develop/external/us/en/images/openmp-global-thread-pool-ids-804042.jpg)
+<br> 
+Figure 2. Machine topology map with setting KMP_AFFINITY=granularity=fine,compact,1,0
+<br><br>
+The advantage of this setting is that consecutive threads are bound close together, so that communication overhead, cache line invalidation overhead, and page thrashing are minimized. If the application also had a number of parallel regions that did not use all of the available OpenMP threads, you should avoid binding multiple threads to the same core, leaving other cores not utilized.
+<br><br>
+For a more detailed description of KMP_AFFINITY, please refer to [Intel® C++ developer guide](https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/optimization-and-programming/openmp-support/openmp-library-support/thread-affinity-interface.html).
+</details>
 
-<div style="position: relative; display: block; max-width: 900px;">
-  <div style="padding-top: 56.25%;">
-    <iframe src="https://players.brightcove.net/740838651001/default_default/index.html?videoId=6286027295001" allowfullscreen="" allow="encrypted-media" style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%;"></iframe>
-  </div>
-</div>
+<details>
+  <summary>KMP_BLOCKTIME</summary>
+  <br>
+   Recommended settings for CNN→ KMP_BLOCKTIME=0
+  <br><br>
+  Recommended settings for non-CNN→ KMP_BLOCKTIME=1 (user should verify empirically)
+  <br><br>
+  usage (shell)
+  <pre>export KMP_BLOCKTIME=0 (or 1)</pre>
+  tf_cnn_benchmarks usage (shell)
+  <pre>OMP_NUM_THREADS=&lt;number of physical cores per socket&gt; python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt;  --num_inter_threads=&lt;number of sockets&gt; --data_format=NCHW --kmp_affinity=granularity=fine,compact,1,0 --kmp_blocktime=0( or 1)</pre>
+  This environment variable sets the time, in milliseconds, that a thread should wait, after completing the execution of a parallel region, before sleeping. The default value is 200ms.
+<br><br>
+After completing the execution of a parallel region, threads wait for new parallel work to become available. After a certain time has elapsed, they stop waiting, and sleep. Sleeping allows the threads to be used, until more parallel work becomes available, by non-OpenMP threaded code that may execute between parallel regions, or by other applications. A small <b>KMP_BLOCKTIME</b> value may offer better overall performance if application contains non-OpenMP threaded code that executes between parallel regions. A larger <b>KMP_BLOCKTIME</b> value may be more appropriate if threads are to be reserved solely for use for OpenMP execution, but may penalize other concurrently-running OpenMP or threaded applications. It is suggested to be set to 0 for convolutional neural network (CNN) based models.
+</details>
 
-multiple videos being added
-<!-- blank line -->
-<figure class="video_container">
-  <iframe src="https://drive.google.com/file/d/0B6m34D8cFdpMZndKTlBRU0tmczg/preview" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+<details>
+  <summary>KMP_SETTINGS</summary>
+  <br>
+  Usage (shell)
+  <pre>export KMP_SETTINGS=TRUE</pre>
+  This environment variable enables (TRUE) or disables (FALSE) the printing of OpenMP run-time library environment variables during program execution.
+</details>
 
-<figure class="video_container">
-  <iframe src="https://drive.google.com/file/d/0B6m34D8cFdpMZndKTlBRU0tmczg/preview" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+## Enable Mixed Precision
 
-<figure class="video_container">
-  <iframe src="https://drive.google.com/file/d/0B6m34D8cFdpMZndKTlBRU0tmczg/preview" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
-<!-- blank line -->
+Mixed precision is the use of both 16-bit and 32-bit floating-point types in a model during training and inference to make it run faster and use less memory.
+<br><br>
+There are two options to enable BF16 mixed precision in TensorFlow.
+<br>
+1. Keras mixed precision API
+2. AutoMixedPrecision oneDNN BFloat16 grappler pass through low level session configuration
 
-this is an anchor
-{: #hello-world}
-```markdown
-{: #hello-world}
+Refer to <a href="https://www.intel.com/content/www/us/en/developer/articles/guide/getting-started-with-automixedprecisionmkl.html">Getting Started with Mixed Precision Support in oneDNN Bfloat16</a> for more details.
 
-```
-**Note:** a note is something that needs to be mentioned but is apart from the context.
-{: .note}
+## Additional Information
 
-Can we embed code from github, here is a gitlab test.
-<!-- leave a blank line here -->
-<script src="https://gitlab.com/gitlab-org/gitlab-ce/snippets/1717978.js"></script>
-<!-- leave a blank line here -->
+<details>
+  <summary>TensorFlow Operations accelerated by oneDNN</summary>
+  <br>
+<table><tbody><tr><td>AddN</td></tr><tr><td>AvgPool</td></tr><tr><td>AvgPool3D</td></tr><tr><td>AvgPool3DGrad</td></tr><tr><td>AvgPoolGrad</td></tr><tr><td>Conv2D</td></tr><tr><td>Conv2DBackpropFilter</td></tr><tr><td>Conv2DBackpropFilterWithBias</td></tr><tr><td>Conv2DBackpropInput</td></tr><tr><td>Conv2DWithBias</td></tr><tr><td>Conv2DWithBiasBackpropBias</td></tr><tr><td>Conv3D</td></tr><tr><td>Conv3DBackpropFilter</td></tr><tr><td>Conv3DBackpropInput</td></tr><tr><td>DepthwiseConv2dNative</td></tr><tr><td>DepthwiseConv2dNativeBackpropFilter</td></tr><tr><td>DepthwiseConv2dNativeBackpropInput</td></tr><tr><td>Dequantize</td></tr><tr><td>Einsum</td></tr><tr><td>Elu</td></tr><tr><td>EluGrad</td></tr><tr><td>FusedBatchNorm</td></tr><tr><td>FusedBatchNorm</td></tr><tr><td>FusedBatchNormFusion</td></tr><tr><td>FusedBatchNormGrad</td></tr><tr><td>FusedBatchNormGrad</td></tr><tr><td>FusedConv2D</td></tr><tr><td>FusedDepthwiseConv2dNative</td></tr><tr><td>FusedMatMul</td></tr><tr><td>LeakyRelu</td></tr><tr><td>LeakyReluGrad</td></tr><tr><td>LRN</td></tr><tr><td>LRNGrad</td></tr><tr><td>MatMul</td></tr><tr><td>MaxPool</td></tr><tr><td>MaxPool3D</td></tr><tr><td>MaxPool3DGrad</td></tr><tr><td>MaxPoolGrad</td></tr><tr><td>Mul</td></tr><tr><td>Quantize</td></tr><tr><td>QuantizedAvgPool</td></tr><tr><td>QuantizedConcat</td></tr><tr><td>QuantizedConv2D</td></tr><tr><td>QuantizedDepthwiseConv2D</td></tr><tr><td>QuantizedMatMul</td></tr><tr><td>QuantizedMaxPool</td></tr><tr><td>Relu</td></tr><tr><td>Relu6</td></tr><tr><td>Relu6Grad</td></tr><tr><td>ReluGrad</td></tr><tr><td>Softmax</td></tr><tr><td>Tanh</td></tr><tr><td>TanhGrad</td></tr></tbody></table> 
+</details>
 
-{::options parse_block_html="false" /}
+## Known issues
 
-<div class="center">
+1. Performance degradation may be observed running with B16 on small batch size.
 
-<blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="en" dir="ltr">Thanks to <a href="https://twitter.com/gitlab">@gitlab</a> for joining <a href="https://twitter.com/RailsGirlsCluj">@RailsGirlsCluj</a>! <a href="https://t.co/NOoiqDWKVY">pic.twitter.com/NOoiqDWKVY</a></p>&mdash; RailsGirlsCluj (@RailsGirlsCluj) <a href="https://twitter.com/RailsGirlsCluj/status/784847271645028352">October 8, 2016</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+## Resources
 
-</div>
+Check out these resource links for more information about Intel’s AI Kit and TensorFlow optimizations:
+<li><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics ToolKit (AI Kit) overview</a></li>
+<li><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit-download.html?operatingsystem=Linux">AI Kit Linux* Downloads<>/a and <a href="https://www.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Get Started Guide]</a></li>
+<li><a href="https://www.intel.com/content/www/us/en/developer/tools/frameworks/overview.html#tensor-flow">Intel® Optimization for TensorFlow Framework</a> and <a href="https://www.intel.com/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html">Installation Guide</a>
