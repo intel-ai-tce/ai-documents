@@ -67,6 +67,7 @@ Runtime options heavily affect TensorFlow performance. Understanding them will h
 
 <details>
   <summary>Data layout</summary>
+  <br>
   <b>Recommended settings → data_format = NHWC</b>
 <br>
 tf_cnn_benchmarks usage (shell)
@@ -77,21 +78,20 @@ Efficiently using cache and memory yields remarkable improvements in overall per
 
 In most cases, data layout is represented by four letters for a two-dimensional image:
 
-N: Batch size, indicates number of images in a batch.
-C: Channel, indicates number of channels in an image.
-W: Width, indicates number of horizontal pixels of an image.
-H: Height, indicates number of vertical pixels of an image.
+- N: Batch size, indicates number of images in a batch.
+- C: Channel, indicates number of channels in an image.
+- W: Width, indicates number of horizontal pixels of an image.
+- H: Height, indicates number of vertical pixels of an image.
+<br>
 The order of these four letters indicates how pixel data are stored in the one-dimensional memory space. For instance, NCHW indicates pixel data are stored as width first, then height, then channel, and finally batch (Illustrated in Figure 2). The data is then accessed from left-to-right with channel-first indexing. NCHW is the recommended data layout for using oneDNN, since this format is an efficient data layout for the CPU. TensorFlow uses NHWC as its default data layout, but it also supports NCHW.
 
- 
-
-Data Formats for Deep Learning NHWC and NCHW
+![Data Formats for Deep Learning NHWC and NCHW](https://www.intel.com/content/dam/develop/external/us/en/images/data-layout-nchw-nhwc-804042.png) 
 
 Figure 1: Data Formats for Deep Learning NHWC and NCHW
 
 NOTE : Intel Optimized TensorFlow supports both plain data formats like NCHW/NHWC and also oneDNN blocked data format since version 2.4. Using blocked format might help on vectorization but might introduce some data reordering operations in TensorFlow.
 
-Users could enable/disable usage of oneDNN blocked data format in Tensorflow by TF_ENABLE_MKL_NATIVE_FORMAT environment variable. By exporting TF_ENABLE_MKL_NATIVE_FORMAT=0, TensorFlow will use oneDNN blocked data format instead. Please check oneDNN memory format for more information about oneDNN blocked data format.
+Users could enable/disable usage of oneDNN blocked data format in Tensorflow by TF_ENABLE_MKL_NATIVE_FORMAT environment variable. By exporting TF_ENABLE_MKL_NATIVE_FORMAT=0, TensorFlow will use oneDNN blocked data format instead. Please check [oneDNN memory format](https://oneapi-src.github.io/oneDNN/dev_guide_understanding_memory_formats.html) for more information about oneDNN blocked data format.
 
 We recommend users to enable NATIVE_FORMAT by below command to achieve good out-of-box performance.
 export TF_ENABLE_MKL_NATIVE_FORMAT=1 (or 0)
@@ -99,12 +99,71 @@ export TF_ENABLE_MKL_NATIVE_FORMAT=1 (or 0)
 
 <details>
 <summary>oneDNN Related Runtime Environment Variables</summary>
+<br>
+There are some runtime arguments related to oneDNN optimizations in TensorFlow.
+<br>
+Users could tune those runtime arguments to achieve better performance.
+
+| Environment Variables | Default | Purpose |
+| --- | --- | --- |
+| TF\_ENABLE\_ONEDNN\_OPTS | True | Enable/Disable oneDNN optimization |
+| TF\_ONEDNN\_ASSUME\_FROZEN\_WEIGHTS | False | Frozen weights for inference.<br>Better inference performance is achieved with frozen graphs.<br>Related ops: fwd conv, fused matmul |
+| TF\_ONEDNN\_USE\_SYSTEM\_ALLOCATOR | False | Use system allocator or BFC allocator in MklCPUAllocator.<br>Usage:<br><li>Set it to true for better performance if the workload meets one of following conditions:</li><ul><li>small allocation.</li><li>inter\_op\_parallelism\_threads is large.</li><li>has a weight sharing session</li></ul><li>Set it to False to use large-size allocator (BFC).</li>In general, set this flag to True for inference, and set this flag to False for training. |
+| TF\_MKL\_ALLOC\_MAX\_BYTES | 64 | MklCPUAllocator: Set upper bound on memory allocation. Unit:GB|
+| TF\_MKL\_OPTIMIZE\_PRIMITIVE\_MEMUSE | True | Use oneDNN primitive caching or not.<li>Set False to enable primitive caching in TensorFlow.</li><li>Set True to disable primitive caching in TensorFlow and oneDNN might cache those primitives for TensorFlow.</li>Disabling primitive caching will reduce memory usage in TensorFlow but impacts performance.|
 </details>
 
 <details>
 <summary>Memory Allocator</summary>
+<br>
+For deep learning workloads, TCMalloc can get better performance by reusing memory as much as possible than default malloc funtion. <a href="https://google.github.io/tcmalloc/overview.html">TCMalloc</a> features a couple of optimizations to speed up program executions. TCMalloc is holding memory in caches to speed up access of commonly-used objects. Holding such caches even after deallocation also helps avoid costly system calls if such memory is later re-allocated. Use environment variable LD_PRELOAD to take advantage of one of them.
+<br>
+  <pre>
+    $ sudo apt-get install google-perftools4
+    $ LD_PRELOAD=/usr/lib/libtcmalloc.so.4 python script.py ...
+</pre>
 </details>
 
+## Non-uniform memory access (NUMA) Controls Affecting Performance
+<br>
+NUMA, or non-uniform memory access, is a memory layout design used in data center machines meant to take advantage of locality of memory in multi-socket machines with multiple memory controllers and blocks. Running on a NUMA-enabled machine brings with it, special considerations. Intel® Optimization for TensorFlow runs inference workload best when confining both the execution and memory usage to a single NUMA node. When running on a NUMA-enabled system, recommendation is to set intra_op_parallelism_threads to the numbers of local cores in each single NUMA-node.
+<br><br>
+Recommended settings: --cpunodebind=0 --membind=0
+<br><br>
+Usage (shell)
+<br>
+<pre>numactl --cpunodebind=0 --membind=0 python</pre>
+
+<details>
+<summary>Concurrent Execution</summary>
+<br>
+You can optimize performance by breaking up your workload into multiple data shards and then running them concurrently on more than one NUMA node. On each node (N), run the following command:
+<br><br>
+Usage (shell)
+<br>
+<pre>numactl --cpunodebind=N --membind=N python</pre>
+  For example, you can use the “&” command to launch simultaneous processes on multiple NUMA nodes:
+  <br>
+    <pre>numactl --cpunodebind=0 --membind=0 python & numactl --cpunodebind=1 --membind=1 python</pre>
+  <br>
+</details>
+
+<details>
+<summary>CPU Affinity</summary>
+  <br>
+  Users could bind threads to specific CPUs via "--physcpubind=cpus" or "-C cpus"
+  <br><br>
+  Setting its value to "0-N" will bind  threads to physical cores 0 to N only.
+  <br><br>
+  Usage (shell)
+  <pre>numactl --cpunodebind=N --membind=N -C 0-N python</pre>
+  For example, you can use the “&” command to launch simultaneous processes on multiple NUMA nodes on physical CPU 0 to 3 and 4 to 7:
+  <pre>numactl --cpunodebind=0 --membind=0 -C 0-3 python & numactl --cpunodebind=1 --membind=1 -C 4-7 python</pre>
+  NOTE : oneDNN will <a href="https://github.com/oneapi-src/oneDNN/blob/e535ef2f8cbfbee4d385153befe508c6b054305e/src/cpu/platform.cpp#LL238">get the CPU affinity mask</a> from users' numactl setting and set the maximum number of working threads in the threadpool accordingly after TensorFlow v2.5.0 RC1.
+</details>
+
+## OpenMP Technical Performance Considerations for Intel® Optimization for TensorFlow
+> **Note**: This section is only for Intel® Optimization for TensorFlow, and it does not apply to official TensorFlow release.
 
 
 
