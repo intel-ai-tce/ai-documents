@@ -283,5 +283,5 @@ Refer to <a href="https://www.intel.com/content/www/us/en/developer/articles/gui
 
 Check out these resource links for more information about Intel’s AI Kit and TensorFlow optimizations:
 <li><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics ToolKit (AI Kit) overview</a></li>
-<li><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit-download.html?operatingsystem=Linux">AI Kit Linux* Downloads</a> and <a href="https://www.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Get Started Guide]</a></li>
+<li><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit-download.html?operatingsystem=Linux">AI Kit Linux* Downloads</a> and <a href="https://www.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Get Started Guide</a></li>
 <li><a href="https://www.intel.com/content/www/us/en/developer/tools/frameworks/overview.html#tensor-flow">Intel® Optimization for TensorFlow Framework</a> and <a href="https://www.intel.com/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html">Installation Guide</a>
