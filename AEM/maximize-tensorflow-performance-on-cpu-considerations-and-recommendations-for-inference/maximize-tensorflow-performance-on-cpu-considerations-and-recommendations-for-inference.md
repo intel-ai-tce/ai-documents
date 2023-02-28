@@ -85,7 +85,7 @@ In most cases, data layout is represented by four letters for a two-dimensional 
 <br>
 The order of these four letters indicates how pixel data are stored in the one-dimensional memory space. For instance, NCHW indicates pixel data are stored as width first, then height, then channel, and finally batch (Illustrated in Figure 2). The data is then accessed from left-to-right with channel-first indexing. NCHW is the recommended data layout for using oneDNN, since this format is an efficient data layout for the CPU. TensorFlow uses NHWC as its default data layout, but it also supports NCHW.
 
-![Data Formats for Deep Learning NHWC and NCHW](https://www.intel.com/content/dam/develop/external/us/en/images/data-layout-nchw-nhwc-804042.png) 
+![Data Formats for Deep Learning NHWC and NCHW](/content/dam/www/central-libraries/us/en/images/data-layout-nchw-nhwc-804042.png) 
 
 Figure 1: Data Formats for Deep Learning NHWC and NCHW
 
@@ -169,11 +169,6 @@ Intel® Optimization for TensorFlow utilizes OpenMP to parallelize deep learnng 
 <br><br>
 Users can use the following environment variables to be able to tune Intel® optimized TensorFlow performance . Thus, changing values of these environment variables affects performance of the framework. These environment variables will be described in detail in the following sections. We highly recommend users tuning these values for their specific neural network model and platform.
 <br><br>
-<li>KMP_AFFINITY</li>  
-<li>KMP_BLOCKTIME</li>
-<li>OMP_NUM_THREADS</li>
-<li>KMP_SETTINGS</li>
-<br>
 <details>
   <summary>OMP_NUM_THREADS</summary>
   <br>
@@ -223,7 +218,7 @@ NOTE The recommendation changes if Hyperthreading is disabled on your machine. I
 <br><br>
 Fig. 2 shows the machine topology map when KMP_AFFINITY is set to these values. The OpenMP thread +1 is bound to a thread context as close as possible to OpenMP thread , but on a different core. Once each core has been assigned one OpenMP thread, the subsequent OpenMP threads are assigned to the available cores in the same order, but they are assigned on different thread contexts.
 <br><br>
-![OpenMP Global Thread Pool IDs](https://www.intel.com/content/dam/develop/external/us/en/images/openmp-global-thread-pool-ids-804042.jpg)
+![OpenMP Global Thread Pool IDs](/content/dam/www/central-libraries/us/en/images/openmp-global-thread-pool-ids-804042.jpg)
 <br> 
 Figure 2. Machine topology map with setting KMP_AFFINITY=granularity=fine,compact,1,0
 <br><br>
