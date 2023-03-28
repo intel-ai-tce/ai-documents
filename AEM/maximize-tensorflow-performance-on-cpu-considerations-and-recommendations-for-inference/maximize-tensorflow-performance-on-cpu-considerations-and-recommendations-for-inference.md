@@ -45,7 +45,7 @@ Runtime options heavily affect TensorFlow performance. Understanding them will h
     echo "number of socket: $number_sockets";
   </pre>
   <br>
-  For example, here is how you can set the inter and intra\_op\_num\_threads by using <a href="https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks)">TensorFlow Benchmark</a>.tf\_cnn\_benchmarks usage (shell)
+  For example, here is how you can set the inter and intra\_op\_num\_threads by using <a href="https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks">TensorFlow Benchmark</a>.tf\_cnn\_benchmarks usage (shell)
   <br>
   <pre>python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt; --num_inter_threads=&lt;number of sockets&gt;</pre>
   <b>intra\_op\_parallelism\_threads</b> and <b>inter\_op\_parallelism\_threads</b> are runtime variables defined in TensorFlow.
