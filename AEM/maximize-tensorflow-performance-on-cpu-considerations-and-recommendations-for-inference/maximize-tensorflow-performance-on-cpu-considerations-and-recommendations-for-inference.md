@@ -28,7 +28,7 @@ When the trained model is used only for inference, after the graph has been froz
 Runtime options heavily affect TensorFlow performance. Understanding them will help get the best performance out of the Intel Optimization of TensorFlow.
 
 <details>
-  <summary>intra\_inter\_op\_parallelism\_threads</summary>
+  <summary>intra\_/inter\_op\_parallelism\_threads</summary>
   <br>
   <b>Recommended settings (RTI):intra\_op\_parallelism = number of physical core per socket</b>
   <br><br>
