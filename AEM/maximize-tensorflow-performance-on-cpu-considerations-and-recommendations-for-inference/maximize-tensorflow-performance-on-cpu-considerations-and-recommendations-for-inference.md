@@ -1,6 +1,6 @@
 To fully utilize the power of Intel® architecture (IA) for high performance, you can enable TensorFlow* to be powered by Intel’s highly optimized math routines in the Intel® oneAPI Deep Neural Network Library (oneDNN). oneDNN includes convolution, normalization, activation, inner product, and other primitives.
 
-The oneAPI Deep Neural Network Library (oneDNN) optimizations are now available both in the official x86-64 TensorFlow and  Intel® Optimization for TensorFlow* after v2.5. Users can enable those CPU optimizations by setting the the environment variable **TF_ENABLE_ONEDNN_OPTS=1** for the official x86-64 TensorFlow after v2.5.
+The oneAPI Deep Neural Network Library (oneDNN) optimizations are now available both in the official x86-64 TensorFlow and  Intel® Optimization for TensorFlow* after v2.5. Users can enable those CPU optimizations by setting the the environment variable <b>TF_ENABLE_ONEDNN_OPTS=1</b> for the official x86-64 TensorFlow after v2.5.
 
 Most of the recommendations work on both official x86-64 TensorFlow and  Intel® Optimization for TensorFlow. Some recommendations such as OpenMP tuning only applies to Intel® Optimization for TensorFlow.
 
