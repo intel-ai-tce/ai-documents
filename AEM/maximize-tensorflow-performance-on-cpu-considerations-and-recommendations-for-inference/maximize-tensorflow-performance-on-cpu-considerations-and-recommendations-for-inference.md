@@ -16,23 +16,23 @@ Optimizing graphs help improve latency and throughput time by transforming graph
 
 Users can use tools from TensorFlow github.  
 
-**First, use Freeze_graph**
+**First, use freeze\_graph**
 
-First, freezing the graph can provide additional performance benefits. The freeze_graph tool, available as part of TensorFlow on GitHub, converts all the variable ops to const ops on the inference graph and outputs a frozen graph. With all weights frozen in the resulting inference graph, you can expect improved inference time. Here is a [LINK](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/tools/freeze_graph.py) to access the freeze_graph tool.
+First, freezing the graph can provide additional performance benefits. The freeze\_graph tool, available as part of TensorFlow on GitHub, converts all the variable ops to const ops on the inference graph and outputs a frozen graph. With all weights frozen in the resulting inference graph, you can expect improved inference time. Here is a [LINK](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/tools/freeze_graph.py) to access the freeze\_graph tool.
 
-**Second, Use Optimize_for_inference**
+**Second, Use optimize\_for\_inference**
 
-When the trained model is used only for inference, after the graph has been frozen, additional transformations can help optimize the graph for inference. TensorFlow project on GitHub offers an easy to use optimization tool to improve the inference time by applying these transformations to a trained model output. The output will be an inference-optimized graph to improve inference time. Here is a [LINK](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/tools/optimize_for_inference.py) to access the optimize_for_inference tool.
+When the trained model is used only for inference, after the graph has been frozen, additional transformations can help optimize the graph for inference. TensorFlow project on GitHub offers an easy to use optimization tool to improve the inference time by applying these transformations to a trained model output. The output will be an inference-optimized graph to improve inference time. Here is a [LINK](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/tools/optimize_for_inference.py) to access the optimize\_for\_inference tool.
 
 ## TensorFlow Runtime Options Improving Performance
 Runtime options heavily affect TensorFlow performance. Understanding them will help get the best performance out of the Intel Optimization of TensorFlow.
 
 <details>
-  <summary>intra_/inter_op_parallelism_threads</summary>
+  <summary>intra\_inter\_op\_parallelism\_threads</summary>
   <br>
-  <b>Recommended settings (RTI):intra_op_parallelism = number of physical core per socket</b>
+  <b>Recommended settings (RTI):intra\_op\_parallelism = number of physical core per socket</b>
   <br><br>
-  <b>Recommended settings: inter_op_parallelism = number of sockets</b>
+  <b>Recommended settings: inter\_op\_parallelism = number of sockets</b>
   <br><br>
   <b>Users can put below bash commands into a bash script file, and then get the number of physical core per socket and number of sockets on your platform by executing the bash script file.</b>
   <br><br>
@@ -45,32 +45,32 @@ Runtime options heavily affect TensorFlow performance. Understanding them will h
     echo "number of socket: $number_sockets";
   </pre>
   <br>
-  For example, here is how you can set the inter and intra_op_num_threads by using <a href="[https://www.runoob.com](https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks)">TensorFlow Benchmark</a>.tf_cnn_benchmarks usage (shell)
+  For example, here is how you can set the inter and intra\_op\_num\_threads by using <a href="https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks)">TensorFlow Benchmark</a>.tf\_cnn\_benchmarks usage (shell)
   <br>
   <pre>python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt; --num_inter_threads=&lt;number of sockets&gt;</pre>
-  <b>intra_op_parallelism_threads</b> and <b>inter_op_parallelism_threads</b> are runtime variables defined in TensorFlow.
+  <b>intra\_op\_parallelism\_threads</b> and <b>inter\_op\_parallelism\_threads</b> are runtime variables defined in TensorFlow.
   <br><br>
   <b>ConfigProto</b>
   <br><br>
   The ConfigProto is used for configuration when creating a session. These two variables control number of cores to use.
   <br><br>
-  <li>intra_op_parallelism_threads</li>
+  <li>intra\_op\_parallelism\_threads</li>
   <br>
-  This runtime setting controls parallelism inside an operation. For instance, if matrix multiplication or reduction is intended to be executed in several threads, this variable should be set. TensorFlow will schedule tasks in a thread pool that contains intra_op_parallelism_threads threads. As illustrated later in Figure 2, OpenMP* threads are bound to thread context as close as possible on different cores. Setting this environment variable to the number of available physical cores is recommended.
+  This runtime setting controls parallelism inside an operation. For instance, if matrix multiplication or reduction is intended to be executed in several threads, this variable should be set. TensorFlow will schedule tasks in a thread pool that contains intra\_op\_parallelism\_threads threads. As illustrated later in Figure 2, OpenMP* threads are bound to thread context as close as possible on different cores. Setting this environment variable to the number of available physical cores is recommended.
   <br><br>
-  <li>inter_op_parallelism_threads</li>
+  <li>inter\_op\_parallelism\_threads</li>
   <br>
   NOTE: This setting is highly dependent on hardware and topologies, so it’s best to empirically confirm the best setting on your workload.
   <br><br>
-  This runtime setting controls parallelism among independent operations. Since these operations are not relevant to each other, TensorFlow will try to run them concurrently in the thread pool that contains inter_op_parallelism_threads threads. This variable should be set to the number of parallel paths where you want the code to run. For Intel® Optimization for TensorFlow, we recommend starting with the setting '2’, and adjusting after empirical testing.
+  This runtime setting controls parallelism among independent operations. Since these operations are not relevant to each other, TensorFlow will try to run them concurrently in the thread pool that contains inter\_op\_parallelism\_threads threads. This variable should be set to the number of parallel paths where you want the code to run. For Intel® Optimization for TensorFlow, we recommend starting with the setting '2’, and adjusting after empirical testing.
 </details>
 
 <details>
   <summary>Data layout</summary>
   <br>
-  <b>Recommended settings → data_format = NHWC</b>
+  <b>Recommended settings → data\_format = NHWC</b>
 <br>
-tf_cnn_benchmarks usage (shell)
+tf\_cnn\_benchmarks usage (shell)
 <br>
 <pre>python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt; --num_inter_threads=&lt;number of sockets&gt; --data_format=NHWC</pre>
 <br>
@@ -91,10 +91,10 @@ Figure 1: Data Formats for Deep Learning NHWC and NCHW
 
 NOTE : Intel Optimized TensorFlow supports both plain data formats like NCHW/NHWC and also oneDNN blocked data format since version 2.4. Using blocked format might help on vectorization but might introduce some data reordering operations in TensorFlow.
 
-Users could enable/disable usage of oneDNN blocked data format in Tensorflow by TF_ENABLE_MKL_NATIVE_FORMAT environment variable. By exporting TF_ENABLE_MKL_NATIVE_FORMAT=0, TensorFlow will use oneDNN blocked data format instead. Please check [oneDNN memory format](https://oneapi-src.github.io/oneDNN/dev_guide_understanding_memory_formats.html) for more information about oneDNN blocked data format.
+Users could enable/disable usage of oneDNN blocked data format in Tensorflow by TF\_ENABLE\_MKL\_NATIVE\_FORMAT environment variable. By exporting TF\_ENABLE\_MKL\_NATIVE\_FORMAT=0, TensorFlow will use oneDNN blocked data format instead. Please check [oneDNN memory format](https://oneapi-src.github.io/oneDNN/dev_guide_understanding_memory_formats.html) for more information about oneDNN blocked data format.
 
-We recommend users to enable NATIVE_FORMAT by below command to achieve good out-of-box performance.
-export TF_ENABLE_MKL_NATIVE_FORMAT=1 (or 0)
+We recommend users to enable NATIVE\_FORMAT by below command to achieve good out-of-box performance.
+export TF\_ENABLE\_MKL\_NATIVE\_FORMAT=1 (or 0)
 </details>
 
 <details>
@@ -116,7 +116,7 @@ Users could tune those runtime arguments to achieve better performance.
 <details>
 <summary>Memory Allocator</summary>
 <br>
-For deep learning workloads, TCMalloc can get better performance by reusing memory as much as possible than default malloc funtion. <a href="https://google.github.io/tcmalloc/overview.html">TCMalloc</a> features a couple of optimizations to speed up program executions. TCMalloc is holding memory in caches to speed up access of commonly-used objects. Holding such caches even after deallocation also helps avoid costly system calls if such memory is later re-allocated. Use environment variable LD_PRELOAD to take advantage of one of them.
+For deep learning workloads, TCMalloc can get better performance by reusing memory as much as possible than default malloc funtion. <a href="https://google.github.io/tcmalloc/overview.html">TCMalloc</a> features a couple of optimizations to speed up program executions. TCMalloc is holding memory in caches to speed up access of commonly-used objects. Holding such caches even after deallocation also helps avoid costly system calls if such memory is later re-allocated. Use environment variable LD\_PRELOAD to take advantage of one of them.
 <br>
   <pre>
     $ sudo apt-get install google-perftools4
@@ -126,7 +126,7 @@ For deep learning workloads, TCMalloc can get better performance by reusing memo
 
 ## Non-uniform memory access (NUMA) Controls Affecting Performance
 <br>
-NUMA, or non-uniform memory access, is a memory layout design used in data center machines meant to take advantage of locality of memory in multi-socket machines with multiple memory controllers and blocks. Running on a NUMA-enabled machine brings with it, special considerations. Intel® Optimization for TensorFlow runs inference workload best when confining both the execution and memory usage to a single NUMA node. When running on a NUMA-enabled system, recommendation is to set intra_op_parallelism_threads to the numbers of local cores in each single NUMA-node.
+NUMA, or non-uniform memory access, is a memory layout design used in data center machines meant to take advantage of locality of memory in multi-socket machines with multiple memory controllers and blocks. Running on a NUMA-enabled machine brings with it, special considerations. Intel® Optimization for TensorFlow runs inference workload best when confining both the execution and memory usage to a single NUMA node. When running on a NUMA-enabled system, recommendation is to set intra\_op\_parallelism\_threads to the numbers of local cores in each single NUMA-node.
 <br><br>
 Recommended settings: --cpunodebind=0 --membind=0
 <br><br>
@@ -170,9 +170,9 @@ Intel® Optimization for TensorFlow utilizes OpenMP to parallelize deep learnng 
 Users can use the following environment variables to be able to tune Intel® optimized TensorFlow performance . Thus, changing values of these environment variables affects performance of the framework. These environment variables will be described in detail in the following sections. We highly recommend users tuning these values for their specific neural network model and platform.
 <br><br>
 <details>
-  <summary>OMP_NUM_THREADS</summary>
+  <summary>OMP\_NUM\_THREADS</summary>
   <br>
-  Recommended settings for CNN→ OMP_NUM_THREADS = num physical cores
+  Recommended settings for CNN→ OMP\_NUM\_THREADS = num physical cores
   <br><br>
   Usage (shell)
   <br><br>
@@ -181,11 +181,11 @@ Users can use the following environment variables to be able to tune Intel® opt
   <br><br>
   With Hyperthreading enabled, there are more than one hardware threads for a physical CPU core, but we recommend to use only one hardware thread for a physical CPU core to avoid cache miss problems. 
   <br><br>
-  tf_cnn_benchmarks usage (shell)
+  tf\_cnn\_benchmarks usage (shell)
   <br>
   <pre>OMP_NUM_THREADS=&lt;number of physical cores per socket&gt; python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt; --num_inter_threads=&lt;number of sockets&gt; --data_format=NCHW</pre>
 
-  Users can bind OpenMP threads to physical processing units. KMP_AFFINITY is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
+  Users can bind OpenMP threads to physical processing units. KMP\_AFFINITY is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
 <br><br>
 The value can be a single integer, in which case it specifies the number of threads for all parallel regions. The value can also be a comma-separated list of integers, in which case each integer specifies the number of threads for a parallel region at a nesting level.
 <br><br>
@@ -195,44 +195,44 @@ The default value is the number of logical processors visible to the operating s
 </details>
 
 <details>
-  <summary>KMP_AFFINITY</summary>
+  <summary>KMP\_AFFINITY</summary>
   <br>
-  <b>Recommended settings → KMP_AFFINITY=granularity=fine,verbose,compact,1,0</b>
+  <b>Recommended settings → KMP\_AFFINITY=granularity=fine,verbose,compact,1,0</b>
   <pre>export KMP_AFFINITY=granularity=fine,compact,1,0</pre>
   tf_cnn_benchmarks usage (shell)
   <pre>OMP_NUM_THREADS=&lt;number of physical cores per socket&gt; python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt; --num_inter_threads=&lt;number of sockets&gt; --data_format=NCHW --kmp_affinity=granularity=fine,compact,1,0</pre>
   
-  Users can bind OpenMP threads to physical processing units. KMP_AFFINITY is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
+  Users can bind OpenMP threads to physical processing units. KMP\_AFFINITY is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
 <br><br>
 Usage of this environment variable is as below.
 <br><br>
-KMP_AFFINITY=[,...][,][,]
+KMP\_AFFINITY=[,...][,][,]
 <br><br>
-Modifier is a string consisting of keyword and specifier. type is a string indicating the thread affinity to use. permute is a positive integer value, controls which levels are most significant when sorting the machine topology map. The value forces the mappings to make the specified number of most significant levels of the sort the least significant, and it inverts the order of significance. The root node of the tree is not considered a separate level for the sort operations. offset is a positive integer value, indicates the starting position for thread assignment. We will use the recommended setting of KMP_AFFINITY as an example to explain basic content of this environment variable.
+Modifier is a string consisting of keyword and specifier. type is a string indicating the thread affinity to use. permute is a positive integer value, controls which levels are most significant when sorting the machine topology map. The value forces the mappings to make the specified number of most significant levels of the sort the least significant, and it inverts the order of significance. The root node of the tree is not considered a separate level for the sort operations. offset is a positive integer value, indicates the starting position for thread assignment. We will use the recommended setting of KMP\_AFFINITY as an example to explain basic content of this environment variable.
 <br><br>
-KMP_AFFINITY=granularity=fine,verbose,compact,1,0
+KMP\_AFFINITY=granularity=fine,verbose,compact,1,0
 <br><br>
 The modifier is granularity=fine,verbose. Fine causes each OpenMP thread to be bound to a single thread context. Verbose prints messages at runtime concerning the supported affinity, and this is optional. These messages include information about the number of packages, number of cores in each package, number of thread contexts for each core, and OpenMP thread bindings to physical thread contexts. Compact is value of type, assigning the OpenMP thread +1 to a free thread context as close as possible to the thread context where the OpenMP thread was placed.
 <br><br>
-NOTE The recommendation changes if Hyperthreading is disabled on your machine. In that case, the recommendation is:   KMP_AFFINITY=granularity=fine,verbose,compact if hyperthreading is disabled.
+NOTE The recommendation changes if Hyperthreading is disabled on your machine. In that case, the recommendation is:   KMP\_AFFINITY=granularity=fine,verbose,compact if hyperthreading is disabled.
 <br><br>
-Fig. 2 shows the machine topology map when KMP_AFFINITY is set to these values. The OpenMP thread +1 is bound to a thread context as close as possible to OpenMP thread , but on a different core. Once each core has been assigned one OpenMP thread, the subsequent OpenMP threads are assigned to the available cores in the same order, but they are assigned on different thread contexts.
+Fig. 2 shows the machine topology map when KMP\_AFFINITY is set to these values. The OpenMP thread +1 is bound to a thread context as close as possible to OpenMP thread , but on a different core. Once each core has been assigned one OpenMP thread, the subsequent OpenMP threads are assigned to the available cores in the same order, but they are assigned on different thread contexts.
 <br><br>
 ![OpenMP Global Thread Pool IDs](/content/dam/www/central-libraries/us/en/images/openmp-global-thread-pool-ids-804042.jpg)
 <br> 
-Figure 2. Machine topology map with setting KMP_AFFINITY=granularity=fine,compact,1,0
+Figure 2. Machine topology map with setting KMP\_AFFINITY=granularity=fine,compact,1,0
 <br><br>
 The advantage of this setting is that consecutive threads are bound close together, so that communication overhead, cache line invalidation overhead, and page thrashing are minimized. If the application also had a number of parallel regions that did not use all of the available OpenMP threads, you should avoid binding multiple threads to the same core, leaving other cores not utilized.
 <br><br>
-For a more detailed description of KMP_AFFINITY, please refer to [Intel® C++ developer guide](https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/optimization-and-programming/openmp-support/openmp-library-support/thread-affinity-interface.html).
+For a more detailed description of KMP\_AFFINITY, please refer to [Intel® C++ developer guide](https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/optimization-and-programming/openmp-support/openmp-library-support/thread-affinity-interface.html).
 </details>
 
 <details>
-  <summary>KMP_BLOCKTIME</summary>
+  <summary>KMP\_BLOCKTIME</summary>
   <br>
-   Recommended settings for CNN→ KMP_BLOCKTIME=0
+   Recommended settings for CNN→ KMP\_BLOCKTIME=0
   <br><br>
-  Recommended settings for non-CNN→ KMP_BLOCKTIME=1 (user should verify empirically)
+  Recommended settings for non-CNN→ KMP\_BLOCKTIME=1 (user should verify empirically)
   <br><br>
   usage (shell)
   <pre>export KMP_BLOCKTIME=0 (or 1)</pre>
@@ -240,11 +240,11 @@ For a more detailed description of KMP_AFFINITY, please refer to [Intel® C++ de
   <pre>OMP_NUM_THREADS=&lt;number of physical cores per socket&gt; python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt;  --num_inter_threads=&lt;number of sockets&gt; --data_format=NCHW --kmp_affinity=granularity=fine,compact,1,0 --kmp_blocktime=0( or 1)</pre>
   This environment variable sets the time, in milliseconds, that a thread should wait, after completing the execution of a parallel region, before sleeping. The default value is 200ms.
 <br><br>
-After completing the execution of a parallel region, threads wait for new parallel work to become available. After a certain time has elapsed, they stop waiting, and sleep. Sleeping allows the threads to be used, until more parallel work becomes available, by non-OpenMP threaded code that may execute between parallel regions, or by other applications. A small <b>KMP_BLOCKTIME</b> value may offer better overall performance if application contains non-OpenMP threaded code that executes between parallel regions. A larger <b>KMP_BLOCKTIME</b> value may be more appropriate if threads are to be reserved solely for use for OpenMP execution, but may penalize other concurrently-running OpenMP or threaded applications. It is suggested to be set to 0 for convolutional neural network (CNN) based models.
+After completing the execution of a parallel region, threads wait for new parallel work to become available. After a certain time has elapsed, they stop waiting, and sleep. Sleeping allows the threads to be used, until more parallel work becomes available, by non-OpenMP threaded code that may execute between parallel regions, or by other applications. A small <b>KMP\_BLOCKTIME</b> value may offer better overall performance if application contains non-OpenMP threaded code that executes between parallel regions. A larger <b>KMP\_BLOCKTIME</b> value may be more appropriate if threads are to be reserved solely for use for OpenMP execution, but may penalize other concurrently-running OpenMP or threaded applications. It is suggested to be set to 0 for convolutional neural network (CNN) based models.
 </details>
 
 <details>
-  <summary>KMP_SETTINGS</summary>
+  <summary>KMP\_SETTINGS</summary>
   <br>
   Usage (shell)
   <pre>export KMP_SETTINGS=TRUE</pre>
