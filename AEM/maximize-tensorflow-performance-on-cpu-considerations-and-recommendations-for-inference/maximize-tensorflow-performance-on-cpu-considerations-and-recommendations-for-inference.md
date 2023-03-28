@@ -163,7 +163,7 @@ Usage (shell)
 </details>
 
 ## OpenMP Technical Performance Considerations for Intel® Optimization for TensorFlow
-<blockquote>This section is only for Intel® Optimization for TensorFlow, and it does not apply to official TensorFlow release.</blockquote>  
+> This section is only for Intel® Optimization for TensorFlow, and it does not apply to official TensorFlow release. 
 <br>
 Intel® Optimization for TensorFlow utilizes OpenMP to parallelize deep learnng model execution among CPU cores.
 <br><br>
@@ -185,7 +185,7 @@ Users can use the following environment variables to be able to tune Intel® opt
   <br>
   <pre>OMP_NUM_THREADS=&lt;number of physical cores per socket&gt; python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt; --num_inter_threads=&lt;number of sockets&gt; --data_format=NCHW</pre>
 
-  Users can bind OpenMP threads to physical processing units. KMP\_AFFINITY is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
+  Users can bind OpenMP threads to physical processing units. <b>KMP\_AFFINITY</b> is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
 <br><br>
 The value can be a single integer, in which case it specifies the number of threads for all parallel regions. The value can also be a comma-separated list of integers, in which case each integer specifies the number of threads for a parallel region at a nesting level.
 <br><br>
@@ -202,13 +202,13 @@ The default value is the number of logical processors visible to the operating s
   tf_cnn_benchmarks usage (shell)
   <pre>OMP_NUM_THREADS=&lt;number of physical cores per socket&gt; python tf_cnn_benchmarks.py --num_intra_threads=&lt;number of physical cores per socket&gt; --num_inter_threads=&lt;number of sockets&gt; --data_format=NCHW --kmp_affinity=granularity=fine,compact,1,0</pre>
   
-  Users can bind OpenMP threads to physical processing units. KMP\_AFFINITY is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
+  Users can bind OpenMP threads to physical processing units. <b>KMP\_AFFINITY</b> is used to take advantage of this functionality. It restricts execution of certain threads to a subset of the physical processing units in a multiprocessor computer.
 <br><br>
 Usage of this environment variable is as below.
 <br><br>
 KMP\_AFFINITY=[,...][,][,]
 <br><br>
-Modifier is a string consisting of keyword and specifier. type is a string indicating the thread affinity to use. permute is a positive integer value, controls which levels are most significant when sorting the machine topology map. The value forces the mappings to make the specified number of most significant levels of the sort the least significant, and it inverts the order of significance. The root node of the tree is not considered a separate level for the sort operations. offset is a positive integer value, indicates the starting position for thread assignment. We will use the recommended setting of KMP\_AFFINITY as an example to explain basic content of this environment variable.
+Modifier is a string consisting of keyword and specifier. type is a string indicating the thread affinity to use. permute is a positive integer value, controls which levels are most significant when sorting the machine topology map. The value forces the mappings to make the specified number of most significant levels of the sort the least significant, and it inverts the order of significance. The root node of the tree is not considered a separate level for the sort operations. offset is a positive integer value, indicates the starting position for thread assignment. We will use the recommended setting of <b>KMP\_AFFINITY</b> as an example to explain basic content of this environment variable.
 <br><br>
 KMP\_AFFINITY=granularity=fine,verbose,compact,1,0
 <br><br>
@@ -216,9 +216,9 @@ The modifier is granularity=fine,verbose. Fine causes each OpenMP thread to be b
 <br><br>
 NOTE The recommendation changes if Hyperthreading is disabled on your machine. In that case, the recommendation is:   KMP\_AFFINITY=granularity=fine,verbose,compact if hyperthreading is disabled.
 <br><br>
-Fig. 2 shows the machine topology map when KMP\_AFFINITY is set to these values. The OpenMP thread +1 is bound to a thread context as close as possible to OpenMP thread , but on a different core. Once each core has been assigned one OpenMP thread, the subsequent OpenMP threads are assigned to the available cores in the same order, but they are assigned on different thread contexts.
+Fig. 2 shows the machine topology map when <b>KMP\_AFFINITY</b> is set to these values. The OpenMP thread +1 is bound to a thread context as close as possible to OpenMP thread , but on a different core. Once each core has been assigned one OpenMP thread, the subsequent OpenMP threads are assigned to the available cores in the same order, but they are assigned on different thread contexts.
 <br><br>
-![OpenMP Global Thread Pool IDs](/content/dam/www/central-libraries/us/en/images/openmp-global-thread-pool-ids-804042.jpg)
+![OpenMP Global Thread Pool IDs](/content/dam/develop/external/us/en/images/openmp-global-thread-pool-ids-804042.jpg)
 <br> 
 Figure 2. Machine topology map with setting KMP\_AFFINITY=granularity=fine,compact,1,0
 <br><br>
