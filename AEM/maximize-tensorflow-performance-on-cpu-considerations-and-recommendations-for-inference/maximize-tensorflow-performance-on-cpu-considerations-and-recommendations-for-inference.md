@@ -153,7 +153,7 @@ Usage (shell)
   <br>
   Users could bind threads to specific CPUs via "--physcpubind=cpus" or "-C cpus"
   <br><br>
-  Setting its value to "0-N" will bind  threads to physical cores 0 to N only.
+  Setting its value to <b>"0-N"</b> will bind  threads to physical cores 0 to N only.
   <br><br>
   Usage (shell)
   <pre>numactl --cpunodebind=N --membind=N -C 0-N python</pre>
