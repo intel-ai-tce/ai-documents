@@ -85,7 +85,7 @@ In most cases, data layout is represented by four letters for a two-dimensional 
 <br>
 The order of these four letters indicates how pixel data are stored in the one-dimensional memory space. For instance, NCHW indicates pixel data are stored as width first, then height, then channel, and finally batch (Illustrated in Figure 2). The data is then accessed from left-to-right with channel-first indexing. NCHW is the recommended data layout for using oneDNN, since this format is an efficient data layout for the CPU. TensorFlow uses NHWC as its default data layout, but it also supports NCHW.
 
-![Data Formats for Deep Learning NHWC and NCHW](/content/dam/www/central-libraries/us/en/images/data-layout-nchw-nhwc-804042.png) 
+![Data Formats for Deep Learning NHWC and NCHW](/content/dam/develop/external/us/en/images/data-layout-nchw-nhwc-804042.png) 
 
 Figure 1: Data Formats for Deep Learning NHWC and NCHW
 
