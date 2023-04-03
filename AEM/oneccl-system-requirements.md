@@ -12,16 +12,11 @@
     - Ubuntu* LTS v20.04 and v22.04
     - SUSE* Linux Enterprise Server* 15 SP2 and SP3
     - Red Hat* Enterprise Linux*  8
-    - CentOS* 7
-    - Fedora* 36 and 37
-    - Debian* 9 and 10 and 11
-    - WSL via Ubuntu 2 and SLES2
-    - Amazon 2022 and 2
 - Compilers:
     - GNU*: C, C++ 4.8.5 or higher
     - Intel® C++ Compiler for Linux* OS 19.1 or higher
     - Intel® C/C++ Compiler Classic 2021.1
-    - **Required**: Intel® oneAPI DPC++/C++ Compiler 2021.1 and DPC++ Runtime 2021.1
+    - **Required**: [Intel® oneAPI DPC++/C++ Compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.ucpyr6)
 - Fabric Software:
     - Open Fabric Interface (OFI): [source codes](github.com/ofiwg/libfabric) or provided with the Intel® MPI Library
         - Minimum: OFI 1.5.0 (OFI/verbs provider is unstable)
