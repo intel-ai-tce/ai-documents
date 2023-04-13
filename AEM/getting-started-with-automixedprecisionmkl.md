@@ -190,7 +190,7 @@ In general, the template corresponding to the names of the environment variables
 ```bash
 TF_AUTO_MIXED_PRECISION_GRAPH_REWRITE_${LIST}_${OP}=operator
 ```
-where ${LIST} would be any of {ALLOW, DENY, INFER}, and ${OP} would be any of {ADD, REMOVE}.
+where ${LIST} would be any of {ALLOW, DENY, INFER, CLEAR}, and ${OP} would be any of {ADD, REMOVE}.
 
 To test this feature of adding an op into denylist and removing from the allowlist, run the code sample conv2D_bf16.py by enabling the environment variables with conv2d ops
 ```bash
