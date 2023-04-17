@@ -18,7 +18,8 @@ Here are the options to enable BF16 mixed precision in TensorFlow
 
 1. Keras mixed precision API
 2. Mixed Precision for Tensorflow Hub models
-2. Legacy AutoMixedPrecision grappler pass
+3. Legacy AutoMixedPrecision grappler pass
+4. Mixed Precision with HuggingFace and other sources
     
 This guide describes the options in details.
 
@@ -50,9 +51,9 @@ import numpy as np
 from tensorflow import keras
 from tensorflow.keras import layers
 
-**from tensorflow.keras import mixed_precision
-mixed_precision.set_global_policy('mixed_bfloat16')
-**```
+from tensorflow.keras import mixed_precision
+mixed_precision.set_global_policy('mixed_bfloat16')  # <--- note these 2 lines
+```
 Users can use oneDNN verbose logs to verify if this modified mnist_convnet indeed uses bfloat16 data type for computation. Using ONEDNN_VERBOSE=1 environment variable as shown below, users will get a oneDNN verbose log file "dnnl_log.csv".
 
 ```bash
@@ -183,20 +184,19 @@ TF_AUTO_MIXED_PRECISION_GRAPH_REWRITE_${LIST}_${OP}=operator
 ```
 where ${LIST} would be any of {ALLOW, DENY, INFER, CLEAR}, and ${OP} would be any of {ADD, REMOVE}.
 
-### IV. Mixed Precision with other ways of executing model
+## IV. Mixed Precision with other ways of executing model
 Apart from the above usecases, there are many places that serve as Model Hub. For example, [HuggingFace](https://huggingface.co/models) is a popular place where one can pick easy to experiment scripts to try a model. To enable mixed precision with we can use the keras method described above if it is keras based model.
 
-## HuggingFace BFloat16 Mixed Precsion Inference
+### HuggingFace BFloat16 Mixed Precsion Inference
 We can use this [TF Distilbert model](https://huggingface.co/docs/transformers/main/en/model_doc/distilbert#transformers.TFDistilBertForSequenceClassification.call.example) as example and used Keras Mixed Precision API to enable BFloat16 computation.
 ```python
 from transformers import AutoTokenizer, TFDistilBertForSequenceClassification
 import tensorflow as tf
 
-**tf.keras.mixed_precision.set_global_policy('mixed_bfloat16')**
-
+tf.keras.mixed_precision.set_global_policy('mixed_bfloat16')  # <--- note this
 ```
 
-## For other models sources
+### For other models sources
 1. If it is a TFHub like SavedModel, one can use the config API described in section II.
 2. If it is an older SavedModel saved in a .pbtxt file, one can use the config API described in secction III.
 
