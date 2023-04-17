@@ -84,7 +84,7 @@ tf.config.optimizer.set_experimental_options({'auto_mixed_precision_onednn_bfloa
 ```
 
 ### End-to-end example using Mixed Precision for Transfer Learning 
-Please refer to [this Transfer Learning sample](https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Features-and-Functionality/IntelTensorFlow_Enabling_Auto_Mixed_Precision_for_TransferLearning) which uses a headless ResNet50v1.5 pretrained model from [TensorFlow Hub](https://www.tensorflow.org/hub) with ImageNet dataset.
+For end-to-end example please refer to [this Transfer Learning sample](https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Features-and-Functionality/IntelTensorFlow_Enabling_Auto_Mixed_Precision_for_TransferLearning) which uses a headless ResNet50v1.5 pretrained model from [TensorFlow Hub](https://www.tensorflow.org/hub) with ImageNet dataset. It also provides examples for performance improvements.
 
 > Remember to use Sapphire Rapids (SPR) server. say eg: C3 instance on GCP.
 
