@@ -2,7 +2,7 @@
 ## Overview
 [Mixed precision](https://www.tensorflow.org/guide/mixed_precision) is the use of both 16-bit and 32-bit floating-point types in a model during training and inference to make it run faster and use less memory. Official Tensorflow* supports this feature from TensorFlow 2.12 with all Intel® optimizations enabled by default. Intel® 4th Gen Xeon processor codenamed Sapphie Rapids(SPR) is the first Intel® processor to support Advanced Matrix Extensions(AMX) instructions, which help to accelerate matrix heavy workflows such as machine learning alongside also having BFloat16 support. Previous hardwares can be used to test functionality, but SPR provides the best performance gains. 
 
-Using one of the methods described here will convert a model written in FP32 data type to operate in BFloat16 data type. To be precise, it scans the data-flow graph corresponding to the model, and looks for nodes in the graph (also called as operators) that can operate in BFloat16 type, and inserts FP32ToBFloat16 and vice-versa Cast nodes in the graph appropriately.
+Using one of the methods described here will enable a model written in FP32 data type to operate in mixed FP32 and BFloat16 data type. To be precise, it scans the data-flow graph corresponding to the model, and looks for nodes in the graph (also called as operators) that can operate in BFloat16 type, and inserts FP32ToBFloat16 and vice-versa Cast nodes in the graph appropriately.
 
 For example: Consider a simple neural network with a typical pattern of Conv2D -> BiasAdd -> Relu with the default TensorFlow datatype FP32. TensorFlow* data-flow graph corresponding to this model looks like below.
 
@@ -14,13 +14,14 @@ The data-flow graph after porting the model to BFloat16 type looks like below.
 
 Notice that 2 operators, Conv2D+BiasAdd and ReLU in the graph are automatically converted to operate in BFloat16 type. Also note that appropriate Cast nodes are inserted in the graph to convert TensorFlow* tensors from FP32 type to BFloat16 type and vice-versa.
 
-Here are the options to enable BF16 mixed precision in TensorFlow
+Here are the options to enable BF16 mixed precision in Tensorflow®.
 
 1. Keras mixed precision API
 2. Mixed Precision for Tensorflow Hub models
 3. Legacy AutoMixedPrecision grappler pass
 4. Mixed Precision with HuggingFace and other sources
-    
+5. Reduced precision math mode via environment variable (introduced in Tensorflow® 2.13)
+
 This guide describes the options in details.
 
 ## I. Keras mixed precision API
@@ -200,3 +201,5 @@ tf.keras.mixed_precision.set_global_policy('mixed_bfloat16')  # <--- note this
 1. If it is a TFHub like SavedModel, one can use the config API described in section II.
 2. If it is an older SavedModel saved in a .pbtxt file, one can use the config API described in secction III.
 
+## V. Reduced precision math mode via environment variable
+In Tensorflow* 2.13, a new environment variable, TF_SET_ONEDNN_FPMATH_MODE, is introduced. When running on BF16 capable hardwares (e.g. SPR) and setting this variable `TF_SET_ONEDNN_FPMATH_MODE=BF16`, Intel® oneDNN library will perform reduced precision math computation on convolution and matrix multiplication operations, the convertion between FP32 and BF16 is handled inside the oneDNN library.
