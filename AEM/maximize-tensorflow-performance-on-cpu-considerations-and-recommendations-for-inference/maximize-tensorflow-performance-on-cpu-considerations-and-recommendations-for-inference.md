@@ -120,8 +120,8 @@ Runtime options heavily affect TensorFlow performance. Understanding them will h
   For deep learning workloads, TCMalloc can get better performance by reusing memory as much as possible than default malloc funtion. <a href="https://google.github.io/tcmalloc/overview.html">TCMalloc</a> features a couple of optimizations to speed up program executions. TCMalloc is holding memory in caches to speed up access of commonly-used objects. Holding such caches even after deallocation also helps avoid costly system calls if such memory is later re-allocated. Use environment variable LD\_PRELOAD to take advantage of one of them.
   <br>
     <pre>
-      $ sudo apt-get install google-perftools4
-      $ LD_PRELOAD=/usr/lib/libtcmalloc.so.4 python script.py ...
+      $ sudo apt-get install google-perftools
+      $ LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libtcmalloc.so.4 python script.py ...
   </pre>
 </details>
 
