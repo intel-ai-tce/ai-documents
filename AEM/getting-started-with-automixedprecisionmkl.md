@@ -1,10 +1,10 @@
 
 ## Overview
-[Mixed precision](https://www.tensorflow.org/guide/mixed_precision) is the use of both 16-bit and 32-bit floating-point types in a model during training and inference to make it run faster and use less memory. Official Tensorflow* supports this feature from TensorFlow 2.12 with all Intel® optimizations enabled by default. Intel® 4th Gen Xeon processor codenamed Sapphie Rapids(SPR) is the first Intel® processor to support Advanced Matrix Extensions(AMX) instructions, which help to accelerate matrix heavy workflows such as machine learning alongside also having BFloat16 support. Previous hardwares can be used to test functionality, but SPR provides the best performance gains. 
+[Mixed precision](https://www.tensorflow.org/guide/mixed_precision) is the use of both 16-bit and 32-bit floating-point types in a model during training and inference to make it run faster and use less memory. Official TensorFlow supports this feature from TensorFlow 2.12 with all Intel® optimizations enabled by default. Intel® 4th Gen Xeon processor codenamed Sapphie Rapids(SPR) is the first Intel® processor to support Advanced Matrix Extensions(AMX) instructions, which help to accelerate matrix heavy workflows such as machine learning alongside also having BFloat16 support. Previous hardwares can be used to test functionality, but SPR provides the best performance gains. 
 
 Using one of the methods described here will enable a model written in FP32 data type to operate in mixed FP32 and BFloat16 data type. To be precise, it scans the data-flow graph corresponding to the model, and looks for nodes in the graph (also called as operators) that can operate in BFloat16 type, and inserts FP32ToBFloat16 and vice-versa Cast nodes in the graph appropriately.
 
-For example: Consider a simple neural network with a typical pattern of Conv2D -> BiasAdd -> Relu with the default TensorFlow datatype FP32. TensorFlow* data-flow graph corresponding to this model looks like below.
+For example: Consider a simple neural network with a typical pattern of Conv2D -> BiasAdd -> Relu with the default TensorFlow datatype FP32. TensorFlow data-flow graph corresponding to this model looks like below.
 
 ![amp-mkl](/content/dam/develop/external/us/en/images/automixedprecisionmkl-1.png)
 
@@ -12,15 +12,15 @@ The data-flow graph after porting the model to BFloat16 type looks like below.
 
 ![amp-mkl2](/content/dam/develop/external/us/en/images/automixedprecisionmkl-2.png)
 
-Notice that 2 operators, Conv2D+BiasAdd and ReLU in the graph are automatically converted to operate in BFloat16 type. Also note that appropriate Cast nodes are inserted in the graph to convert TensorFlow* tensors from FP32 type to BFloat16 type and vice-versa.
+Notice that 2 operators, Conv2D+BiasAdd and ReLU in the graph are automatically converted to operate in BFloat16 type. Also note that appropriate Cast nodes are inserted in the graph to convert TensorFlow tensors from FP32 type to BFloat16 type and vice-versa.
 
-Here are the options to enable BF16 mixed precision in Tensorflow®.
+Here are the options to enable BF16 mixed precision in TensorFlow.
 
 1. Keras mixed precision API
-2. Mixed Precision for Tensorflow Hub models
+2. Mixed Precision for TensorFlow Hub models
 3. Legacy AutoMixedPrecision grappler pass
 4. Mixed Precision with HuggingFace and other sources
-5. Reduced precision math mode via environment variable (introduced in Tensorflow® 2.13)
+5. Reduced precision math mode via environment variable (introduced in TensorFlow 2.13)
 
 This guide describes the options in details.
 
@@ -31,7 +31,7 @@ This session describes how to use the Keras mixed precision API to speed up your
 ### Getting started with a FP32 Model
 By using an existing sample, users can easily understand how to change their own Keras* model.
 
-First, create an environment and install Tensorflow*
+First, create an environment and install TensorFlow
 ```bash
 conda create -n tf_latest python=3.8 -c intel 
 source activate tf_latest 
@@ -67,7 +67,7 @@ onednn_verbose,exec,cpu,matmul,brg:avx512_core_**amx_bf16**,undef,src_bf16::bloc
 
 > Please use Python 3.8 or above for the best performance on Sapphire Rapids Xeon Scalable Processors.
 
-## II. Mixed Precision for Tensorflow Hub models 
+## II. Mixed Precision for TensorFlow Hub models 
 ### Introduction
 This session describes how to enable the auto-mixed precision for [TensorFlow Hub](https://www.tensorflow.org/hub) models using the tf.config API. Enabling this API will automatically convert the pre-trained model to use the bfloat16 datatype for computation resulting in an increased training throughput on the latest Intel® Xeon® scalable processor. These instructions works for inference or fine tuning usecase.
 
@@ -95,10 +95,10 @@ Auto Mixed Precision is a grappler pass that automatically converts a model writ
 - How to convert the graph to BFloat16 on-the-fly as you train the model
 - How to convert a pre-trained fp32 model to BFloat16
 
-Let’s use a simple neural network with a typical pattern of Conv2D -> BiasAdd -> ReLU. Inputs x and w of Conv2D and input b of bias_add are TensorFlow* Variables with default FP32 data type, so this neural network model operates completely in FP32 data type. TensorFlow* data-flow graph corresponding to this model looks like below.
+Let’s use a simple neural network with a typical pattern of Conv2D -> BiasAdd -> ReLU. Inputs x and w of Conv2D and input b of bias_add are TensorFlow Variables with default FP32 data type, so this neural network model operates completely in FP32 data type. TensorFlow data-flow graph corresponding to this model looks like below.
 
 ### Steps to set up the runtime environment
-Before running the examples, setup runtime environement with steps below to create an environment and install Tensorflow*, as done earlier.
+Before running the examples, setup runtime environement with steps below to create an environment and install TensorFlow, as done earlier.
 ```bash
 conda create -n tf_latest python=3.8 -c intel 
 source activate tf_latest 
@@ -106,7 +106,7 @@ source activate tf_latest
 ```
 
 ### Enabling BFloat16 using AMP in a Model
-Following lines of Python* code will enable BFloat16 data type using Auto Mixed Precision when using grappler via Tensorflow v1. This setting enables BF16 for training AND inference usecase.
+Following lines of Python* code will enable BFloat16 data type using Auto Mixed Precision when using grappler via TensorFlow v1. This setting enables BF16 for training AND inference usecase.
 ```python
 graph_options=tf.compat.v1.GraphOptions( 
         rewrite_options=rewriter_config_pb2.RewriterConfig( 
@@ -164,9 +164,9 @@ python conv2D_bf16.py
 > One can also use ONEDNN_VERBOSE logs as discussed earlier to verify AMX BF16 instructions.
 
 ### Controlling Ops to be converted to BFloat16 type Automatically
-An important point to note is that not all of TensorFlow’s* operators for CPU backend support BFloat16 type - this could be because either the support is missing (and is a WIP) or that the BFloat16 version of an operator may not offer much performance improvement over the FP32 implementation. Or for certain operators, BFloat16 type could lead to numerical instability of the neural network model.
+An important point to note is that not all of TensorFlow’s operators for CPU backend support BFloat16 type - this could be because either the support is missing (and is a WIP) or that the BFloat16 version of an operator may not offer much performance improvement over the FP32 implementation. Or for certain operators, BFloat16 type could lead to numerical instability of the neural network model.
 
-So we categorize TensorFlow* operators that are supported by MKL backend in BFloat16 type into 1) if they are always numerically stable, and 2) if they are always numerically unstable, and 3) if their stability could depend on the context. Auto Mixed Precision pass uses a specific Allow, Deny, Clear and Infer list of operators respectively to capture these operators. The exact lists could be found in auto_mixed_precision_lists.h file in TensorFlow* github repository.
+So we categorize TensorFlow operators that are supported by MKL backend in BFloat16 type into 1) if they are always numerically stable, and 2) if they are always numerically unstable, and 3) if their stability could depend on the context. Auto Mixed Precision pass uses a specific Allow, Deny, Clear and Infer list of operators respectively to capture these operators. The exact lists could be found in auto_mixed_precision_lists.h file in TensorFlow github repository.
 
 The default values of these lists already capture the most common BFloat16 usage models and also ensure numerical stability of the model. There is, however, a way to add or remove operators from any of these lists by setting environment variables that control these lists. For instance, executing
 
@@ -202,4 +202,9 @@ tf.keras.mixed_precision.set_global_policy('mixed_bfloat16')  # <--- note this
 2. If it is an older SavedModel saved in a .pbtxt file, one can use the config API described in secction III.
 
 ## V. Reduced precision math mode via environment variable
-In Tensorflow* 2.13, a new environment variable, TF_SET_ONEDNN_FPMATH_MODE, is introduced. When running on BF16 capable hardwares (e.g. SPR) and setting this variable `TF_SET_ONEDNN_FPMATH_MODE=BF16`, Intel® oneDNN library will perform reduced precision math computation on convolution and matrix multiplication operations, the convertion between FP32 and BF16 is handled inside the oneDNN library.
+In TensorFlow 2.13, a new environment variable, TF_SET_ONEDNN_FPMATH_MODE, is introduced to enable mixed precision computation in hardwares enpowered by new generation of Intel® Xeon processors starting from SPR. When setting this variable `TF_SET_ONEDNN_FPMATH_MODE=BF16`, Intel® oneDNN library inside TensorFlow will perform reduced precision math computation on high cost operations such as convolution and matrix multiplication. This option is different from the others listed above, no Cast nodes are added in the graph level by TensorFlow framework, instead, the convertion between FP32 and BF16 is handled inside the oneDNN library.
+This environment variable can be added as prefix to the model run command, i.e.,
+```bash
+TF_SET_ONEDNN_FPMATH_MODE=BF16 python mnist_convnet.py
+```
+
