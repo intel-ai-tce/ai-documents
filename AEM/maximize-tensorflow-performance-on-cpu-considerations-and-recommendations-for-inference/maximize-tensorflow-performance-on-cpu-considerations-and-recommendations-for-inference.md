@@ -121,7 +121,7 @@ Runtime options heavily affect TensorFlow performance. Understanding them will h
   <br>
     <pre>
       $ sudo apt-get install google-perftools
-      $ LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libtcmalloc.so.4 python script.py ...
+      $ LD\_PRELOAD=/usr/lib/x86\_64-linux-gnu/libtcmalloc.so.4 python script.py ...
   </pre>
 </details>
 
