@@ -204,7 +204,7 @@ tf.keras.mixed_precision.set_global_policy('mixed_bfloat16')  # <--- note this
 2. If it is an older SavedModel saved in a .pbtxt file, one can use the config API described in secction III.
 
 ## V. Reduced precision math mode via environment variable
-In TensorFlow 2.13, a new environment variable, TF_SET_ONEDNN_FPMATH_MODE, is introduced to enable mixed precision computation in hardwares enpowered by new generation of Intel® Xeon processors starting from SPR. When setting this variable `TF_SET_ONEDNN_FPMATH_MODE=BF16`, Intel® oneDNN library inside TensorFlow will perform reduced precision math computation on high cost operations such as convolution and matrix multiplication. This option is different from the others listed above, no Cast nodes are added in the graph level by TensorFlow framework, instead, the convertion between FP32 and BF16 is handled inside the oneDNN library.
+In TensorFlow 2.13, a new environment variable, TF_SET_ONEDNN_FPMATH_MODE, is introduced to enable mixed precision computation in hardwares enpowered by new generation of Intel® Xeon processors starting from SPR. When setting this variable `TF_SET_ONEDNN_FPMATH_MODE=BF16`, Intel® oneDNN library inside TensorFlow will perform reduced precision math computation on high cost operations such as convolution and matrix multiplication. This option is different from the others listed above, no Cast nodes are added in the graph level by TensorFlow framework, instead, the conversion between FP32 and BF16 is handled inside the oneDNN library.
 This environment variable can be added as prefix to the model run command, i.e.,
 ```bash
 TF_SET_ONEDNN_FPMATH_MODE=BF16 python mnist_convnet.py
