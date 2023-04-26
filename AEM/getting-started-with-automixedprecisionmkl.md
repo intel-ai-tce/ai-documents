@@ -1,6 +1,6 @@
 
 ## Overview
-[Mixed precision](https://www.tensorflow.org/guide/mixed_precision) is the use of both 16-bit and 32-bit floating-point types in a model during training and inference to make it run faster and use less memory. Official TensorFlow supports this feature from TensorFlow 2.12 with all Intel® optimizations enabled by default. Intel® 4th Gen Xeon processor codenamed Sapphie Rapids(SPR) is the first Intel® processor to support Advanced Matrix Extensions(AMX) instructions, which help to accelerate matrix heavy workflows such as machine learning alongside also having BFloat16 support. Previous hardwares can be used to test functionality, but SPR provides the best performance gains. 
+[Mixed precision](https://www.tensorflow.org/guide/mixed_precision) is the use of both 16-bit and 32-bit floating-point types in a model during training and inference to make it run faster and use less memory. Official TensorFlow supports this feature from TensorFlow 2.12 with all Intel® optimizations enabled by default. Intel® 4th Gen Xeon processor codenamed Sapphire Rapids  is the first Intel® processor to support Advanced Matrix Extensions(AMX) instructions, which help to accelerate matrix heavy workflows such as machine learning alongside also having BFloat16 support. Previous generations can be used to test functionality, but Sapphire Rapids provides the best performance gains.
 
 Using one of the methods described here will enable a model written in FP32 data type to operate in mixed FP32 and BFloat16 data type. To be precise, it scans the data-flow graph corresponding to the model, and looks for nodes in the graph (also called as operators) that can operate in BFloat16 type, and inserts FP32ToBFloat16 and vice-versa Cast nodes in the graph appropriately.
 
@@ -14,7 +14,7 @@ The data-flow graph after porting the model to BFloat16 type looks like below.
 
 Notice that 2 operators, Conv2D+BiasAdd and ReLU in the graph are automatically converted to operate in BFloat16 type. Also note that appropriate Cast nodes are inserted in the graph to convert TensorFlow tensors from FP32 type to BFloat16 type and vice-versa.
 
-Here are the options to enable BF16 mixed precision in TensorFlow.
+Here are the different ways to enable BF16 mixed precision in TensorFlow.
 
 1. Keras mixed precision API
 2. Mixed Precision for TensorFlow Hub models
@@ -75,19 +75,21 @@ This session describes how to enable the auto-mixed precision for [TensorFlow Hu
 We can use [this example for Transfer Learning](https://www.tensorflow.org/tutorials/images/transfer_learning_with_hub). By applying below experimental option "auto_mixed_precision_onednn_bfloat16" via tf.config API, auto mixed precision with bfloat16 will be enabled on the saved model.
 
 ```python
+import tensorflow as tf
 tf.config.optimizer.set_experimental_options({'auto_mixed_precision_onednn_bfloat16':True})
 ```
 
 ### Steps to enable Bfloat16 Inference for a Saved Model
 Here's a [TF HUB inference example](https://www.tensorflow.org/hub/tutorials/tf2_object_detection). Same config as earlier can be used. 
 ```python
+import tensorflow as tf
 tf.config.optimizer.set_experimental_options({'auto_mixed_precision_onednn_bfloat16':True})
 ```
 
 ### End-to-end example using Mixed Precision for Transfer Learning 
 For end-to-end example please refer to [this Transfer Learning sample](https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Features-and-Functionality/IntelTensorFlow_Enabling_Auto_Mixed_Precision_for_TransferLearning) which uses a headless ResNet50v1.5 pretrained model from [TensorFlow Hub](https://www.tensorflow.org/hub) with ImageNet dataset. It also provides examples for performance improvements.
 
-> Remember to use Sapphire Rapids (SPR) server. say eg: C3 instance on GCP.
+> Remember to use Sapphire Rapids server. say eg: C3 instance on GCP.
 
 ## III. Legacy Auto Mixed Precision (AMP) with Bfloat16
 Auto Mixed Precision is a grappler pass that automatically converts a model written in FP32 data type to operate in BFloat16 data type. It mainly supports TF v1 style models that use a session to run the model. We will demonstrate this with examples illustrating:
