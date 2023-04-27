@@ -268,6 +268,8 @@ An example of a horizontal rule
 <br><br>
 ***
 ## A collapsible section with markdown
+> **Note** Some markdown syntax may not work, html syntax can be used instead
+
 This does work within the article template. THe arrow is a bit large, but I will see if there is a way to get it updated.
 Code:
 ```markdown
