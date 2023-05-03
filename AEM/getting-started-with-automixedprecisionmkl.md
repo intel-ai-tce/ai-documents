@@ -55,7 +55,7 @@ from tensorflow.keras import layers
 from tensorflow.keras import mixed_precision
 mixed_precision.set_global_policy('mixed_bfloat16')  # <--- note these 2 lines
 ```
-Users can use oneDNN verbose logs to verify if this modified mnist_convnet indeed uses bfloat16 data type for computation. Using ONEDNN_VERBOSE=1 environment variable as shown below, users will get a oneDNN verbose log file "dnnl_log.csv".
+Users can use oneDNN verbose logs to verify if this modified mnist_convnet indeed uses bfloat16 data type for computation. Using ONEDNN\_VERBOSE=1 environment variable as shown below, users will get a oneDNN verbose log file "dnnl_log.csv".
 
 ```bash
 ONEDNN_VERBOSE=1 python mnist_convnet.py > dnnl_log.csv
@@ -72,7 +72,7 @@ onednn_verbose,exec,cpu,matmul,brg:avx512_core_**amx_bf16**,undef,src_bf16::bloc
 This session describes how to enable the auto-mixed precision for [TensorFlow Hub](https://www.tensorflow.org/hub) models using the tf.config API. Enabling this API will automatically convert the pre-trained model to use the bfloat16 datatype for computation resulting in an increased training throughput on the latest Intel® Xeon® scalable processor. These instructions works for inference or fine tuning usecase.
 
 ### Steps to do Transfer Learning with Mixed Precision on a Saved Model
-We can use [this example for Transfer Learning](https://www.tensorflow.org/tutorials/images/transfer_learning_with_hub). By applying below experimental option "auto_mixed_precision_onednn_bfloat16" via tf.config API, auto mixed precision with bfloat16 will be enabled on the saved model.
+We can use [this example for Transfer Learning](https://www.tensorflow.org/tutorials/images/transfer_learning_with_hub). By applying below experimental option "auto\_mixed\_precision\_onednn\_bfloat16" via tf.config API, auto mixed precision with bfloat16 will be enabled on the saved model.
 
 ```python
 import tensorflow as tf
@@ -115,7 +115,7 @@ graph_options=tf.compat.v1.GraphOptions(
             auto_mixed_precision_onednn_bfloat16=rewriter_config_pb2.RewriterConfig.ON)) 
 ```
 
-Auto Mixed Precision grappler pass is disabled by default and can be controlled using RewriterConfig proto of GraphOptions proto. To enable use rewriter_config_pb2.RewriterConfig.ON and to disable use rewriter_config_pb2.RewriterConfig.OFF (default).
+Auto Mixed Precision grappler pass is disabled by default and can be controlled using RewriterConfig proto of GraphOptions proto. To enable use rewriter\_config\_pb2.RewriterConfig.ON and to disable use rewriter\_config\_pb2.RewriterConfig.OFF (default).
 
 Below is the complete code for a neural network model ported to BFloat16 data type using Auto Mixed Precision.
 
@@ -168,7 +168,7 @@ python conv2D_bf16.py
 ### Controlling Ops to be converted to BFloat16 type Automatically
 An important point to note is that not all of TensorFlow’s operators for CPU backend support BFloat16 type - this could be because either the support is missing (and is a WIP) or that the BFloat16 version of an operator may not offer much performance improvement over the FP32 implementation. Or for certain operators, BFloat16 type could lead to numerical instability of the neural network model.
 
-So we categorize TensorFlow operators that are supported by MKL backend in BFloat16 type into 1) if they are always numerically stable, and 2) if they are always numerically unstable, and 3) if their stability could depend on the context. Auto Mixed Precision pass uses a specific Allow, Deny, Clear and Infer list of operators respectively to capture these operators. The exact lists could be found in auto_mixed_precision_lists.h file in TensorFlow github repository.
+So we categorize TensorFlow operators that are supported by MKL backend in BFloat16 type into 1) if they are always numerically stable, and 2) if they are always numerically unstable, and 3) if their stability could depend on the context. Auto Mixed Precision pass uses a specific Allow, Deny, Clear and Infer list of operators respectively to capture these operators. The exact lists could be found in auto\_mixed\_precision\_lists.h file in TensorFlow github repository.
 
 The default values of these lists already capture the most common BFloat16 usage models and also ensure numerical stability of the model. There is, however, a way to add or remove operators from any of these lists by setting environment variables that control these lists. For instance, executing
 
@@ -204,7 +204,7 @@ tf.keras.mixed_precision.set_global_policy('mixed_bfloat16')  # <--- note this
 2. If it is an older SavedModel saved in a .pbtxt file, one can use the config API described in secction III.
 
 ## V. Reduced precision math mode via environment variable
-In TensorFlow 2.13, a new environment variable, TF_SET_ONEDNN_FPMATH_MODE, is introduced to enable mixed precision computation in hardwares enpowered by new generation of Intel® Xeon processors starting from SPR. When setting this variable `TF_SET_ONEDNN_FPMATH_MODE=BF16`, Intel® oneDNN library inside TensorFlow will perform reduced precision math computation on high cost operations such as convolution and matrix multiplication. This option is different from the others listed above, no Cast nodes are added in the graph level by TensorFlow framework, instead, the conversion between FP32 and BF16 is handled inside the oneDNN library.
+In TensorFlow 2.13, a new environment variable, TF\_SET\_ONEDNN\_FPMATH\_MODE, is introduced to enable mixed precision computation in hardwares enpowered by new generation of Intel® Xeon processors starting from SPR. When setting this variable `TF_SET_ONEDNN_FPMATH_MODE=BF16`, Intel® oneDNN library inside TensorFlow will perform reduced precision math computation on high cost operations such as convolution and matrix multiplication. This option is different from the others listed above, no Cast nodes are added in the graph level by TensorFlow framework, instead, the conversion between FP32 and BF16 is handled inside the oneDNN library.
 This environment variable can be added as prefix to the model run command, i.e.,
 ```bash
 TF_SET_ONEDNN_FPMATH_MODE=BF16 python mnist_convnet.py
