@@ -1,5 +1,11 @@
 # Workflow/Use Case Title
 
+## Introduction
+
+Briefly describe Industry vertical, problem and solution.
+ -  Problem Statement from Customer POV: <Describe “What”: Applicable Verticals, Input & Output> 
+ -  How does the Solution solve Customer’s problem?  
+ -  
 Start with a short (~300 characters) teaser description of what this workflow
 does, useful as the summary in the dev catalog. Use "active" language. For
 example,
@@ -13,10 +19,6 @@ or
 Run a video streamer pipeline that mimics real-time video analysis. Take in
 real-time data, send it to an endpoint for single-shot object detection, and
 store the resulting metadata for further review.
-
-Briefly describe Industry vertical, problem and solution.
- -  Problem Statement from Customer POV: <Describe “What”: Applicable Verticals, Input & Output> 
- -  How does the Solution solve Customer’s problem?  
 
 Provide a link back to the dev catalog, for example:
 
@@ -53,18 +55,24 @@ For more details, visit the [Cloud Training and Cloud Inference on Amazon
 Sagemaker/Elastic Kubernetes
 Service](https://github.com/intel/NLP-Workflow-with-AWS) GitHub repository.
 
-## Hardware Requirements
+## Solution Technical Details
+Describe details with diagram, dataset sample, model, etc.
+
+## Validated Hardware Details 
 There are workflow-specific hardware and software setup requirements depending on
 how the workflow is run. Bare metal development system and Docker\* image running
 locally have the same system requirements.
 
 ### On Premise
+
+#### Training
+
 Update this table for relevance to your workflow (e.g., maybe the hardware isn't
 impacted by precision)
 
 | Supported Hardware           | Precision  |
 | ---------------------------- | ---------- |
-| <CLient machine like laptop> |            |
+| Intel Core XYZ |            |
 | Intel® 4th Gen Xeon® Scalable Performance processors|BF16 |
 | Intel® 1st, 2nd, 3rd, and 4th Gen Xeon® Scalable Performance processors| FP32 |
 
@@ -72,8 +80,14 @@ If your workflow has some unusual memory requirements or storage requirements (b
 large datasets, for example) add a sentence here that mentions these
 requirements.
 
+#### Inference 
+Add Inference HW details if different from Training HW
+
 If Docker runs on a cloud service, specify cloud service requirements.
 ### On Cloud
+
+#### Training
+
 Update this table for relevance to your workflow (e.g., maybe the hardware isn't
 impacted by precision)
   
@@ -83,6 +97,9 @@ impacted by precision)
 | Azure        |               |            |
 | GCP          |               |            |  
   
+#### Inference 
+Add Inference HW details if different from Training HW
+
 ## How it Works
 Explain how the workflow does what it does, including its inputs, processing, and outputs.
 Provide a simple architecture or data flow diagram, and additional diagram(s)
