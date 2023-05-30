@@ -66,8 +66,9 @@ Installation Options
 
 #### Get Intel® Optimization for TensorFlow\* Pre-Built Images
 
-####  [](#collapseCollapsible1678899283282) [Install the latest Intel® Optimization for TensorFlow\* from Anaconda\* Cloud](#collapseCollapsible1678899283282)
-
+<details>
+  <summary>Install the latest Intel® Optimization for TensorFlow\* from Anaconda\* Cloud</summary>
+  <br>
 Available for Linux\*, Windows\*, MacOS\*
 
 | **OS** | **TensorFlow\* version** | 
@@ -116,8 +117,13 @@ conda install tensorflow python-flatbuffers 
 Windows
 
 conda install tensorflow-mkl python-flatbuffers 
+</details>
 
-####  [](#collapseCollapsible1678899283279) [Install the latest Intel® Optimization for TensorFlow\* from Intel Channel](#collapseCollapsible1678899283279)
+
+
+<details>
+  <summary>Install the latest Intel® Optimization for TensorFlow\* from Intel Channel</summary>
+  <br>
 
 Available for Linux\*, Windows\*
 
@@ -137,8 +143,10 @@ conda install tensorflow -c intel
 **Note: please use the following instructions if you install TensorFlow\* v2.8 for missing python-flatbuffers module in TensorFlow\* v2.8.**
 
 conda install tensorflow python-flatbuffers -c intel
-
-####  [](#collapseCollapsible1678899283278) [Install Intel® Optimization for TensorFlow\* from Intel® AI Analytics Toolkit](#collapseCollapsible1678899283278)
+</details>
+<details>
+  <summaryInstall Intel® Optimization for TensorFlow\* from Intel® AI Analytics Toolkit</summary>
+  <br>
 
 Available for Linux\*
 
@@ -153,7 +161,12 @@ There are multiple options provided to download Intel® AI Analytics Toolkit, in
 
 **All available download and installation guides can be found [here](https://www.intel.com/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit-download.html?operatingsystem=linux)**
 
-####  [](#collapseCollapsible1678899283276) [Install the Intel® Optimization for TensorFlow\* Wheel via PIP](#collapseCollapsible1678899283276)
+</details>
+
+
+<details>
+  <summary> Install the Intel® Optimization for TensorFlow\* Wheel via PIP </summary>
+  <br>
 
 Available for Linux\* and Windows\*
 
@@ -203,8 +216,11 @@ I tensorflow/core/platform/cpu\_feature\_guard.cc:142\] This TensorFlow binary i
 
 **Available for Linux\* [here](https://pypi.org/project/intel-tensorflow/)**
 
-####  [](#collapseCollapsible1678899283275) [Install the Official TensorFlow\* Wheel for running on Intel CPUs via PIP](#collapseCollapsible1678899283275)
+</details>
 
+<details>
+<summary> Install the Official TensorFlow\* Wheel for running on Intel CPUs via PIP </summary>
+<br>
 Available for Linux\*
 
 TensorFlow version: 2.11.0
@@ -218,12 +234,15 @@ pip install tensorflow==2.11.0
 The oneDNN CPU optimizations are enabled by default.
 
 Please check [#Additional Info](#Additional Info) for differences between Intel® Optimization for TensorFlow\* and official TensorFlow\*.
-
+</details>
 ### 2. Docker Images
 
 #### Get Intel® Optimization for TensorFlow\* Docker Images
 
-####  [](#collapseCollapsible1678899283273) [Google DL Containers](#collapseCollapsible1678899283273)
+  
+<details>
+<summary> Google DL Containers </summary>
+<br>
 
 Starting version 1.14, Google released DL containers for TensorFlow on CPU optimized with oneDNN by default. The TensorFlow v1.x CPU container names are in the format "tf-cpu.", TensorFlow v2.x CPU container names are in the format "tf2-cpu." and support Python3. Below are sample commands to download the docker image locally and launch the container for TensorFlow 1.15 or TensorFlow 2.9. Please use one of the following commands at one time.
 
@@ -251,7 +270,11 @@ docker run -v /home:/home -it gcr.io/deeplearning-platform-release/tf2-cpu.2-11 
 
 You can find all supported docker tags/configurations [here](https://cloud.google.com/ai-platform/deep-learning-containers/docs/choosing-container).
 
-####  [](#collapseCollapsible1678899283272) [Intel Containers at docker.com](#collapseCollapsible1678899283272)
+</details>
+  
+<details>
+<summary> Intel Containers at docker.com </summary>
+<br>
 
 Tensorflow Version: 2.9.1
 
@@ -295,7 +318,10 @@ You can find all supported docker tags/configurations for [intel-optimized-tenso
 
 #### Build TensorFlow from Source with Intel oneAPI oneDNN library
 
-####  [](#collapseCollapsible1678899283270) [Linux build](#collapseCollapsible1678899283270)
+</details>
+<details>
+<summary> Linux build </summary>
+<br>
 
 Building TensorFlow from source is not recommended. However, if instructions provided above do not work due to unsupported ISA, you can always build from source.
 
@@ -339,7 +365,11 @@ Installation instructions:
     *   bazel-bin/tensorflow/tools/pip\_package/build\_pip\_package ~/path\_to\_save\_wheel
     *   pip install --upgrade --user ~/path\_to\_save\_wheel/
 
-####  [](#collapseCollapsible1678899283267) [Windows Build](#collapseCollapsible1678899283267)
+</details>
+  
+<details>
+<summary> Windows Build </summary>
+<br>
 
 **\* Prior to TensorFlow 2.3**
 
@@ -414,7 +444,11 @@ Install the below Visual C++ 2015 build tools from [https://visualstudio.micro
 Additional Information
 ----------------------
 
-####  [](#collapseCollapsible1678899283265) [Sanity Check](#collapseCollapsible1678899283265)
+</details>
+  
+<details>
+<summary>Sanity Check </summary>
+<br>
 
 Once Intel-optimized TensorFlow is installed, running the below command must print "True" if oneDNN optimizations are present.
 
@@ -446,7 +480,11 @@ def get\_mkl\_enabled\_flag():
 print ("We are using Tensorflow version", tf.\_\_version\_\_)  
 print("MKL enabled :", get\_mkl\_enabled\_flag())
 
-####  [](#collapseCollapsible1678899283263) [Capture Verbose Log](#collapseCollapsible1678899283263)
+</details>
+  
+ <details>
+<summary> Capture Verbose Log </summary>
+<br>
 
 For a deeper analysis of what oneDNN calls are being made under the hood, we have enabled a flag "ONEDNN\_VERBOSE" to catpure a log. Set the  environment variable ONEDNN\_VERBOSE=1 and run the Tensorflow script. You should see an output similar to below  printed on the console. This will ensure that the workload not only has MKL enabled but utlizes oneDNN calls underneath. 
 
@@ -481,8 +519,10 @@ Tensorflow optimizations are agnostic to the type of hardware, ISA supported, dt
 
            del os.environ\['KMP\_BLOCKTIME'\]
 
-####  [](#collapseCollapsible1678899283260) [Differences between Intel Optimization for Tensorflow and official TensorFlow for running on Intel CPUs after v2.5](#collapseCollapsible1678899283260)
-
+</details>
+<details>
+<summary> Differences between Intel Optimization for Tensorflow and official TensorFlow for running on Intel CPUs after v2.5 </summary>
+<br>
 Although official TensorFlow has oneDNN optimizations by default, there are still some major differences between Intel Optimization for Tensorflow and official TensorFlow
 
 **Here is a comparison table For TensorFlow v2.9 and later.**
@@ -612,8 +652,13 @@ TensorFlow native layout format by default.  Enable oneDNN blocked format by se
 Enabled by setting the env-variable TF\_ENABLE\_MKL\_NATIVE\_FORMAT=0
 
 Not supported
+  
+</details>
+  
+ <details>
+<summary> Intel® Extension for TensorFlow </summary>
+<br>
 
-####  [](#collapseCollapsible1678899283256) [Intel® Extension for TensorFlow](#collapseCollapsible1678899283256)
 
 Intel has released [Intel® Extension for TensorFlow](https://github.com/intel/intel-extension-for-tensorflow) to support optimizations on Intel dGPU ( currently for Flex series)  and CPU.
 
@@ -637,8 +682,11 @@ Blog
 
 [Meet the Innovation of Intel AI Software: ITEX](https://www.intel.com/content/www/us/en/developer/articles/technical/innovation-of-ai-software-extension-tensorflow.html)
 
-####  [](#collapseCollapsible1678899283254) [4th Generation Intel® Xeon® Scalable Processors](#collapseCollapsible1678899283254)
-
+</details>
+  
+ <details>
+<summary> 4th Generation Intel® Xeon® Scalable Processors </summary>
+<br>
 Optimizations for 4th Generation Intel® Xeon® Scalable processors start from TensorFlow\* 2.11.
 
 Official x86-64 TensorFlow has the 4th Gen Xeon scalable processors optimizations but the [dev release of Intel Optimization for TensorFlow](https://pypi.org/project/intel-tensorflow/2.11.dev202242/) has most up-to-date optimizations.
@@ -647,6 +695,7 @@ Please follow below instructions to install the dev release of Intel Optimizatio
 
 `conda create -n intel-tf python=3.8 -y conda activate intel-tf pip install intel-tensorflow==2.11.dev202242`
 
+</details>
 Support
 -------
 
