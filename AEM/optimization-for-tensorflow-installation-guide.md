@@ -44,67 +44,20 @@ Supported Installation Options
 
 **NOTE : Users can start with pip wheel installation from Intel Channel if no preference.**
 
-**Catagory**
+| Catagory | Details |  Version |
+| ----------- | ----------- | ----------- |
+| Anaconda | **Linux:** Main Channel |  v2.10.0 |
+|  | **Linux:** Intel AI Analytics Toolkit | v2.9.1 |
+|  | **Windows**: Main Channel | v2.10.0 |
+|  | **Windows**: Intel Channel | v2.8.0 |
+|  | **MacOS:** Main Channel | v2.10.0 |
+| _PIP Wheels_ | **Linux** | v2.11.0 |
+|  | **Windows** | v2.11.0 |
+| _Docker Containers_ | **Linux:** Intel containers | v2.9.1 |
+|  | **Linux:** Google DL containers | v2.11 |
+| _Build from source_ | **Linux** | NA |
+| _Build from source_ | **Windows** | NA |
 
-**Details**
-
-**Version**
-
-Anaconda
-
-**Linux:** Main Channel
-
-v2.10.0
-
-**Linux:** Intel Channel
-
-v2.9.1
-
-**Linux:** Intel AI Analytics Toolkit
-
-v2.9.1
-
-**Windows**: Main Channel
-
-v2.10.0
-
-**Windows**: Intel Channel
-
-v2.8.0
-
-**MacOS:** Main Channel
-
-v2.10.0
-
-_PIP Wheels_
-
-**Linux**
-
-v2.11.0
-
-**Windows**
-
-v2.11.0
-
-_Docker Containers_
-
-**Linux:** Intel containers
-
-v2.9.1
-
-**Linux:** Google DL containers
-
-v2.11
-
-_Build from source_
-
-**Linux**
-
-NA
-
-**Windows**
-
-NA
 
 Installation Options
 --------------------
@@ -117,21 +70,11 @@ Installation Options
 
 Available for Linux\*, Windows\*, MacOS\*
 
-**OS**
-
-**TensorFlow\* version**
-
-Linux\*
-
-2.10.0
-
-Windows\*
-
-2.10.0
-
-MacOS\*
-
-2.10.0
+| **OS** | **TensorFlow\* version** | 
+| -------- | -------- | 
+| Linux\* | 2.10.0 | 
+| Windows\*| 2.10.0 | 
+| MacOS\* | 2.10.0 | 
 
   
 Installation instructions:
@@ -178,23 +121,12 @@ conda install tensorflow-mkl python-flatbuffers 
 
 Available for Linux\*, Windows\*
 
-**OS**
 
-**TensorFlow\* version**
+| **OS** | **TensorFlow\* version** | **Python Version** |
+| -------- | -------- | ----------- |
+| Linux\* | 2.9.1 | 3.9 |
+| Windows\*| 2.8.0 | 3.7, 3.8, 3.9 and 3.10 |
 
-**Python Version**
-
-Linux\*
-
-2.9.1
-
-3.9
-
-Windows\*
-
-2.8.0
-
-3.7, 3.8, 3.9 and 3.10
 
 Installation instructions:
 
