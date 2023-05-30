@@ -46,13 +46,13 @@ Supported Installation Options
 
 | Catagory | Details |  Version |
 | ----------- | ----------- | ----------- |
-| Anaconda | **Linux:** Main Channel |  v2.10.0 |
-|  | **Linux:** Intel AI Analytics Toolkit | v2.9.1 |
+| Anaconda | **Linux:** Main Channel |  v2.12.0 |
+|  | **Linux:** Intel Channel | v2.12 |
 |  | **Windows**: Main Channel | v2.10.0 |
 |  | **Windows**: Intel Channel | v2.8.0 |
-|  | **MacOS:** Main Channel | v2.10.0 |
-| _PIP Wheels_ | **Linux** | v2.11.0 |
-|  | **Windows** | v2.11.0 |
+|  | **MacOS:** Main Channel | v2.11.0 |
+| _PIP Wheels_ | **Linux** | v2.12.0 |
+|  | **Windows** | v2.12.0 |
 | _Docker Containers_ | **Linux:** Intel containers | v2.9.1 |
 |  | **Linux:** Google DL containers | v2.11 |
 | _Build from source_ | **Linux** | NA |
@@ -73,9 +73,9 @@ Available for Linux\*, Windows\*, MacOS\*
 
 | **OS** | **TensorFlow\* version** | 
 | -------- | -------- | 
-| Linux\* | 2.10.0 | 
+| Linux\* | 2.12.0 | 
 | Windows\*| 2.10.0 | 
-| MacOS\* | 2.10.0 | 
+| MacOS\* | 2.11.0 | 
 
   
 Installation instructions:
@@ -130,7 +130,7 @@ Available for Linux\*, Windows\*
 
 | **OS** | **TensorFlow\* version** | **Python Version** |
 | -------- | -------- | ----------- |
-| Linux\* | 2.9.1 | 3.9 |
+| Linux\* | 2.12 | 3.9 |
 | Windows\*| 2.8.0 | 3.7, 3.8, 3.9 and 3.10 |
 
 
@@ -150,7 +150,7 @@ conda install tensorflow python-flatbuffers -c intel
 
 Available for Linux\*
 
-TensorFlow\* version: 2.9.1
+TensorFlow\* version: 2.12.0
 
 Installation instructions:
 
@@ -178,15 +178,15 @@ Run the below instruction to install the wheel into an existing Python\* install
 
 For Linux\* :
 
-pip install intel-tensorflow==2.11.0
+pip install intel-tensorflow==2.12.0
 
 For Windows\*
 
-pip install tensorflow-intel==2.11.0
+pip install tensorflow-intel==2.12.0
 
 If your machine has AVX512 instruction set supported please use the below packages for better performance.
 
-pip install intel-tensorflow-avx512==2.11.0 # linux only
+pip install intel-tensorflow-avx512==2.12.0 # linux only
 
 **Installation instructions for 2.9.1 and earlier:**
 
@@ -223,13 +223,13 @@ I tensorflow/core/platform/cpu\_feature\_guard.cc:142\] This TensorFlow binary i
 <br>
 Available for Linux\*
 
-TensorFlow version: 2.11.0
+TensorFlow version: 2.12.0
 
 Installation instructions:
 
 Run the below instruction to install the wheel into an existing Python\* installation. Python versions supported are 3.7, 3.8, 3.9, 3.10
 
-pip install tensorflow==2.11.0
+pip install tensorflow==2.12.0
 
 The oneDNN CPU optimizations are enabled by default.
 
@@ -696,8 +696,7 @@ Please follow below instructions to install the dev release of Intel Optimizatio
 `conda create -n intel-tf python=3.8 -y conda activate intel-tf pip install intel-tensorflow==2.11.dev202242`
 
 </details>
-Support
--------
+### Support
 
 If you have further questions or need support on your workload optimization, Please submit your queries at the [TensorFlow GitHub issues](https://github.com/tensorflow/tensorflow/issues) with the label "comp:mkl" or the [Intel AI Frameworks forum](https://forums.intel.com/s/topic/0TO0P000000Pms4WAC/intel-optimized-ai-frameworks).
 
@@ -735,46 +734,3 @@ Performance
 [Optimize pre-trained model](/content/www/us/en/developer/articles/technical/optimize-tensorflow-pre-trained-model-inference.html)
 
 [Improve TensorFlow Performance on AWS by oneDNN](https://www.intel.com/content/www/us/en/developer/articles/technical/improve-tensorflow-performance-on-aws-instances.html#gs.3nhs4u) 
-
-1
-
-#### Product and Performance Information
-
-1
-
-Performance varies by use, configuration and other factors. Learn more at [www.Intel.com/PerformanceIndex](http://www.intel.com/PerformanceIndex "Follow link").
-
-Get Help
-
-<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/230524/intel/clientlibs/pages/get-help.min.css" type="text/css">
-
-*   [Company Overview](/content/www/us/en/company-overview/company-overview.html)
-*   [Contact Intel](/content/www/us/en/support/contact-intel.html)
-*   [Newsroom](/content/www/us/en/newsroom/home.html)
-*   [Investors](https://www.intc.com/)
-*   [Careers](/content/www/us/en/jobs/jobs-at-intel.html)
-*   [Corporate Responsibility](/content/www/us/en/corporate-responsibility/corporate-responsibility.html)
-*   [Diversity & Inclusion](/content/www/us/en/diversity/diversity-at-intel.html)
-*   [Public Policy](/content/www/us/en/company-overview/public-policy.html)
-
-*   [](https://www.facebook.com/Intel)
-*   [](https://twitter.com/intel)
-*   [](https://www.linkedin.com/company/intel-corporation)
-*   [](https://www.youtube.com/user/channelintel?sub_confirmation=1)
-*   [](https://www.instagram.com/intel/)
-
-*   © Intel Corporation
-*   [Terms of Use](/content/www/us/en/legal/terms-of-use.html)
-*   [\*Trademarks](/content/www/us/en/legal/trademarks.html)
-*   [Cookies](/content/www/us/en/privacy/intel-cookie-notice.html)
-*   [Privacy](/content/www/us/en/privacy/intel-privacy-notice.html)
-*   [Supply Chain Transparency](/content/www/us/en/corporate-responsibility/statement-combating-modern-slavery.html)
-*   [Site Map](/content/www/us/en/siteindex.html)
-*   [Do Not Share My Personal Information](/#)
-*   [Recycling](/content/www/us/en/products/docs/boards-kits/nuc/nuc-compute-stick-recycling-program.html)
-
-Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration and other factors. // See our complete legal [Notices and Disclaimers](https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C). // Intel is committed to respecting human rights and avoiding complicity in human rights abuses. See Intel’s [Global Human Rights Principles](https://www.intel.com/content/www/us/en/policy/policy-human-rights.html). Intel’s products and software are intended only to be used in applications that do not cause or contribute to a violation of an internationally recognized human right.
-
-[![Intel Footer Logo](/content/dam/logos/intel-footer-logo.svg "Intel Footer Logo")](/content/www/us/en/homepage.html "Intel Footer Logo")
-
-<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/230524/intel/clientlibs/pages/commons-page.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/230524/intel/clientlibs/pages/commons-page.min.js" defer></script> <link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/230524/intel/clientlibs/pages/contact-us.min.css" as="style"><link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/230524/intel/clientlibs/pages/contact-us.min.css" type="text/css"> <script>!function(){var e=setInterval(function(){"undefined"!=typeof $CQ&&($CQ(function(){CQ\_Analytics.SegmentMgr.loadSegments("/etc/segmentation"),CQ\_Analytics.ClientContextUtils.init("/etc/clientcontext/intel",window.location.pathname.substr(0,window.location.pathname.indexOf(".")))}),clearInterval(e))},100)}();</script> <link rel="preload" as="style" href="/etc.clientlibs/settings/wcm/designs/intel/us/en/css/resources/css/intel.rwd.override.css"/> <link rel="stylesheet" type="text/css" href="/etc.clientlibs/settings/wcm/designs/intel/us/en/css/resources/css/intel.rwd.override.css"/>
