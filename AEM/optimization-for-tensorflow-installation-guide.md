@@ -2,18 +2,6 @@
 Intel® Optimization for TensorFlow\* Installation Guide
 =======================================================
 
-ID 767540
-
-Updated 12/28/2022
-
-Version Latest
-
-Public
-
-By
-
-[PREETHI VENKATESH](https://community.intel.com/cipcp26785/plugins/custom/intel/intel/custom.userprofile?id=ml5gZ%2Bq2S%2FRuVuF5yVKOCw%3D%3D&iv=5440453458718028), [Jing Xu](https://community.intel.com/cipcp26785/plugins/custom/intel/intel/custom.userprofile?id=x%2BBLebNRNAv2RqmgOFwgig%3D%3D&iv=5832850724664211), [Hung-Ju Tsai](https://community.intel.com/cipcp26785/plugins/custom/intel/intel/custom.userprofile?id=gUEEIUHgEmoN5kvGGnYb%2Fg%3D%3D&iv=5872134306417728)
-
 [TensorFlow\*](https://github.com/tensorflow/tensorflow) is a widely-used machine learning framework in the deep learning arena, demanding efficient utilization of computational resources. In order to take full advantage of Intel® architecture and to extract maximum performance, the TensorFlow framework has been optimized using oneAPI Deep Neural Network Library (oneDNN) primitives, a popular performance library for deep learning applications. For more information on the optimizations as well as performance data, see this blog post [TensorFlow\* Optimizations on Modern Intel® Architecture](/content/www/us/en/developer/articles/technical/tensorflow-optimizations-on-modern-intel-architecture.html).
 
 Anaconda\* has now made it convenient for the AI community to enable high-performance-computing in TensorFlow. Starting from TensorFlow v1.9, Anaconda has and will continue to build TensorFlow using oneDNN primitives to deliver maximum performance in your CPU.
@@ -235,6 +223,8 @@ The oneDNN CPU optimizations are enabled by default.
 
 Please check [#Additional Info](#Additional Info) for differences between Intel® Optimization for TensorFlow\* and official TensorFlow\*.
 </details>
+  
+  
 ### 2. Docker Images
 
 #### Get Intel® Optimization for TensorFlow\* Docker Images
@@ -313,12 +303,12 @@ You can find all supported docker tags/configurations for [intel-optimized-tenso
 **To get the latest Release Notes on Intel® Optimization for TensorFlow\*, please refer this [article](/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html).**
 
 **More containers for Intel® Optimization for TensorFlow\* can be found at the [Intel® oneContainer Portal](/content/www/us/en/developer/tools/containers/overview.html).**
-
+</details>
+  
+  
 ### 3\. Build from Source
-
 #### Build TensorFlow from Source with Intel oneAPI oneDNN library
 
-</details>
 <details>
 <summary> Linux build </summary>
 <br>
@@ -441,10 +431,11 @@ Install the below Visual C++ 2015 build tools from [https://visualstudio.micro
 
 **Note: Based on [bazel issue #7026](https://github.com/bazelbuild/bazel/issues/7026) we set --action\_env=PATH=. Open cmd.exe, run echo %PATH% and copy the output to the value of --action\_env=PATH=. If found, please use single quotes with folder names of white space**s.
 
-Additional Information
-----------------------
-
 </details>
+  
+ 
+#### Additional Information
+
   
 <details>
 <summary>Sanity Check </summary>
@@ -493,8 +484,11 @@ For a deeper analysis of what oneDNN calls are being made under the hood, we ha
 Here is how to intepret the the log
 
 Tensorflow optimizations are agnostic to the type of hardware, ISA supported, dtype, ops used in the workload, this data is used as a starting point by the Tensorflow optimization engineers to understand the perframance impact on your workload and help optimize further
-
-####  [](#collapseCollapsible1678899283262) [Additional Capabilities and Known Issues](#collapseCollapsible1678899283262)
+</details>
+  
+<details>
+<summary> Additional Capabilities and Known Issues </summary>
+<br>
 
 1.  For Intel® Optimization for TensorFlow\* for 4th Generation Intel® Xeon® Scalable processors, we publish one preview release for good performance. Please install it by   
      $ pip install intel-tensorflow==2.11.dev202242
@@ -520,6 +514,7 @@ Tensorflow optimizations are agnostic to the type of hardware, ISA supported, dt
            del os.environ\['KMP\_BLOCKTIME'\]
 
 </details>
+  
 <details>
 <summary> Differences between Intel Optimization for Tensorflow and official TensorFlow for running on Intel CPUs after v2.5 </summary>
 <br>
@@ -696,6 +691,7 @@ Please follow below instructions to install the dev release of Intel Optimizatio
 `conda create -n intel-tf python=3.8 -y conda activate intel-tf pip install intel-tensorflow==2.11.dev202242`
 
 </details>
+ 
 ### Support
 
 If you have further questions or need support on your workload optimization, Please submit your queries at the [TensorFlow GitHub issues](https://github.com/tensorflow/tensorflow/issues) with the label "comp:mkl" or the [Intel AI Frameworks forum](https://forums.intel.com/s/topic/0TO0P000000Pms4WAC/intel-optimized-ai-frameworks).
@@ -703,34 +699,18 @@ If you have further questions or need support on your workload optimization, Ple
 Useful Resources
 ----------------
 
-**Category**
+| **Category** | **Links** |  
+| ----------- | ----------- |  
+| Installation & releases | [Intel® AI Analytics Toolkit](/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit-download.html) |
+|  | [TensorFlow in Anaconda](https://www.anaconda.com/tensorflow-in-anaconda/) |
+|  | [Intel TensorFlow Installation Guide](/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html) |
+|  | [Build TensorFlow from source on Windows](https://www.tensorflow.org/install/source_windows)|
+|  | [Intel-optimized TensorFlow on AWS](https://aws.amazon.com/about-aws/whats-new/2018/11/tensorflow1_12_mms10_launch_deep_learning_ami/) |
+|  | [Intel oneContainer](/content/www/us/en/developer/tools/containers/overview.html) |
+| Performance| [Improve TensorFlow Performance on AWS by oneDNN](https://www.intel.com/content/www/us/en/developer/articles/technical/improve-tensorflow-performance-on-aws-instances.html#gs.3nhs4u) |
+|  | [General BKMs to maximize performance](/content/www/us/en/developer/articles/technical/maximize-tensorflow-performance-on-cpu-considerations-and-recommendations-for-inference.html) |
+|  | [Topology specific BKMs and tutorials](https://github.com/IntelAI/models/tree/master/docs) |
+|  | [Intel Model Zoo with pretrained models](https://github.com/IntelAI/models) |
+|  | [Getting Started with AutoMixedPrecisionMkl](/content/www/us/en/developer/articles/guide/getting-started-with-automixedprecisionmkl.html) |
+|  | [Optimize pre-trained model](/content/www/us/en/developer/articles/technical/optimize-tensorflow-pre-trained-model-inference.html) |
 
-**Links**
-
-Installation & releases
-
-[Intel® AI Analytics Toolkit](/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit-download.html)
-
-[TensorFlow in Anaconda](https://www.anaconda.com/tensorflow-in-anaconda/)
-
-[Intel TensorFlow Installation Guide](/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html)
-
-[Build TensorFlow from source on Windows](https://www.tensorflow.org/install/source_windows)
-
-[Intel-optimized TensorFlow on AWS](https://aws.amazon.com/about-aws/whats-new/2018/11/tensorflow1_12_mms10_launch_deep_learning_ami/)
-
-[Intel oneContainer](/content/www/us/en/developer/tools/containers/overview.html)
-
-Performance
-
-[General BKMs to maximize performance](/content/www/us/en/developer/articles/technical/maximize-tensorflow-performance-on-cpu-considerations-and-recommendations-for-inference.html)
-
-[Topology specific BKMs and tutorials](https://github.com/IntelAI/models/tree/master/docs)
-
-[Intel Model Zoo with pretrained models](https://github.com/IntelAI/models)
-
-[Getting Started with AutoMixedPrecisionMkl](/content/www/us/en/developer/articles/guide/getting-started-with-automixedprecisionmkl.html)
-
-[Optimize pre-trained model](/content/www/us/en/developer/articles/technical/optimize-tensorflow-pre-trained-model-inference.html)
-
-[Improve TensorFlow Performance on AWS by oneDNN](https://www.intel.com/content/www/us/en/developer/articles/technical/improve-tensorflow-performance-on-aws-instances.html#gs.3nhs4u) 
