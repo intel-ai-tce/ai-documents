@@ -74,43 +74,44 @@ Linux and MacOS
 
 Open Anaconda prompt and use the following instruction
 
-conda install tensorflow
+`conda install tensorflow`
 
 In case your anaconda channel is not the highest priority channel by default(or you are not sure), use the following command to make sure you get the right TensorFlow with Intel optimizations
 
-conda install tensorflow -c anaconda
+`conda install tensorflow -c anaconda`
 
 Windows
 
 Open Anaconda prompt and use the following instruction
 
-conda install tensorflow-mkl
+`conda install tensorflow-mkl`
 
 (or)
 
-conda install tensorflow-mkl -c anaconda
+`conda install tensorflow-mkl -c anaconda`
 
 Besides the install method described above, Intel Optimization for TensorFlow is distributed as wheels, docker images and conda package on Intel channel. Follow one of the installation procedures to get Intel-optimized TensorFlow.
 
 Note: All binaries distributed by Intel were built against the TensorFlow version tags in a centOS container with gcc 4.8.5 and glibc 2.17 with the following compiler flags (shown below as passed to bazel\*)
 
+```
 \--cxxopt=-D\_GLIBCXX\_USE\_CXX11\_ABI=0 --copt=-march=corei7-avx --copt=-mtune=core-avx-i --copt=-O3 --copt=-Wformat --copt=-Wformat-security --copt=-fstack-protector --copt=-fPIC --copt=-fpic --linkopt=-znoexecstack --linkopt=-zrelro --linkopt=-znow --linkopt=-fstack-protector
-
+```
 **Note: please use the following instructions if you install TensorFlow\* v2.8 for missing python-flatbuffers module in TensorFlow\* v2.8.**
 
 Linux and MacOS
 
-conda install tensorflow python-flatbuffers 
+`conda install tensorflow python-flatbuffers`
 
 Windows
 
-conda install tensorflow-mkl python-flatbuffers 
+`conda install tensorflow-mkl python-flatbuffers` 
+
 </details>
 
 
-
 <details>
-  <summary>Install the latest Intel® Optimization for TensorFlow\* from Intel Channel</summary>
+<summary>Install the latest Intel® Optimization for TensorFlow\* from Intel Channel</summary>
   <br>
 
 Available for Linux\*, Windows\*
@@ -126,14 +127,16 @@ Installation instructions:
 
 Open Anaconda prompt and use the following instruction. 
 
-conda install tensorflow -c intel
+`conda install tensorflow -c intel`
 
 **Note: please use the following instructions if you install TensorFlow\* v2.8 for missing python-flatbuffers module in TensorFlow\* v2.8.**
 
-conda install tensorflow python-flatbuffers -c intel
+`conda install tensorflow python-flatbuffers -c intel`
+
 </details>
+
 <details>
-  <summaryInstall Intel® Optimization for TensorFlow\* from Intel® AI Analytics Toolkit</summary>
+  <summary>Install Intel® Optimization for TensorFlow\* from Intel® AI Analytics Toolkit</summary>
   <br>
 
 Available for Linux\*
@@ -166,31 +169,31 @@ Run the below instruction to install the wheel into an existing Python\* install
 
 For Linux\* :
 
-pip install intel-tensorflow==2.12.0
+`pip install intel-tensorflow==2.12.0`
 
 For Windows\*
 
-pip install tensorflow-intel==2.12.0
+`pip install tensorflow-intel==2.12.0`
 
 If your machine has AVX512 instruction set supported please use the below packages for better performance.
 
-pip install intel-tensorflow-avx512==2.12.0 # linux only
+`pip install intel-tensorflow-avx512==2.12.0 # linux only`
 
 **Installation instructions for 2.9.1 and earlier:**
 
 Run the below instruction to install the wheel into an existing Python\* installation. Python versions supported are  3.7, 3.8, 3.9, 3.10
 
-pip install intel-tensorflow==2.9.1
+`pip install intel-tensorflow==2.9.1`
 
 If your machine has AVX512 instruction set supported please use the below packages for better performance.
 
-pip install intel-tensorflow-avx512==2.9.1 # linux only
+`pip install intel-tensorflow-avx512==2.9.1 # linux only`
 
 **Note: For TensorFlow versions 1.13, 1.14 and 1.15 with pip > 20.0, if you experience invalid wheel error, try to downgrade the pip version to < 20.0**
 
 For e.g
 
-python -m pip install --force-reinstall pip==19.0  
+`python -m pip install --force-reinstall pip==19.0`
   
 **Note: If your machine has AVX-512 instruction set supported, please download and install the wheel file with AVX-512 as minimum required instruction set from the table above, otherwise download and install the wheel without AVX-512. All Intel TensorFlow binaries are optimized with oneAPI Deep Neural Network Library (oneDNN), which will use the AVX2 or AVX512F FMA etc CPU instructions automatically in performance-critical operations based on the supported Instruction sets on your machine for both Windows and Linux OS.** 
 
@@ -217,7 +220,7 @@ Installation instructions:
 
 Run the below instruction to install the wheel into an existing Python\* installation. Python versions supported are 3.7, 3.8, 3.9, 3.10
 
-pip install tensorflow==2.12.0
+`pip install tensorflow==2.12.0`
 
 The oneDNN CPU optimizations are enabled by default.
 
@@ -238,11 +241,11 @@ Starting version 1.14, Google released DL containers for TensorFlow on CPU optim
 
 \# TensorFlow 1.15
 
-docker run -d -p 8080:8080 -v /home:/home gcr.io/deeplearning-platform-release/tf-cpu.1-15
+`docker run -d -p 8080:8080 -v /home:/home gcr.io/deeplearning-platform-release/tf-cpu.1-15`
 
 \# TensorFlow 2.11
 
-docker run -d -p 8080:8080 -v /home:/home gcr.io/deeplearning-platform-release/tf2-cpu.2-11
+`docker run -d -p 8080:8080 -v /home:/home gcr.io/deeplearning-platform-release/tf2-cpu.2-11`
 
 This command will start the TensorFlow 1.15 or TensorFlow 2.8 with oneDNN enabled in detached mode, bind the running Jupyter server to port 8080 on the local machine, and mount local /home directory to /home in the container. The running JupyterLab instance can be accessed at localhost:8080.
 
@@ -250,11 +253,11 @@ To launch an interactive bash instance of the docker container, run one of the b
 
 \# TensorFlow 1.15
 
-docker run -v /home:/home -it gcr.io/deeplearning-platform-release/tf-cpu.1-15 bash
+`docker run -v /home:/home -it gcr.io/deeplearning-platform-release/tf-cpu.1-15 bash`
 
 \# TensorFlow 2.11
 
-docker run -v /home:/home -it gcr.io/deeplearning-platform-release/tf2-cpu.2-11 bash
+`docker run -v /home:/home -it gcr.io/deeplearning-platform-release/tf2-cpu.2-11 bash`
 
 **Available Container Configurations**
 
@@ -272,21 +275,21 @@ These docker images are all published at [http://hub.docker.com](http://hub.dock
 
 \# intel-optimized-tensorflow
 
-docker pull intel/intel-optimized-tensorflow
+`docker pull intel/intel-optimized-tensorflow`
 
 \# intel-optimized-tensorflow-avx512
 
-docker pull intel/intel-optimized-tensorflow-avx512:latest
+`docker pull intel/intel-optimized-tensorflow-avx512:latest`
 
 For example, to run the data science container directly, simply
 
 \# intel-optimized-tensorflow
 
-docker run -it -p 8888:8888 intel/intel-optimized-tensorflow
+`docker run -it -p 8888:8888 intel/intel-optimized-tensorflow`
 
 \# intel-optimized-tensorflow-avx512
 
-docker run -it -p 8888:8888 intel/intel-optimized-tensorflow-avx512:latest
+`docker run -it -p 8888:8888 intel/intel-optimized-tensorflow-avx512:latest`
 
 And then go to your browser on [http://localhost:8888/](http://localhost:8888/)
 
@@ -321,13 +324,13 @@ Installation instructions:
 
 1.  Ensure numpy, keras-applications, keras-preprocessing, pip, six, wheel, mock packages are installed in the Python environment where TensorFlow is being built and installed.
 2.  Clone the TensorFlow source code and checkout a branch of your preference
-    *   git clone https://github.com/tensorflow/tensorflow
-    *   git checkout r2.11
+    *   `git clone https://github.com/tensorflow/tensorflow`
+    *   `git checkout r2.11`
 3.  Run "./configure" from the TensorFlow source directory
 4.  Execute the following commands to create a pip package that can be used to install the optimized TensorFlow build.
     *   PATH can be changed to point to a specific version of GCC compiler:
         
-        export PATH=/PATH//bin:$PATH
+        `export PATH=/PATH//bin:$PATH`
         
     *   LD\_LIBRARY\_PATH can also be to new:
         
@@ -335,25 +338,26 @@ Installation instructions:
         
     *   Set the compiler flags support by the GCC on your machine to build TensorFlow with oneDNN.
         
-        bazel build --config=mkl -c opt --copt=-march=native //tensorflow/tools/pip\_package:build\_pip\_package
+        `bazel build --config=mkl -c opt --copt=-march=native //tensorflow/tools/pip\_package:build\_pip\_package`
         
          
         *   If you would like to build the binary against certain hardware, ensure appropriate "march" and "mtune" flags are set. Refer the [gcc online docs](https://gcc.gnu.org/onlinedocs/) or [gcc x86-options](https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html) to know the flags supported by your GCC version.
             
-            bazel build --config=mkl --cxxopt=-D\_GLIBCXX\_USE\_CXX11\_ABI=0 --copt=-march=sandybridge --copt=-mtune=ivybridge --copt=-O3 //tensorflow/tools/pip\_package:build\_pip\_package
+            `bazel build --config=mkl --cxxopt=-D\_GLIBCXX\_USE\_CXX11\_ABI=0 --copt=-march=sandybridge --copt=-mtune=ivybridge --copt=-O3 //tensorflow/tools/pip\_package:build\_pip\_package`
             
         *   Alternatively, if you would like to build the binary against certain instruction sets, set appropriate "Instruction sets" flags:
             
-            bazel build --config=mkl -c opt --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mavx512f --copt=-mavx512pf --copt=-mavx512cd --copt=-mavx512er //tensorflow/tools/pip\_package:build\_pip\_package
+            `bazel build --config=mkl -c opt --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mavx512f --copt=-mavx512pf --copt=-mavx512cd --copt=-mavx512er //tensorflow/tools/pip\_package:build\_pip\_package`
             
             **Flags set above will add AVX, AVX2 and AVX512 instructions which will result in "illegal instruction" errors when you use older CPUs. If you want to build on older CPUs, set the instruction flags accordingly.**
             
         *   Users could enable additional oneDNN features by passing a "--copt=-Dxxx" build option.  For example, enable ITT\_TASKS feature from oneDNN by using below build instruction. User could refer to [oneDNN build options](https://oneapi-src.github.io/oneDNN/dev_guide_build_options.html) for more details.
             
-            bazel build --config=mkl -c opt --copt=-march=native --copt=-DDNNL\_ENABLE\_ITT\_TASKS=True //tensorflow/tools/pip\_package:build\_pip\_package
+            `bazel build --config=mkl -c opt --copt=-march=native --copt=-DDNNL\_ENABLE\_ITT\_TASKS=True //tensorflow/tools/pip\_package:build\_pip\_package`
+  
 5.  Install the optimized TensorFlow wheel
-    *   bazel-bin/tensorflow/tools/pip\_package/build\_pip\_package ~/path\_to\_save\_wheel
-    *   pip install --upgrade --user ~/path\_to\_save\_wheel/
+    *   `bazel-bin/tensorflow/tools/pip\_package/build\_pip\_package ~/path\_to\_save\_wheel`
+    *   `pip install --upgrade --user ~/path\_to\_save\_wheel/`
 
 </details>
   
@@ -376,17 +380,17 @@ Install the below Visual C++ 2015 build tools from [https://visualstudio.micro
 2.  To build TensorFlow with oneDNN support, we need two additional steps.
     *   Link.exe on  Visual Studio 2015 causes the linker issue when /WHOLEARCHIVE switch is used. To overcome this issue, install the hotfix to your Visual C++ compiler available at [https://support.microsoft.com/en-us/help/4020481/fix-link-exe-crashes-with-a-fatal-lnk1000-error-when-you-use-wholearch](https://support.microsoft.com/en-us/help/4020481/fix-link-exe-crashes-with-a-fatal-lnk1000-error-when-you-use-wholearch)  
     *   Add a PATH environment variable to include MKL runtime lib location that will be created during the build process. The base download location can be specified in the bazel build command by using the --output\_base option, and the oneDNN libraries will then be downloaded into a directory relative to that base              
-        *   set PATH=%PATH%;output\_dir\\external\\mkl\_windows\\lib
+        *   `set PATH=%PATH%;output\_dir\\external\\mkl\_windows\\lib`
 
          3. Bazel build with the with "mkl" flag and the "output\_dir" to use the right mkl libs
 
-             bazel --output\_base=output\_dir build --config=mkl --config=opt //tensorflow/tools/pip\_package:build\_pip\_package
+             `bazel --output\_base=output\_dir build --config=mkl --config=opt //tensorflow/tools/pip\_package:build\_pip\_package`
 
           4. Install the optimized TensorFlow wheel
 
-      bazel-bin\\tensorflow\\tools\\pip\_package\\build\_pip\_package C:\\temp\\path\_to\_save\_wheel
+      `bazel-bin\\tensorflow\\tools\\pip\_package\\build\_pip\_package C:\\temp\\path\_to\_save\_wheel`
 
-      pip install C:\\temp\\path\_to\_save\_wheel\\
+      `pip install C:\\temp\\path\_to\_save\_wheel\\`
 
 **\* TensorFlow 2.3 and newer:**
 
@@ -397,11 +401,11 @@ Install the below Visual C++ 2015 build tools from [https://visualstudio.micro
 **Installation**
 
 1.  Set the following environment variables:
-    *        BAZEL\_SH: C:\\msys64/usr\\bin\\bash.exe
-    *        BAZEL\_VS: C:\\Program Files (x86)\\Microsoft Visual Studio
-    *        BAZEL\_VC: C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC
+    *        `BAZEL\_SH: C:\\msys64/usr\\bin\\bash.exe`
+    *        `BAZEL\_VS: C:\\Program Files (x86)\\Microsoft Visual Studio`
+    *        `BAZEL\_VC: C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC`
 2.  Note: For [compile time reduction](https://github.com/Intel-tensorflow/tensorflow/blob/860ad1d719a6ad32da3bd551af39a95be0b2e8c3/configure.py#L1247), please set:
-    *   set TF\_VC\_VERSION=16.6
+    *   `set TF\_VC\_VERSION=16.6`
     *   More details can be found [here](https://groups.google.com/a/tensorflow.org/d/topic/build/SsW98Eo7l3o/discussion).
 3.  Add to the PATH environment variable to include
     *   python path, e.g. C:\\Program Files\\_Python-version_  # Python38
@@ -414,19 +418,19 @@ Install the below Visual C++ 2015 build tools from [https://visualstudio.micro
         
     *   Git path, e.g. C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git/usr\\bin
         
-        set PATH=%PATH%;C:\\Program Files\\Python38;D:\\output\_dir\\external\\mkl\_windows\\lib;C:\\Program Files\\Bazel-3.7.2;C:\\msys64;C:\\msys64/usr\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git/usr\\bin
+        `set PATH=%PATH%;C:\\Program Files\\Python38;D:\\output\_dir\\external\\mkl\_windows\\lib;C:\\Program Files\\Bazel-3.7.2;C:\\msys64;C:\\msys64/usr\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git/usr\\bin`
 4.  Download the TensorFlow source code, checkout the release branch, and configure the build:
-    *   git clone https://github.com/Intel-tensorflow/tensorflow.git
-    *   cd tensorflow
-    *   git checkout _branch-name_ # r2.6, r2.7, etc.
-    *   python ./configure.py
+    *   `git clone https://github.com/Intel-tensorflow/tensorflow.git`
+    *   `cd tensorflow`
+    *   `git checkout _branch-name_ # r2.6, r2.7, etc.`
+    *   `python ./configure.py`
 5.  Set the oneDNN output directory location outside TensorFlow home directory to avoid infinite symlink expansion error. Then add the path to the oneDNN output directory to the system PATH:   
-    *   set OneDNN\_DIR=\\one\_dnn\_dir
+    *   `set OneDNN\_DIR=\\one\_dnn\_dir`
         
-    *   set PATH=%OneDNN\_DIR%;%PATH%
+    *   `set PATH=%OneDNN\_DIR%;%PATH%`
         
 6.  Build TensorFlow from source with oneDNN. Navigate to the TensorFlow root directory tensorflow and run the following bazel command to build TensorFlow oneDNN from Source:
-    *   bazel --output\_base=%OneDNN\_DIR% build --announce\_rc --config=opt --config=mkl --action\_env=PATH=""  --define=no\_tensorflow\_py\_deps=true  tensorflow/tools/pip\_package:build\_pip\_package
+    *   `bazel --output\_base=%OneDNN\_DIR% build --announce\_rc --config=opt --config=mkl --action\_env=PATH=""  --define=no\_tensorflow\_py\_deps=true  tensorflow/tools/pip\_package:build\_pip\_package`
         
 
 **Note: Based on [bazel issue #7026](https://github.com/bazelbuild/bazel/issues/7026) we set --action\_env=PATH=. Open cmd.exe, run echo %PATH% and copy the output to the value of --action\_env=PATH=. If found, please use single quotes with folder names of white space**s.
@@ -442,7 +446,7 @@ Install the below Visual C++ 2015 build tools from [https://visualstudio.micro
 <br>
 
 Once Intel-optimized TensorFlow is installed, running the below command must print "True" if oneDNN optimizations are present.
-
+```
 import tensorflow as tf
 
 import os
@@ -470,7 +474,7 @@ def get\_mkl\_enabled\_flag():
 
 print ("We are using Tensorflow version", tf.\_\_version\_\_)  
 print("MKL enabled :", get\_mkl\_enabled\_flag())
-
+```
 </details>
   
  <details>
