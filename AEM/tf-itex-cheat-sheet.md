@@ -1,7 +1,7 @@
 Get started with Intel® Optimization for TensorFlow* and Intel® Extension for TensorFlow* using the following commands.
 
 # Intel® Optimization for TensorFlow*: A Public Release from Google®
-Features and optimizations for TensorFlow* on Intel hardware are frequently upstreamed and included in stock TensorFlow* releases. As of TensorFlow* v2.9, Intel® oneAPI Deep Neural Network Library (oneDNN) optimization is automatically enabled.
+Features and optimizations for TensorFlow* on Intel® hardware are frequently upstreamed and included in stock TensorFlow* releases. As of TensorFlow* v2.9, Intel® oneAPI Deep Neural Network Library (oneDNN) optimization is automatically enabled.
 
 For more information, see TensorFlow.
 
@@ -13,7 +13,7 @@ Basic Installation Using Anaconda*
 
 conda install -c conda-forge tensorflow
 
-Import TensorFlow
+import TensorFlow
 
 import tensorflow as tf
 
@@ -66,9 +66,9 @@ conda install tensorflow (Linux/MacOS)
 
 conda install tensorflow-mkl (Windows)
 
-Import TensorFlow
+import TensorFlow
 
-Import tensorflow as tf
+import tensorflow as tf
 
 Capture a Verbose Log (Command Prompt)
 
@@ -145,7 +145,7 @@ itex.set_backend(‘GPU’)
 
 Toggle a GPU Back End (Command Prompt): Set by Default
 
-Export ITEX_XPU_BACKEND="GPU"
+export ITEX_XPU_BACKEND="GPU"
 
 Advanced Automatic Mixed Precision (in the Code): A Basic Configuration with Improved Inference Speed with Reduced Memory Consumption
 
