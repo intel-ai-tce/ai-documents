@@ -1,7 +1,7 @@
 Get started with Intel® Optimization for TensorFlow* and Intel® Extension for TensorFlow* using the following commands.
 
-# Intel® Optimization for TensorFlow*: A Public Release from Google®
-Features and optimizations for TensorFlow* on Intel® hardware are frequently upstreamed and included in stock TensorFlow* releases. As of TensorFlow* v2.9, Intel® oneAPI Deep Neural Network Library (oneDNN) optimization is automatically enabled.
+# Intel® Optimization for TensorFlow*: A Public Release from Google
+Features and optimizations for TensorFlow* on Intel hardware are frequently upstreamed and included in stock TensorFlow* releases. As of TensorFlow* v2.9, Intel® oneAPI Deep Neural Network Library (oneDNN) optimization is automatically enabled.
 
 For more information, see TensorFlow.
 
@@ -49,8 +49,8 @@ mixed_precision.set_global_policy(policy)
 
 
 
-Intel® Optimization for TensorFlow*: A Public Release from Intel®
-In addition to the performance tuning options listed under the Google® public release, the Intel® public release offers OpenMP* optimizations for further performance enhancements.
+Intel® Optimization for TensorFlow*: A Public Release from Intel
+In addition to the performance tuning options listed under the Google public release, the Intel public release offers OpenMP* optimizations for further performance enhancements.
 
 For additional installation methods, see the Intel® Optimization for TensorFlow* Installation Guide.
 
@@ -121,7 +121,7 @@ export KMP_SETTINGS=TRUE
 
 
 Intel® Extension for TensorFlow*
-This extension provides the most up-to-date features and optimizations on Intel® hardware, most of which will eventually be upstreamed to stock TensorFlow* releases. Additionally, while users can get many optimization benefits by default without needing an additional set up, Intel® Extension for TensorFlow* provides further tuning and custom operations to boost performance even more.
+This extension provides the most up-to-date features and optimizations on Intel hardware, most of which will eventually be upstreamed to stock TensorFlow* releases. Additionally, while users can get many optimization benefits by default without needing an additional set up, Intel® Extension for TensorFlow* provides further tuning and custom operations to boost performance even more.
 
 For additional installation methods, see the Intel® Extension for TensorFlow* Installation Guide.
 
@@ -235,7 +235,7 @@ For more information and support, or to report any issues, see:
 
 Intel® Extension for TensorFlow* Issues on GitHub*
 
-TensorFlow* Issues on GitHub
+TensorFlow* Issues on GitHub*
 
 Intel® AI Analytics Toolkit Forum
 
