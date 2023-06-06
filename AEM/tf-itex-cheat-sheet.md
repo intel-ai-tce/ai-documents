@@ -3,7 +3,7 @@ Get started with Intel® Optimization for TensorFlow* and Intel® Extension for 
 # Intel® Optimization for TensorFlow*: A Public Release from Google
 Features and optimizations for TensorFlow* on Intel hardware are frequently upstreamed and included in stock TensorFlow* releases. As of TensorFlow* v2.9, Intel® oneAPI Deep Neural Network Library (oneDNN) optimization is automatically enabled.
 
-For more information, see TensorFlow.
+For more information, see [TensorFlow](https://www.tensorflow.org/).
 
 Basic Installation Using PyPI*
 
@@ -52,9 +52,9 @@ mixed_precision.set_global_policy(policy)
 Intel® Optimization for TensorFlow*: A Public Release from Intel
 In addition to the performance tuning options listed under the Google public release, the Intel public release offers OpenMP* optimizations for further performance enhancements.
 
-For additional installation methods, see the Intel® Optimization for TensorFlow* Installation Guide.
+For additional installation methods, see the [Intel® Optimization for TensorFlow* Installation Guide](https://www.intel.com/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html).
 
-For more information about performance, see Maximize TensorFlow* Performance on CPU.
+For more information about performance, see the [Maximize TensorFlow* Performance on CPU](https://www.intel.com/content/www/us/en/developer/articles/technical/maximize-tensorflow-performance-on-cpu-considerations-and-recommendations-for-inference.html).
 
 Basic Installation Using PyPI*
 
@@ -123,9 +123,9 @@ export KMP_SETTINGS=TRUE
 Intel® Extension for TensorFlow*
 This extension provides the most up-to-date features and optimizations on Intel hardware, most of which will eventually be upstreamed to stock TensorFlow* releases. Additionally, while users can get many optimization benefits by default without needing an additional set up, Intel® Extension for TensorFlow* provides further tuning and custom operations to boost performance even more.
 
-For additional installation methods, see the Intel® Extension for TensorFlow* Installation Guide.
+For additional installation methods, see the [Intel® Extension for TensorFlow* Installation Guide](https://intel.github.io/intel-extension-for-tensorflow/latest/docs/install/installation_guide.html).
 
-For more information, see Intel® Extension for TensorFlow*.
+For more information, see [Intel® Extension for TensorFlow*](https://intel.github.io/intel-extension-for-tensorflow/latest/get_started.html).
 
 Basic GPU Installation using PyPI
 
@@ -233,12 +233,12 @@ itex.ops.ItexLSTM(
 
 For more information and support, or to report any issues, see:
 
-Intel® Extension for TensorFlow* Issues on GitHub*
+[Intel® Extension for TensorFlow* Issues on GitHub*](https://github.com/intel/intel-extension-for-tensorflow/issues)
 
-TensorFlow* Issues on GitHub*
+[TensorFlow* Issues on GitHub*](https://github.com/tensorflow/tensorflow/issues)
 
-Intel® AI Analytics Toolkit Forum
+[Intel® AI Analytics Toolkit Forum](https://community.intel.com/t5/Intel-oneAPI-AI-Analytics/bd-p/ai-analytics-toolkit)
 
 
 
-Sign up and try this extension for free using Intel® Developer Cloud for oneAPI.
+Sign up and try this extension for free using [Intel® Developer Cloud for oneAPI](https://devcloud.intel.com/oneapi/get_started/).
