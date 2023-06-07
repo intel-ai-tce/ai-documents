@@ -1,5 +1,5 @@
 Get started with Intel® Optimization for TensorFlow* and Intel® Extension for TensorFlow* using the following commands.
-
+<br><br>
 ## Intel® Optimization for TensorFlow*: A Public Release from Google
 Features and optimizations for TensorFlow* on Intel hardware are frequently upstreamed and included in stock TensorFlow* releases. As of TensorFlow* v2.9, Intel® oneAPI Deep Neural Network Library (oneDNN) optimization is automatically enabled.
 
@@ -16,8 +16,7 @@ For more information, see [TensorFlow](https://www.tensorflow.org/).
 <tr><td>Enable Keras Mixed Precision with BF16</td><td>from tf.keras import mixed_precision <br> mixed_precision.set_global_policy('mixed_bfloat16')</td></tr>
 </tbody></table>
 
-
-
+<br><br>
 ## Intel® Optimization for TensorFlow*: A Public Release from Intel
 In addition to the performance tuning options listed under the Google public release, the Intel public release offers OpenMP* optimizations for further performance enhancements.
 
@@ -40,8 +39,7 @@ For more information about performance, see the [Maximize TensorFlow* Performanc
 <tr><td>Print an OpenMP Runtime Library Env Variables During Execution</td><td>export KMP_SETTINGS=TRUE</td></tr>
 </tbody></table>
 
-
-
+<br><br>
 ## Intel® Extension for TensorFlow*
 This extension provides the most up-to-date features and optimizations on Intel hardware, supporting both Intel CPU and Intel GPU devices, most of which will eventually be upstreamed to stock TensorFlow* releases. Additionally, while users can get many optimization benefits by default without needing an additional set up, Intel® Extension for TensorFlow* provides further tuning and custom operations to boost performance even more.
 
@@ -63,16 +61,14 @@ For more information, see [Intel® Extension for TensorFlow*](https://intel.gith
 <tr><td>Customized LSTM (in the Code)</td><td>itex.ops.ItexLSTM( <br>&emsp;&emsp;200, activation='tanh', <br>&emsp;&emsp;recurrent_activation='sigmoid', <br>&emsp;&emsp;use_bias=True, <br>&emsp;&emsp;kernel_initializer='glorot_uniform', <br>&emsp;&emsp;recurrent_initializer='orthogonal', <br>&emsp;&emsp;bias_initializer='zeros', **kwargs <br>)</td></tr>
 </tbody></table>
 
-
-
+<br>
 For more information and support, or to report any issues, see:
 
-[Intel® Extension for TensorFlow* Issues on GitHub*](https://github.com/intel/intel-extension-for-tensorflow/issues)
+<br>[Intel® Extension for TensorFlow* Issues on GitHub*](https://github.com/intel/intel-extension-for-tensorflow/issues)
 
 [TensorFlow* Issues on GitHub*](https://github.com/tensorflow/tensorflow/issues)
 
 [Intel® AI Analytics Toolkit Forum](https://community.intel.com/t5/Intel-oneAPI-AI-Analytics/bd-p/ai-analytics-toolkit)
 
-
-
+<br>
 Sign up and try this extension for free using [Intel® Developer Cloud for oneAPI](https://devcloud.intel.com/oneapi/get_started/).
