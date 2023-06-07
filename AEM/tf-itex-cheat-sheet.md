@@ -70,5 +70,4 @@ For more information and support, or to report any issues, see:
 
 [Intel® AI Analytics Toolkit Forum](https://community.intel.com/t5/Intel-oneAPI-AI-Analytics/bd-p/ai-analytics-toolkit)
 
-<br>
-Sign up and try this extension for free using [Intel® Developer Cloud for oneAPI](https://devcloud.intel.com/oneapi/get_started/).
+<br>Sign up and try this extension for free using [Intel® Developer Cloud for oneAPI](https://devcloud.intel.com/oneapi/get_started).
