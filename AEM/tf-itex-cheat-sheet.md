@@ -10,7 +10,7 @@ For more information, see [TensorFlow](https://www.tensorflow.org/).
 <tr><td>Basic Installation Using Anaconda*</td><td>conda install -c conda-forge tensorflow</td></tr>
 <tr><td>Import TensorFlow</td><td>import tensorflow as tf</td></tr>
 <tr><td>Capture a Verbose Log (Command Prompt)</td><td>export ONEDNN_VERBOSE=1</td></tr>
-<tr><td>Parallelize Execution (in the Code)</td><td>tf.config.threading.set_intra_op_parallelism_threads(&lt;number of physical core per socket&gt;) <br> tf.config.threading.set_inter_op_parallelism_threads(&lt;number of sockets&gt;) <br> tf.config.set_soft_device_placement(True)</td></tr>
+<tr><td>Parallelize Execution (in the Code)</td><td>tf.config.threading.set_intra_op_parallelism_threads(&lt;number of physical cores per socket&gt;) <br> tf.config.threading.set_inter_op_parallelism_threads(&lt;number of sockets&gt;) <br> tf.config.set_soft_device_placement(True)</td></tr>
 <tr><td>Parallelize Execution (Command Prompt)</td><td>export TF_NUM_INTRAOP_THREADS=&lt;number of physical cores per socket&gt; <br> export TF_NUM_INTEROP_THREADS=&lt;number of sockets&gt;</td></tr>
 <tr><td>Non-Uniform Memory Access (NUMA)</td><td>numactl --cpunodebind N --membind N python &lt;script&gt;</td></tr>
 <tr><td>Enable Keras Mixed Precision with BF16</td><td>from tf.keras import mixed_precision <br> mixed_precision.set_global_policy('mixed_bfloat16')</td></tr>
@@ -29,11 +29,11 @@ For more information about performance, see the [Maximize TensorFlow* Performanc
 <tr><td>Basic Installation Using Anaconda*</td><td>conda install tensorflow (Linux/MacOS) <br> conda install tensorflow-mkl (Windows)</td></tr>
 <tr><td>Import TensorFlow</td><td>import tensorflow as tf</td></tr>
 <tr><td>Capture a Verbose Log (Command Prompt)</td><td>export ONEDNN_VERBOSE=1</td></tr>
-<tr><td>Parallelize Execution (in the Code)</td><td>tf.config.threading.set_intra_op_parallelism_threads(&lt;number of physical core per socket&gt;) <br> tf.config.threading.set_inter_op_parallelism_threads(&lt;number of sockets&gt;) <br> tf.config.set_soft_device_placement(True)</td></tr>
+<tr><td>Parallelize Execution (in the Code)</td><td>tf.config.threading.set_intra_op_parallelism_threads(&lt;number of physical cores per socket&gt;) <br> tf.config.threading.set_inter_op_parallelism_threads(&lt;number of sockets&gt;) <br> tf.config.set_soft_device_placement(True)</td></tr>
 <tr><td>Parallelize Execution (Command Prompt)</td><td>export TF_NUM_INTRAOP_THREADS=&lt;number of physical cores per socket&gt; <br> export TF_NUM_INTEROP_THREADS=&lt;number of sockets&gt;</td></tr>
 <tr><td>Non-Uniform Memory Access (NUMA)</td><td>numactl --cpunodebind N --membind N python &lt;script&gt;</td></tr>
 <tr><td>Enable Keras Mixed Precision with BF16</td><td>from tf.keras import mixed_precision <br> mixed_precision.set_global_policy('mixed_bfloat16')</td></tr>
-<tr><td>Set the Maximum Number of Threads (Command Prompt)</td><td>export OMP_NUM_THREADS=num physical cores</td></tr>
+<tr><td>Set the Maximum Number of Threads (Command Prompt)</td><td>export OMP_NUM_THREADS=&lt;number of physical cores per socket&gt;</td></tr>
 <tr><td>Bind OpenMP Threads to Physical Processing Units</td><td>export KMP_AFFINITY=granularity=fine,compact,1,0</td></tr>
 <tr><td>Set a Wait Time (ms) After Completing the Execution of a Parallel Region Before Sleeping</td><td>export KMP_BLOCKTIME=&lt;time&gt; <br> # Recommended to be to 0 for CNN or 1 for non-CNN (user should verify empirically)</td></tr>
 <tr><td>Print an OpenMP Runtime Library Env Variables During Execution</td><td>export KMP_SETTINGS=TRUE</td></tr>
