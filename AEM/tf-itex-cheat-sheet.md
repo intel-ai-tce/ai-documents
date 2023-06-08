@@ -10,8 +10,8 @@ For more information, see [TensorFlow](https://www.tensorflow.org/).
 <tr><td>Basic Installation Using Anaconda*</td><td>conda install -c conda-forge tensorflow</td></tr>
 <tr><td>Import TensorFlow</td><td>import tensorflow as tf</td></tr>
 <tr><td>Capture a Verbose Log (Command Prompt)</td><td>export ONEDNN_VERBOSE=1</td></tr>
-<tr><td>Parallelize Execution (in the Code)</td><td>tf.config.threading.set_intra_op_parallelism_threads(&lt;number of physical cores per socket&gt;) <br> tf.config.threading.set_inter_op_parallelism_threads(&lt;number of sockets&gt;) <br> tf.config.set_soft_device_placement(True)</td></tr>
-<tr><td>Parallelize Execution (Command Prompt)</td><td>export TF_NUM_INTRAOP_THREADS=&lt;number of physical cores per socket&gt; <br> export TF_NUM_INTEROP_THREADS=&lt;number of sockets&gt;</td></tr>
+<tr><td>Parallelize Execution (in the Code)</td><td>tf.config.threading.set_intra_op_parallelism_threads(&lt;number of physical cores per socket&gt;) <br> tf.config.threading.set_inter_op_parallelism_threads(&lt;number of sockets&gt;) <br> tf.config.set_soft_device_placement(True) <br># Users could tune the INTRAOP and INTEROP setting based on the workloads</td></tr>
+<tr><td>Parallelize Execution (Command Prompt)</td><td>export TF_NUM_INTRAOP_THREADS=&lt;number of physical cores per socket&gt; <br> export TF_NUM_INTEROP_THREADS=&lt;number of sockets&gt; <br># Users could tune the INTRAOP and INTEROP setting based on the workloads</td></tr>
 <tr><td>Non-Uniform Memory Access (NUMA)</td><td>numactl --cpunodebind N --membind N python &lt;script&gt;</td></tr>
 <tr><td>Enable Keras Mixed Precision with BF16</td><td>from tf.keras import mixed_precision <br> mixed_precision.set_global_policy('mixed_bfloat16')</td></tr>
 </tbody></table>
@@ -29,8 +29,8 @@ For more information about performance, see the [Maximize TensorFlow* Performanc
 <tr><td>Basic Installation Using Anaconda*</td><td>conda install tensorflow (Linux/MacOS) <br> conda install tensorflow-mkl (Windows)</td></tr>
 <tr><td>Import TensorFlow</td><td>import tensorflow as tf</td></tr>
 <tr><td>Capture a Verbose Log (Command Prompt)</td><td>export ONEDNN_VERBOSE=1</td></tr>
-<tr><td>Parallelize Execution (in the Code)</td><td>tf.config.threading.set_intra_op_parallelism_threads(&lt;number of physical cores per socket&gt;) <br> tf.config.threading.set_inter_op_parallelism_threads(&lt;number of sockets&gt;) <br> tf.config.set_soft_device_placement(True)</td></tr>
-<tr><td>Parallelize Execution (Command Prompt)</td><td>export TF_NUM_INTRAOP_THREADS=&lt;number of physical cores per socket&gt; <br> export TF_NUM_INTEROP_THREADS=&lt;number of sockets&gt;</td></tr>
+<tr><td>Parallelize Execution (in the Code)</td><td>tf.config.threading.set_intra_op_parallelism_threads(&lt;number of physical cores per socket&gt;) <br> tf.config.threading.set_inter_op_parallelism_threads(&lt;number of sockets&gt;) <br> tf.config.set_soft_device_placement(True) <br># Users could tune the INTRAOP and INTEROP setting based on the workloads</td></tr>
+<tr><td>Parallelize Execution (Command Prompt)</td><td>export TF_NUM_INTRAOP_THREADS=&lt;number of physical cores per socket&gt; <br> export TF_NUM_INTEROP_THREADS=&lt;number of sockets&gt; <br># Users could tune the INTRAOP and INTEROP setting based on the workloads</td></tr>
 <tr><td>Non-Uniform Memory Access (NUMA)</td><td>numactl --cpunodebind N --membind N python &lt;script&gt;</td></tr>
 <tr><td>Enable Keras Mixed Precision with BF16</td><td>from tf.keras import mixed_precision <br> mixed_precision.set_global_policy('mixed_bfloat16')</td></tr>
 <tr><td>Set the Maximum Number of Threads (Command Prompt)</td><td>export OMP_NUM_THREADS=&lt;number of physical cores per socket&gt;</td></tr>
