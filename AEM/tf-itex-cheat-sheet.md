@@ -22,7 +22,7 @@ In addition to the performance tuning options listed under the Google public rel
 
 For additional installation methods, see the [Intel® Optimization for TensorFlow* Installation Guide](https://www.intel.com/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html).
 
-For more information about performance, see the [Maximize TensorFlow* Performance on CPU](https://www.intel.com/content/www/us/en/developer/articles/technical/maximize-tensorflow-performance-on-cpu-considerations-and-recommendations-for-inference.html).
+For more information about performance, see the [Maximize TensorFlow* Performance on CPU](https://www.intel.com/content/www/us/en/developer/articles/technical/maximize-tensorflow-performance-on-cpu-considerations-and-recommendations-for-inference.html) and [Getting Started with Mixed Precision Support in oneDNN Bfloat16](https://www.intel.com/content/www/us/en/developer/articles/guide/getting-started-with-automixedprecisionmkl.html).
 
 <table><tbody>
 <tr><td>Basic Installation Using PyPI*</td><td>pip install intel-tensorflow</td></tr>
