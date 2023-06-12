@@ -495,10 +495,10 @@ Tensorflow optimizations are agnostic to the type of hardware, ISA supported, dt
 <br>
 
 1.  For Intel® Optimization for TensorFlow\* for 4th Generation Intel® Xeon® Scalable processors, we publish one preview release for good performance. Please install it by   
-     $ pip install intel-tensorflow==2.11.dev202242
+    `$ pip install intel-tensorflow==2.11.dev202242 `
 2.  Intel-optimized TensorFlow enables oneDNN calls by default. **For v2.4 and previous version**, If at any point you wish to disable Intel MKL primitive calls, this can be disabled by setting TF\_DISABLE\_MKL flag to 1 before running your TensorFlow script.
     
-    export TF\_DISABLE\_MKL=1       
+   `export TF\_DISABLE\_MKL=1 `     
     
 
            However, note that this flag will only disable oneDNN calls, but not MKL-ML calls. 
@@ -507,6 +507,7 @@ Tensorflow optimizations are agnostic to the type of hardware, ISA supported, dt
 
        3. CPU affinity settings in Anaconda's TensorFlow: If oneDNN enabled TensorFlow is installed from the anaconda channel (not Intel channel), the "import tensorflow" command sets the KMP\_BLOCKTIME and OMP\_PROC\_BIND environment variables if not already set. However, these variables may have effects on other libraries such as Numpy/Scipy which use OpenMP or oneDNN. Alternatively, you can either set preferred values or unset them after importing TensorFlow. More details available in the TensorFlow GitHub [issue](https://github.com/tensorflow/tensorflow/issues/24172)
 
+```
             import tensorflow # this sets KMP\_BLOCKTIME and OMP\_PROC\_BIND
 
             import os
@@ -516,7 +517,7 @@ Tensorflow optimizations are agnostic to the type of hardware, ISA supported, dt
             del os.environ\['OMP\_PROC\_BIND'\]
 
            del os.environ\['KMP\_BLOCKTIME'\]
-
+```
 </details>
   
 <details>
@@ -526,135 +527,47 @@ Although official TensorFlow has oneDNN optimizations by default, there are sti
 
 **Here is a comparison table For TensorFlow v2.9 and later.**
 
- 
-
-**Intel Optimization for Tensorflow**
-
-**official TensorFlow (Running on Intel CPUs)**
-
-**oneDNN optimiziations**  
-
-Enabled by default
-
-Enabled by default
-
-**OpenMP Optimizations**
-
-Enabled by default
-
-N/A. use eigen thread pool instead
-
-**Layout Format** 
-
-TensorFlow native layout format by default. **No oneDNN blocked format support.**
-
-TensorFlow native layout format by default. **No oneDNN blocked format support.**
-
-**int8 support from oneDNN**
-
-Enabled by default
-
-Enabled by default
+|             | Intel Optimization for Tensorflow	 | official TensorFlow (Running on Intel CPUs) |  
+| ----------- | ----------- | ----------- |
+| oneDNN optimiziations | Enabled by default | Enabled by default |
+| OpenMP Optimizations | Enabled by default | N/A. use eigen thread pool instead |
+| Layout Format | TensorFlow native layout format by default. No oneDNN blocked format support. | TensorFlow native layout format by default. No oneDNN blocked format support. |
+| int8 support from oneDNN | Enabled by default |  Enabled by default |  
+<br>
 
 **Here is a comparison table For TensorFlow v2.8.**
 
- 
-
-**Intel Optimization for Tensorflow**
-
-**official TensorFlow (Running on Intel CPUs)**
-
-**oneDNN optimiziations**  
-
-Enabled by default
-
-Enable by setting environment variable TF\_ENABLE\_ONEDNN\_OPTS=1 at runtime
-
-**OpenMP Optimizations**
-
-Enabled by default
-
-N/A. use eigen thread pool instead
-
-**Layout Format** 
-
-TensorFlow native layout format by default. **No oneDNN blocked format support.**
-
-TensorFlow native layout format by default. **No oneDNN blocked format support.**
-
-**int8 support from oneDNN**
-
-Enabled by default
-
-Enable by setting environment variable TF\_ENABLE\_ONEDNN\_OPTS=1 at runtime
+|             | Intel Optimization for Tensorflow	 | official TensorFlow (Running on Intel CPUs) |  
+| ----------- | ----------- | ----------- |
+| oneDNN optimiziations | Enabled by default | Enable by setting environment variable TF_ENABLE_ONEDNN_OPTS=1 at runtime |
+| OpenMP Optimizations | Enabled by default | N/A. use eigen thread pool instead |
+| Layout Format | TensorFlow native layout format by default. No oneDNN blocked format support. | TensorFlow native layout format by default. No oneDNN blocked format support. |
+| int8 support from oneDNN | Enabled by default | Enable by setting environment variable TF_ENABLE_ONEDNN_OPTS=1 at runtime |
+<br>
 
 **Here is a comparison table For TensorFlow v2.6 and v2.7.**
 
- 
-
-**Intel Optimization for Tensorflow**
-
-**official TensorFlow (Running on Intel CPUs)**
-
-**oneDNN optimiziations**  
-
-Enabled by default
-
-Enable by setting environment variable TF\_ENABLE\_ONEDNN\_OPTS=1 at runtime
-
-**OpenMP Optimizations**
-
-Enabled by default
-
-N/A. use eigen thread pool instead
-
-**Layout Format** 
-
-TensorFlow native layout format by default.  Enable oneDNN blocked format by setting  environment variable TF\_ENABLE\_MKL\_NATIVE\_FORMAT=0
-
-TensorFlow native layout format by default.  Enable oneDNN blocked format by setting  environment variable TF\_ENABLE\_ONEDNN\_OPTS=1   and TF\_ENABLE\_MKL\_NATIVE\_FORMAT=0 
-
-**int8 support from oneDNN**
-
-Enabled by default
-
-**Enable by setting environment variable TF\_ENABLE\_ONEDNN\_OPTS=1 at runtime**
+|             | Intel Optimization for Tensorflow	 | official TensorFlow (Running on Intel CPUs) |  
+| ----------- | ----------- | ----------- |
+| oneDNN optimiziations | Enabled by default | Enable by setting environment variable TF_ENABLE_ONEDNN_OPTS=1 at runtime |
+| OpenMP Optimizations | Enabled by default | N/A. use eigen thread pool instead |
+| Layout Format | TensorFlow native layout format by default.  Enable oneDNN blocked format by setting  environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 | TensorFlow native layout format by default.  Enable oneDNN blocked format by setting  environment variable TF_ENABLE_ONEDNN_OPTS=1 and TF_ENABLE_MKL_NATIVE_FORMAT=0 |
+| int8 support from oneDNN | Enabled by default | Enable by setting environment variable TF_ENABLE_ONEDNN_OPTS=1 at runtime |
+<br>
 
 **Here is a comparison table for TensorFlow v2.5.**
 
- 
-
-**Intel Optimization for Tensorflow**
-
-**official TensorFlow (Running on Intel CPUs)**
-
-**oneDNN optimiziations**  
-
-Enabled by default
-
-Enable by setting environment variable TF\_ENABLE\_ONEDNN\_OPTS=1 at runtime
-
-**OpenMP Optimizations**
-
-Enabled by default
-
-N/A. use eigen thread pool instead
-
-**Layout Format** 
-
-TensorFlow native layout format by default.  Enable oneDNN blocked format by setting  environment variable TF\_ENABLE\_MKL\_NATIVE\_FORMAT=0 
-
-TensorFlow native layout format by default.  Enable oneDNN blocked format by setting  environment variable TF\_ENABLE\_ONEDNN\_OPTS=1   and TF\_ENABLE\_MKL\_NATIVE\_FORMAT=0 
-
-**int8 support from oneDNN**
-
-Enabled by setting the env-variable TF\_ENABLE\_MKL\_NATIVE\_FORMAT=0
-
-Not supported
+|             | Intel Optimization for Tensorflow	 | official TensorFlow (Running on Intel CPUs) |  
+| ----------- | ----------- | ----------- |
+| oneDNN optimiziations | Enabled by default | Enable by setting environment variable TF_ENABLE_ONEDNN_OPTS=1 at runtime |
+| OpenMP Optimizations | Enabled by default | N/A. use eigen thread pool instead |
+| Layout Format | TensorFlow native layout format by default.  Enable oneDNN blocked format by setting  environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0  | TensorFlow native layout format by default.  Enable oneDNN blocked format by setting  environment variable TF_ENABLE_ONEDNN_OPTS=1  and TF_ENABLE_MKL_NATIVE_FORMAT=0 |
+| int8 support from oneDNN | Enabled by setting the env-variable TF_ENABLE_MKL_NATIVE_FORMAT=0 | Not supported |
+<br>
   
 </details>
   
- <details>
+<details>
 <summary> Intel® Extension for TensorFlow </summary>
 <br>
 
@@ -665,21 +578,13 @@ Intel has released [Intel® Extension for TensorFlow](https://github.com/intel/i
 
 More info on ITEX can be accessed from these resources for **Intel dGPUs( Flex series)**
 
-**Category**
+| Category | Links |  
+| ----------- | ----------- |  
+| Official Doc | [Get Started Document](https://intel.github.io/intel-extension-for-tensorflow/latest/get_started.html) |  
+| Blog | [Accelerating TensorFlow on Intel Data Center GPU Flex Series](https://blog.tensorflow.org/2022/10/accelerating-tensorflow-on-intel-data-center-gpu-flex-series.html) |
+| Blog | [Meet the Innovation of Intel AI Software: ITEX](https://www.intel.com/content/www/us/en/developer/articles/technical/innovation-of-ai-software-extension-tensorflow.html) |
+   
 
-**Links**
-
-Official Doc
-
-[Get Started Document](https://intel.github.io/intel-extension-for-tensorflow/latest/get_started.html)
-
-Blog
-
-[Accelerating TensorFlow on Intel Data Center GPU Flex Series](https://blog.tensorflow.org/2022/10/accelerating-tensorflow-on-intel-data-center-gpu-flex-series.html)
-
-Blog
-
-[Meet the Innovation of Intel AI Software: ITEX](https://www.intel.com/content/www/us/en/developer/articles/technical/innovation-of-ai-software-extension-tensorflow.html)
 
 </details>
   
