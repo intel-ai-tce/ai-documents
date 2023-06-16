@@ -77,14 +77,14 @@ Table1
 - Provides optimized performance for Intel® Data Center GPU Max Series utilizing oneCCL.
 - Enables support for Allreduce, Allgather, Reduce, and Alltoall connectivity for GPUs on the same node
 ## Known issues and limitations
-- Limitations imposed by Intel® oneAPI DPC++ Compiler:
-  - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
 ```c++  
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
+- Limitations imposed by Intel® oneAPI DPC++ Compiler:
+  - SYCL buffers cannot be used from different queues
 
 </details>
 
