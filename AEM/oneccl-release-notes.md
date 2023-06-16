@@ -86,6 +86,7 @@ namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
 </details>
+
 <details>
 <summary>2021.7</summary>
 <br>
@@ -137,6 +138,7 @@ oneccl::allreduce(...);
 ```
 
 </details>
+
 <details>
 <summary>2021.6</summary>
 <br>
@@ -186,6 +188,7 @@ oneccl::allreduce(...);
 ```
 
 </details>
+
 <details>
 <summary>2021.5</summary>
 <br>
@@ -205,6 +208,7 @@ namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
 </details>
+
 <details>
 <summary>2021.4</summary>
 <br>
@@ -223,6 +227,7 @@ namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
 </details>
+
 <details>
 <summary>2021.3</summary>
 <br>
@@ -243,6 +248,7 @@ namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
 </details>
+
 <details>
 <summary>2021.2</summary>
 <br>
@@ -266,6 +272,7 @@ namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
 </details>
+
 <details>
 <summary>2021.1</summary>
 <br>
