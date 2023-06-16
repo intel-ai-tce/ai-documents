@@ -85,6 +85,7 @@ when oneCCL is used with other oneAPI libraries. You can instead create a namesp
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
+
 </details>
 
 <details>
@@ -226,6 +227,7 @@ when oneCCL is used with other oneAPI libraries. You can instead create a namesp
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
+ 
 </details>
 
 <details>
@@ -247,6 +249,7 @@ when oneCCL is used with other oneAPI libraries. You can instead create a namesp
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
+ 
 </details>
 
 <details>
@@ -259,7 +262,6 @@ oneccl::allreduce(...);
 - Optimized communicator creation phase.
 - Optimized multi-GPU collectives for single-node case.
 - Bug fixes
-## Known issues and limitations
 
 ## Known issues and limitations
 
@@ -271,6 +273,7 @@ when oneCCL is used with other oneAPI libraries. You can instead create a namesp
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
+ 
 </details>
 
 <details>
@@ -292,6 +295,7 @@ when oneCCL is used with other oneAPI libraries. You can instead create a namesp
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
+ 
 </details>
 
 **Notices and Disclaimers**
