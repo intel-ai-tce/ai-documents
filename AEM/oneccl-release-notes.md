@@ -89,6 +89,7 @@ oneccl::allreduce(...);
 <details>
 <summary>2021.7</summary>
 <br>
+ 
 # 2021.7.1 Release
 Intel® oneAPI Collective Communications Library 2021.7.1 has been updated to include functional and security updates. Users should update to the latest version as it becomes available.
 
@@ -140,7 +141,8 @@ oneccl::allreduce(...);
 <summary>2021.6</summary>
 <br>
 
-##Major Features Supported
+  
+## Major Features Supported
 
 Table1
 | Functionality	| Subitems|	CPU	| GPU |
