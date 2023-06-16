@@ -134,10 +134,10 @@ Table1
   - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
-```c++  
+ 
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
-```
+
 
 </details>
 
@@ -184,10 +184,10 @@ Table1
   - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
-```c++  
+ 
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
-```
+
 
 </details>
 
@@ -205,10 +205,10 @@ oneccl::allreduce(...);
   - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
-```c++  
+ 
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
-```
+
 </details>
 
 <details>
@@ -224,10 +224,10 @@ oneccl::allreduce(...);
   - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
-```c++  
+ 
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
-```
+
  
 </details>
 
@@ -246,10 +246,10 @@ oneccl::allreduce(...);
   - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
-```c++  
+
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
-```
+
  
 </details>
 
@@ -270,10 +270,10 @@ oneccl::allreduce(...);
   - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
-```c++  
+ 
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
-```
+
  
 </details>
 
@@ -292,10 +292,10 @@ oneccl::allreduce(...);
   - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
-```c++  
+ 
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
-```
+
  
 </details>
 
