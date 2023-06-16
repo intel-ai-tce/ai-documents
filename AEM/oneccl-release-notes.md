@@ -80,10 +80,10 @@ Table1
 ## Known issues and limitations
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
-```c++  
+ 
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
-```
+
 - Limitations imposed by Intel® oneAPI DPC++ Compiler:
   - SYCL buffers cannot be used from different queues  
 
