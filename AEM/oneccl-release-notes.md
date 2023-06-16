@@ -129,14 +129,14 @@ Table1
 - no change from previous release.
 
 ## Known issues and limitations
-
-- Limitations imposed by Intel® oneAPI DPC++ Compiler:
-  - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
  
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
+
+- Limitations imposed by Intel® oneAPI DPC++ Compiler:
+  - SYCL buffers cannot be used from different queues  
 
 
 </details>
@@ -180,14 +180,14 @@ Table1
 - Intel® oneAPI Collective Communications Library can be seamlessly integrated with Windows platforms with WSL2 (Windows Subsystem for Linux 2) support
 - Enhanced application stability with runtime dependency check for Level Zero, in Intel® oneAPI Collective Communications Library
 ## Known issues and limitations
-- Limitations imposed by Intel® oneAPI DPC++ Compiler:
-  - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
  
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 
+- Limitations imposed by Intel® oneAPI DPC++ Compiler:
+  - SYCL buffers cannot be used from different queues  
 
 </details>
 
@@ -200,13 +200,14 @@ oneccl::allreduce(...);
 - Added OFI/verbs provider with dmabuf support into package
 - Bug fixes
 ## Known issues and limitations
-
-- Limitations imposed by Intel®  DPC++ compiler:
-  - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
  
 namespace oneccl = ::oneapi::ccl;
+oneccl::allreduce(...);
+
+- Limitations imposed by Intel® oneAPI DPC++ Compiler:
+  - SYCL buffers cannot be used from different queues  
 oneccl::allreduce(...);
 
 </details>
@@ -220,14 +221,14 @@ oneccl::allreduce(...);
 - NIC filtering by name is now supported for OFI-based multi-NIC
 - IPv6 is now supported for key-value store (KVS)
 ## Known issues and limitations
-- Limitations imposed by Intel®  DPC++ compiler:
-  - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
  
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 
+- Limitations imposed by Intel® oneAPI DPC++ Compiler:
+  - SYCL buffers cannot be used from different queues  
  
 </details>
 
@@ -241,14 +242,14 @@ oneccl::allreduce(...);
 - Added OFI/psm3 provider support
 - Bug fixes
 ## Known issues and limitations
-
-- Limitations imposed by Intel®  DPC++ compiler:
-  - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
-
+ 
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
+
+- Limitations imposed by Intel® oneAPI DPC++ Compiler:
+  - SYCL buffers cannot be used from different queues  
 
  
 </details>
@@ -265,14 +266,14 @@ oneccl::allreduce(...);
 - Bug fixes
 
 ## Known issues and limitations
-
-- Limitations imposed by Intel®  DPC++ compiler:
-  - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
  
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
+
+- Limitations imposed by Intel® oneAPI DPC++ Compiler:
+  - SYCL buffers cannot be used from different queues  
 
  
 </details>
@@ -287,14 +288,14 @@ oneccl::allreduce(...);
 - Fixed bugs
 
 ## Known issues and limitations
-
-- Limitations imposed by Intel®  DPC++ compiler:
-  - SYCL buffers cannot be used from different queues
 - The 'using namespace oneapi;' directive is not recommended, as it may result in compilation errors 
 when oneCCL is used with other oneAPI libraries. You can instead create a namespace alias for oneCCL, e.g. 
  
 namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
+
+- Limitations imposed by Intel® oneAPI DPC++ Compiler:
+  - SYCL buffers cannot be used from different queues  
 
  
 </details>
