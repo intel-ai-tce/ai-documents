@@ -41,6 +41,7 @@ Table1
 please see [system requirements](https://www.intel.com/content/www/us/en/developer/articles/system-requirements/oneapi-collective-communication-library-system-requirements.html).
  
 # Previous Releases
+
 <details>
 <summary>2021.8</summary>
 <br>
@@ -84,9 +85,9 @@ namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
 - Limitations imposed by Intel® oneAPI DPC++ Compiler:
-  - SYCL buffers cannot be used from different queues
+  - SYCL buffers cannot be used from different queues  
 
-</details>
+</details> 
 
 <details>
 <summary>2021.7</summary>
