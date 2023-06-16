@@ -286,6 +286,7 @@ namespace oneccl = ::oneapi::ccl;
 oneccl::allreduce(...);
 ```
 </details>
+
 **Notices and Disclaimers**
 
 Intel technologies may require enabled hardware, software or service activation.
