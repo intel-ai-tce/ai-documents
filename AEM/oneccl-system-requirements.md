@@ -1,5 +1,5 @@
 
-# 2023.1 release
+# 2021.10.0 release
 ## Hardware Requirements
 - CPU
     - Intel® Core™ Processor Family
