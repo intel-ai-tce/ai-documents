@@ -37,6 +37,10 @@ Table1
 ## What's New
 - Improved scaling efficiency of the Scaleup algorithms for ReduceScatter
 - Optimize performance of oneCCL scaleup collectives by utilizing the new embedded Data Streaming Accelerator in Intel® 4th Generation Xeon Scalable Processors (formerly code-named Sapphire Rapids)
+## Removals
+- Sockets provider will be removed starting with 2021.10 release
+- Support of Intel® C++ Compiler Classic (icc) will be removed starting with 2021.11 release
+
 ## System Requirements
 please see [system requirements](https://www.intel.com/content/www/us/en/developer/articles/system-requirements/oneapi-collective-communication-library-system-requirements.html).
  
