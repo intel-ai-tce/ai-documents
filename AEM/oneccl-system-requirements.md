@@ -6,7 +6,7 @@
     - Intel® Xeon® Processor Family
     - Intel® Xeon® Scalable Performance Processor Family
 - GPU
-    - Intel® Graphics Technology GEN9 or greater
+    - Intel® Data Center GPU Max Series
 ## Software Requirements
 - Operating Systems:
     - Ubuntu* LTS v20.04 and v22.04
