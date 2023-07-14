@@ -11,19 +11,30 @@ machine learning systems.
 In this document, we'll show how to run Intel MLPerf v3.0 submission with Intel
 optimized Docker images.
 
+## Get the latest MLPerf 3.0 release
+
+Please follow the below commands to get the latest mlperf 3.0 release.
+```
+git clone https://github.com/mlcommons/inference_results_v3.0.git
+cd inference_results_v3.0
+wget https://raw.githubusercontent.com/intel-ai-tce/ai-documents/mlperf_patches/AEM/mlperf/patches/0001-updates-for-3.0-submission.patch
+git am 0001-updates-for-3.0-submission.patch
+```
+
 ## Intel Docker Images for MLPerf
 
 The Intel optimized Docker images for MLPerf v3.0 can be built using the
-Dockerfiles. 
+Dockerfiles.   
+__Please refer to "Build & Run Docker container from Dockerfile" sub-section in each model section.__
 
 Example for building docker image with Dockerfile:
 ```
-cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/resnet50/pytorch-cpu/docker/
+cd inference_results_v3.0/closed/Intel/code/resnet50/pytorch-cpu/docker/
 
 bash build_resnet50_contanier.sh
 ```
 
-## HW configuration:
+## Validated HW configuration:
 
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
@@ -106,9 +117,10 @@ In the following sections, we'll show you how to set up and run each of the six 
 
 
 ## Get Started with 3DUNET
+### Build & Run Docker container from Dockerfile
 If you haven't already done so, build the Intel optimized Docker image for 3DUNET using:
 ```
-cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/3d-unet-99.9/pytorch-cpu/docker
+cd inference_results_v3.0/closed/Intel/code/3d-unet-99.9/pytorch-cpu/docker
 bash build_3dunet_container.sh
 ```
 
@@ -185,7 +197,7 @@ The docker container can be created either by building it using the Dockerfile o
 ### Build & Run Docker container from Dockerfile
 If you haven't already done so, build and run the Intel optimized Docker image for BERT using:
 ```
-cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/bert-99/pytorch-cpu/docker/
+cd inference_results_v3.0/closed/Intel/code/bert-99/pytorch-cpu/docker/
 
 bash build_bert-99_contanier.sh
 ```
@@ -267,14 +279,15 @@ Save these output log files elsewhere when each test is completed as they will b
 ---
 
 ## Get started with DLRM
+### Build & Run Docker container from Dockerfile
 If you haven't already done so, build the Intel optimized Docker image for DLRM using:
 ```
 # Please get compiler first.
-cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/dlrm-99.9
+cd inference_results_v3.0/closed/Intel/code/dlrm-99.9
 wget https://registrationcenter-download.intel.com/akdlm/irc_nas/18679/l_HPCKit_p_2022.2.0.191.sh
 
 # Build docker image
-cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/dlrm-99.9/pytorch-cpu/docker
+cd inference_results_v3.0/closed/Intel/code/dlrm-99.9/pytorch-cpu/docker
 bash build_dlrm-99.9_container.sh
 ```
 
@@ -386,7 +399,7 @@ bash download_imagenet.sh
 ### Build & Run Docker container from Dockerfile
 If you haven't already done so, build and run the Intel optimized Docker image for ResNet50 using:
 ```
-cd /frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/resnet50/pytorch-cpu/docker/
+cd inference_results_v3.0/closed/Intel/code/resnet50/pytorch-cpu/docker/
 
 bash build_resnet50_contanier.sh
 
@@ -521,7 +534,7 @@ mv 'retinanet-model.pth' ${WORKLOAD_DATA}/
 ### Build & Run Docker container from Dockerfile
 If you haven't already done so, build and run the Intel optimized Docker image for Retinanet using:
 ```
-cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/retinanet/pytorch-cpu/docker/
+cd inference_results_v3.0/closed/Intel/code/retinanet/pytorch-cpu/docker/
 
 bash build_retinanet_contanier.sh
 
@@ -601,9 +614,10 @@ Save these output log files elsewhere when each test is completed as they will b
 
 ## Get Started with RNNT
 
+### Build & Run Docker container from Dockerfile
 If you haven't already done so, build the Intel optimized Docker image for RNNT using:
 ```
-cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/rnnt/pytorch-cpu/docker/
+cd inference_results_v3.0/closed/Intel/code/rnnt/pytorch-cpu/docker/
 bash build_rnnt-99_container.sh
 ```
 
