@@ -153,6 +153,7 @@ export https_proxy="your host proxy"
 
 Preprocess the data and download the model using the provided script:
 ```
+pip install numpy==1.23.5
 cd code/3d-unet-99.9/pytorch-cpu/
 bash process_data_model.sh 
 ```
@@ -268,8 +269,12 @@ Save these output log files elsewhere when each test is completed as they will b
 ## Get started with DLRM
 If you haven't already done so, build the Intel optimized Docker image for DLRM using:
 ```
+# Please get compiler first.
+cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/dlrm-99.9
+wget https://registrationcenter-download.intel.com/akdlm/irc_nas/18679/l_HPCKit_p_2022.2.0.191.sh
+
+# Build docker image
 cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/code/dlrm-99.9/pytorch-cpu/docker
-# Please firstly refer to the prerequisite file in the current directory to download the compiler before building the Docker image. 
 bash build_dlrm-99.9_container.sh
 ```
 
@@ -399,10 +404,6 @@ export https_proxy="your host proxy"
 
 Prepare calibration 500 images into folders
 ```
-cd /opt/workdir/vision
-git checkout 8e078971b8aebdeb1746fea58851e3754f103053
-python setup.py install && python setup.py develop
-
 cd /opt/workdir/code/resnet50/pytorch-cpu
 bash prepare_calibration_dataset.sh
 ```
@@ -509,6 +510,7 @@ bash openimages_calibration_mlperf.sh --dataset-path ${WORKLOAD_DATA}/openimages
 ```
 Calibration dataset downloaded to `${WORKLOAD_DATA}/openimages-calibration`
 
+Note: If you meet any obstacles on downloading the dataset, please try again in the docker container to be launched after [Build & Run Docker container from Dockerfile](Build & Run Docker container from Dockerfile).
 
 ### Download Model
 ```
@@ -523,7 +525,7 @@ cd frameworks.ai.benchmarking.mlperf.develop.inference-datacenter/closed/Intel/c
 
 bash build_retinanet_contanier.sh
 
-docker run --name intel_retinanet --privileged -itd --net=host --ipc=host -v ${WORKLOAD_DATA}:/opt/workdir/code/retinanet/pytorch-cpu/data <resnet docker image ID> 
+docker run --name intel_retinanet --privileged -itd --net=host --ipc=host -v ${WORKLOAD_DATA}:/opt/workdir/code/retinanet/pytorch-cpu/data <retinanet docker image ID> 
 
 docker exec -it intel_retinanet bash 
 
