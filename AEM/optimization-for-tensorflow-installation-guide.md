@@ -159,54 +159,20 @@ There are multiple options provided to download Intel® AI Analytics Toolkit, in
   <summary> Install the Intel® Optimization for TensorFlow\* Wheel via PIP </summary>
   <br>
 
-Available for Linux\* and Windows\*
-
-TensorFlow version >= 2.12.0
-
-**Installation instructions for 2.12 and later:**
-
-Run the below instruction to install the wheel into an existing Python\* installation. Python versions supported are  3.8, 3.9, 3.10, 3.11
+Run the below instruction to install the wheel into an existing Python* installation.
+> **Notes:** Starting from 2.12.0, Python versions supported are changed to 3.8, 3.9, 3.10, 3.11 
 
 For Linux\* :
 
-`pip install intel-tensorflow==2.12.0 # or later`
+`pip install intel-tensorflow==2.13.0 # or earlier`
 
-For Windows\*
+For Windows\* (starting from TensorFlow 2.10.0) :
 
-`pip install tensorflow-intel==2.12.0 # or later`
-
-If your machine has AVX512 instruction set supported please use the below packages for better performance.
-
-`pip install intel-tensorflow-avx512==2.12.0  # or later, linux only`
-
-
-TensorFlow version: 2.10.0 - 2.11.0
-
-**Installation instructions for 2.10 and later:**
-
-Run the below instruction to install the wheel into an existing Python\* installation. Python versions supported are  3.7, 3.8, 3.9, 3.10
-
-For Linux\* :
-
-`pip install intel-tensorflow==2.10.0 # or 2.11.0`
-
-For Windows\*
-
-`pip install tensorflow-intel==2.10.0 # or 2.11.0`
+`pip install tensorflow-intel==2.10.0 # or later`
 
 If your machine has AVX512 instruction set supported please use the below packages for better performance.
 
-`pip install intel-tensorflow-avx512==2.10.0 #  or 2.11.0, linux only`
-
-**Installation instructions for 2.9.1 and earlier:**
-
-Run the below instruction to install the wheel into an existing Python\* installation. Python versions supported are  3.7, 3.8, 3.9, 3.10
-
-`pip install intel-tensorflow==2.9.1`
-
-If your machine has AVX512 instruction set supported please use the below packages for better performance.
-
-`pip install intel-tensorflow-avx512==2.9.1 # linux only`
+`pip install intel-tensorflow-avx512==2.13.0  # or earlier, linux only`
 
 **Note: For TensorFlow versions 1.13, 1.14 and 1.15 with pip > 20.0, if you experience invalid wheel error, try to downgrade the pip version to < 20.0**
 
