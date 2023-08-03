@@ -25,6 +25,51 @@ Please check the release page for more information on how to acquire the package
 
 Compatibility Notes
 Component	Compatibility Version
+Intel® Optimization for TensorFlow*	2.13
+Intel® Extension for TensorFlow*	2.13
+Intel® Optimization for PyTorch*	2.0.1
+Intel® Extension for PyTorch*	2.0.110
+Intel® oneCCL Bindings for PyTorch* 	2.0.100
+Intel® Distribution for Python*	3.9
+Intel® Distribution of Modin* 	0.23.0
+Intel® Neural Compressor	2.2
+Model Zoo for Intel® Architecture	2.12
+What's New in AI Analytics Toolkit 2023.2
+The NEW Intel AI Tools Selector beta to discover and install Intel's AI tools, libraries, and frameworks with greater flexibility to meet your needs, including recommendations to match common workflows and custom configurations.
+
+Enhanced TensorFlow performance through a reduction in the number of “cast” operations for bfloat16 models using Intel® Advanced Matrix Extensions (AMX) with the Intel® Extension for TensorFlow.
+
+Accelerate data preprocessing with Pandas 2.0 support in the Intel® Distribution for Modin, combining the latest advancements in Pandas with the benefits of parallel and distributed computing. 
+
+Faster training and inference for AI workloads, increased hardware choice, simpler debug and diagnostics, and support for graph neural network processing, Intel® oneAPI Deep Neural Network Library (oneDNN) now has improved performance optimization for 4th Gen Intel® Xeon® Processors and Intel GPUs, extended diagnostics in verbose mode, and experimental support of Graph Compiler backend for Graph API. 
+
+System Requirements
+Please see system requirements.
+
+How to Start Using the Tools
+Please reference the usage guides for each of the included tools:
+
+Intel® Optimization for TensorFlow* - See Performance Considerations
+Intel® Optimization for PyTorch * - See Performance Considerations
+Known Limitations
+Runtime Out of Memory Error Using GPU
+There is a potential known issue with the cleanup of resources at queue synchronization points in longer running jobs (most likely to show up in multi-tile or multi-device setups) that can lead to resources on the device being used up and causing out of memory errors.  
+
+Workaround
+
+In cases where this is identified, users can use the compiler hotfix available at below links to help address this situation. With this hotfix in place, cleanup of these resources will happen more often, i.e. after certain threshold of the number of allocated resources is hit. While a default value for this has been provided, users can enforce finer grain control through the usage of the environmental variable SYCL_PI_LEVEL_ZERO_COMMANDLISTS_CLEANUP_THRESHOLD.  The value is defined as: If non-negative, then the threshold is set to this value. If negative, the threshold is set to INT_MAX. Whenever the number of command lists in a queue exceeds this threshold, an attempt is made to cleanup completed command lists for their subsequent reuse. The default is 20
+
+Compiler hotfix
+
+Windows: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/5c0da857-a4a2-4b7e-9914-4f2b0994c0ed/2023.1-windows-hotfx.zip
+
+Linux: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/89283df8-c667-47b0-b7e1-c4573e37bd3e/2023.1-linux-hotfix.zip
+
+ 
+2023.1.1
+Compatibility Notes
+
+Component	Compatibility Version
 Intel® Optimization for TensorFlow*	2.12
 Intel® Extension for TensorFlow*	1.2
 Intel® Optimization for PyTorch*	1.13
@@ -35,20 +80,24 @@ Intel® Distribution of Modin* 	0.19.0
 Intel® Neural Compressor	2.1
 Model Zoo for Intel® Architecture	2.11
 What's New in AI Analytics Toolkit 2023.1.1
+
 Intel® Neural Compressor optimizes auto-/multinode-tuning strategy & LLM memory.
 Intel® Distribution of Modin introduces a new, experimental NumPy API.
 Model Zoo for Intel® Architecture adds support for dataset downloader and data connectors.
 Intel® Extension for TensorFlow now supports TensorFlow 2.12 and adds Ubuntu 22.04 and Red Hat Enterprise Linux 8.6 to the list of supported platforms.   
 Intel® Extension for PyTorch is now compatible with oneDNN 3.1 which improves on PyTorch 1.13 operator coverage..
 System Requirements
+
 Please see system requirements.
 
 How to Start Using the Tools
+
 Please reference the usage guides for each of the included tools:
 
 Intel® Optimization for TensorFlow* - See Performance Considerations
 Intel® Optimization for PyTorch * - See Performance Considerations
 Known Limitations
+
 This release of Model Zoo does not support workloads on Intel® Data Center GPU Max Series, but supports workloads on Intel® Data Center GPU Flex Series.
 Runtime Out of Memory Error Using GPU
 There is a potential known issue with the cleanup of resources at queue synchronization points in longer running jobs (most likely to show up in multi-tile or multi-device setups) that can lead to resources on the device being used up and causing out of memory errors.  
@@ -63,7 +112,6 @@ Windows: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/5c0da857-a4
 
 Linux: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/89283df8-c667-47b0-b7e1-c4573e37bd3e/2023.1-linux-hotfix.zip
 
-The Intel® oneAPI Base Toolkit 2023.1 release temporarily caused incompatibilities with the Intel® AI Analytics Toolkit (AI Kit) 2023.1, which necessitated the requirement to continue using the Intel oneAPI Base Toolkit 2023.0. With Intel® AI Analytics Toolkit (AI Kit) 2023.1.1, this issue has been resolved. The Intel AI Analytics Toolkit (AI Kit) 2023.1.1 is now compatible with Intel oneAPI Base Toolkit 2023.1.
  
 2023.1
 Compatibility Notes
