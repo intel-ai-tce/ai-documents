@@ -35,14 +35,14 @@ Supported Installation Options
 | Catagory | Details |  Version |
 | ----------- | ----------- | ----------- |
 | Anaconda | **Linux:** Main Channel |  v2.12.0 |
-|  | **Linux:** Intel Channel | v2.12 |
+|  | **Linux:** Intel Channel | v2.13.0 |
 |  | **Windows**: Main Channel | v2.10.0 |
 |  | **Windows**: Intel Channel | v2.8.0 |
-|  | **MacOS:** Main Channel | v2.11.0 |
-| _PIP Wheels_ | **Linux** | v2.12.0 |
-|  | **Windows** | v2.12.0 |
-| _Docker Containers_ | **Linux:** Intel containers | v2.9.1 |
-|  | **Linux:** Google DL containers | v2.11 |
+|  | **MacOS:** Main Channel | v2.12.0 |
+| _PIP Wheels_ | **Linux** | v2.13.0 |
+|  | **Windows** | v2.13.0 |
+| _Docker Containers_ | **Linux:** Intel containers | v2.12.0 |
+|  | **Linux:** Google DL containers | v2.13.0 |
 | _Build from source_ | **Linux** | NA |
 | _Build from source_ | **Windows** | NA |
 
@@ -63,14 +63,14 @@ Available for Linux\*, Windows\*, MacOS\*
 | -------- | -------- | 
 | Linux\* | 2.12.0 | 
 | Windows\*| 2.10.0 | 
-| MacOS\* | 2.11.0 | 
+| MacOS\* | 2.12.0 | 
 
   
 Installation instructions:
 
 If you don't have conda package manager, download and install [Anaconda](https://docs.anaconda.com/anaconda/install/)
 
-Linux and MacOS
+Linux, MacOS, Windows (after 2.5.0) 
 
 Open Anaconda prompt and use the following instruction
 
@@ -80,7 +80,7 @@ In case your anaconda channel is not the highest priority channel by default(or 
 
 `conda install tensorflow -c anaconda`
 
-Windows
+Windows (2.5.0 and earlier)
 
 Open Anaconda prompt and use the following instruction
 
@@ -99,11 +99,11 @@ Note: All binaries distributed by Intel were built against the TensorFlow versio
 ```
 **Note: please use the following instructions if you install TensorFlow\* v2.8 for missing python-flatbuffers module in TensorFlow\* v2.8.**
 
-Linux and MacOS
+Linux, MacOS, Windows (after 2.5.0) 
 
 `conda install tensorflow python-flatbuffers`
 
-Windows
+Windows (2.5.0 and earlier)
 
 `conda install tensorflow-mkl python-flatbuffers` 
 
@@ -119,7 +119,7 @@ Available for Linux\*, Windows\*
 
 | **OS** | **TensorFlow\* version** | **Python Version** |
 | -------- | -------- | ----------- |
-| Linux\* | 2.12 | 3.9 |
+| Linux\* | 2.13.0 | 3.9 |
 | Windows\*| 2.8.0 | 3.7, 3.8, 3.9 and 3.10 |
 
 
@@ -222,17 +222,17 @@ Please check [#Additional Info](#Additional Info) for differences between Int
 <summary> Google DL Containers </summary>
 <br>
 
-Starting version 1.14, Google released DL containers for TensorFlow on CPU optimized with oneDNN by default. The TensorFlow v1.x CPU container names are in the format "tf-cpu.", TensorFlow v2.x CPU container names are in the format "tf2-cpu." and support Python3. Below are sample commands to download the docker image locally and launch the container for TensorFlow 1.15 or TensorFlow 2.12. Please use one of the following commands at one time.
+Starting version 1.14, Google released DL containers for TensorFlow on CPU optimized with oneDNN by default. The TensorFlow v1.x CPU container names are in the format "tf-cpu.", TensorFlow v2.x CPU container names are in the format "tf2-cpu." and support Python3. Below are sample commands to download the docker image locally and launch the container for TensorFlow 1.15 or TensorFlow 2.13. Please use one of the following commands at one time.
 
 \# TensorFlow 1.15
 
 `docker run -d -p 8080:8080 -v /home:/home gcr.io/deeplearning-platform-release/tf-cpu.1-15`
 
-\# TensorFlow 2.12
+\# TensorFlow 2.13
 
-`docker run -d -p 8080:8080 -v /home:/home gcr.io/deeplearning-platform-release/tf2-cpu.2-12.py310`
+`docker run -d -p 8080:8080 -v /home:/home gcr.io/deeplearning-platform-release/tf2-cpu.2-13.py310`
 
-This command will start the TensorFlow 1.15 or TensorFlow 2.12 with oneDNN enabled in detached mode, bind the running Jupyter server to port 8080 on the local machine, and mount local /home directory to /home in the container. The running JupyterLab instance can be accessed at localhost:8080.
+This command will start the TensorFlow 1.15 or TensorFlow 2.13 with oneDNN enabled in detached mode, bind the running Jupyter server to port 8080 on the local machine, and mount local /home directory to /home in the container. The running JupyterLab instance can be accessed at localhost:8080.
 
 To launch an interactive bash instance of the docker container, run one of the below commands.
 
@@ -240,9 +240,9 @@ To launch an interactive bash instance of the docker container, run one of the b
 
 `docker run -v /home:/home -it gcr.io/deeplearning-platform-release/tf-cpu.1-15 bash`
 
-\# TensorFlow 2.12
+\# TensorFlow 2.13
 
-`docker run -v /home:/home -it gcr.io/deeplearning-platform-release/tf2-cpu.2-12.py310 bash`
+`docker run -v /home:/home -it gcr.io/deeplearning-platform-release/tf2-cpu.2-13.py310 bash`
 
 **Available Container Configurations**
 
