@@ -125,9 +125,13 @@ Available for Linux\*, Windows\*
 
 Installation instructions:
 
-Open Anaconda prompt and use the following instruction. 
+Open Anaconda prompt and use the following instruction.   
 
-`conda install tensorflow -c intel`
+After 2.9 :  
+`conda install intel-tensorflow -c intel`  
+
+2.9 and ealier :  
+`conda install tensorflow -c intel` 
 
 **Note: please use the following instructions if you install TensorFlow\* v2.8 for missing python-flatbuffers module in TensorFlow\* v2.8.**
 
