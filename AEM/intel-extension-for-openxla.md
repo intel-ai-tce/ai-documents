@@ -20,6 +20,8 @@ In this section, we show how to enable JAX applications on Intel GPUs with Intel
 
 1.	Preinstallation Requirements
 
+   * Install Ubuntu\* 22.04 OS
+
    * Install Intel GPU driver
 
       Intel® Data Center GPU Max Series [627.7 driver](https://dgpu-docs.intel.com/releases/stable_627_7_20230526.html)
