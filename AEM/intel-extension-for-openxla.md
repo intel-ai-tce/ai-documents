@@ -6,7 +6,7 @@ OpenXLA is an open-source Machine Learning compiler ecosystem co-developed by AI
 
 <p align="center">Figure 1: Intel® Data Center GPU Max Series 1100 PCIe Card</p>
 
-The PJRT plugin for Intel GPU is based on LLVM + SPIR-V IR code-gen technique.  It integrates with optimizations in oneAPI-powered libraries, such as Intel® oneAPI Deep Neural Network Library (oneDNN) and Intel® oneAPI Math Kernel Library (oneMKL). With the optimizations on linear algebra, operator fusion, layout propagation, etc., developers can speed up their workloads without any device-specific codes. JAX is the first supported front-end. Intel® Extension for OpenXLA\* enables and accelerates training and inference of different scales workloads, including Large Language Models (LLMs) or multi-modal models on Intel GPUs, such as Stable Diffusion. 
+The PJRT plugin for Intel GPU is based on LLVM + SPIR-V IR code-gen technique.  It integrates with optimizations in oneAPI-powered libraries, such as Intel® oneAPI Deep Neural Network Library (oneDNN) and Intel® oneAPI Math Kernel Library (oneMKL). With optimizations on linear algebra, operator fusion, layout propagation, etc., developers can speed up their workloads without any device-specific codes. JAX is the first supported front-end. Intel® Extension for OpenXLA\* enables and accelerates training and inference of different scales workloads on Intel GPUs, including Large Language Models (LLMs) or multi-modal models, etc., such as Stable Diffusion.
 
 <br><div align=center><img src="/content/dam/developer/articles/technical/accelerate-stable-diffusion-on-intel-gpus-with-intel-extension-for-openxla/Intel-Extension-for-OpenXLA-Architecture%20.png"></div>
 
@@ -91,7 +91,7 @@ sudo apt install numactl
 ```
 ### Run Stable Diffusion Inference 
 
-We provide the code file `jax_sd.py` below that you can copy and execute directly. The script is based on the official guide [Stable Diffusion in JAX / Flax](https://huggingface.co/blog/stable_diffusion_jax). It generates images based on a text prompt, such as `Wildlife photography of a cute bunny in the wood, particles, soft-focus, DSLR`. For benchmarking purpose, we do warmup for one-time costs for model creation and JIT compilation. Then we execute actual inference with 10 iterations and print out the average latency, for 1 image with 512 x 512 pixels generated, in a step count of 20 for each iteration. The hyper-parameters are listed in Table 1: the maximum sequence length for prompt is set as default 77 with 768 embedding dimensions each, and the guidance scale is 7.5, and the scheduler is Multistep DPM-Solver (Fast Solver for Guided Sampling of Diffusion Probabilistic Models, [multistep-dpm-solver API in Diffusers](https://huggingface.co/docs/diffusers/api/schedulers/multistep_dpm_solver)).
+Image generation with Stable Diffusion is used for a wide range of use cases, including content creation, product design, gaming, architecture, etc. We provide the code file `jax_sd.py` below that you can copy and execute directly. The script is based on the official guide [Stable Diffusion in JAX / Flax](https://huggingface.co/blog/stable_diffusion_jax). It generates images based on a text prompt, such as `Wildlife photography of a cute bunny in the wood, particles, soft-focus, DSLR`. For benchmarking purpose, we do warmup for one-time costs for model creation and JIT compilation. Then we execute actual inference with 10 iterations and print out the average latency, for 1 image with 512 x 512 pixels generated, in a step count of 20 for each iteration. The hyper-parameters are listed in Table 1: the maximum sequence length for the prompt is set as default 77 with 768 embedding dimensions each, the guidance scale is 7.5, and the scheduler is Multistep DPM-Solver (Fast Solver for Guided Sampling of Diffusion Probabilistic Models, [multistep-dpm-solver API in Diffusers](https://huggingface.co/docs/diffusers/api/schedulers/multistep_dpm_solver)).
 
 <p align="center">Table 1: Text-to-images Generation Configurations in Stable Diffusion</p>
 <table align="center"><tbody>
@@ -181,7 +181,7 @@ images[0].save("img.png")
 ```
 #### Execute the Benchmark on Intel GPUs
 
-Setup environment variable of [affinity mask](https://spec.oneapi.io/level-zero/latest/core/PROG.html#affinity-mask) to utilize 1 stack of the GPU (only for 2-stacks GPU, such as Max 1550 GPU) and use `numactl` to bind the process with GPU affinity NUMA node.
+Set up the environment variable of [affinity mask](https://spec.oneapi.io/level-zero/latest/core/PROG.html#affinity-mask) to utilize 1 stack of the GPU (only for 2-stacks GPU, such as Max 1550 GPU) and use `numactl` to bind the process with GPU affinity NUMA node.
 ```bash
 export ZE_AFFINITY_MASK=0.0
 numactl -N 0 -m 0 python jax_sd.py
@@ -189,9 +189,9 @@ numactl -N 0 -m 0 python jax_sd.py
 
 ## Performance Data
 
-Based on above steps, we measured and collected the Stable Diffusion performance data as demonstrated in Table 2 on 2 SKUs of [Intel® Data Center GPU Max Series](https://www.intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/max-series.html), Max 1550 GPU (600W OAM) and Max 1100 GPU (300W PCIe), respectively. Check out the [Intel® Data Center GPU Max Series Product Brief](https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/data-center-gpu/max-series-gpu-product-brief.html) for details. On both GPUs, we could generate attractive images in less than 1 second with 20 steps! Figure 3 shows the images generated on Intel® Data Center GPU Max Series. 
+Based on the above steps, we measured and collected the Stable Diffusion performance data as demonstrated in Table 2 on 2 SKUs of [Intel® Data Center GPU Max Series](https://www.intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/max-series.html), Max 1550 GPU (600W OAM) and Max 1100 GPU (300W PCIe), respectively. Check out the [Intel® Data Center GPU Max Series Product Brief](https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/data-center-gpu/max-series-gpu-product-brief.html) for details. On both GPUs, we could generate attractive images in less than 1 second with 20 steps! Figure 3 shows the images generated on Intel® Data Center GPU Max Series. 
 
-These benchmarks could be re-run with above procedures or refering to [Stable Diffusion example](https://github.com/intel/intel-extension-for-openxla/tree/main/example/stable_diffusion) to reproduce the results.
+These benchmarks could be re-run with the above procedures or referring to [Stable Diffusion example](https://github.com/intel/intel-extension-for-openxla/tree/main/example/stable_diffusion) to reproduce the results.
 
 <p align="center">Table 2: Stable Diffusion Inference Performance on Intel® Data Center GPU Max Series</p>
 <table align="center"><tbody>
@@ -242,7 +242,7 @@ As a next step, Intel will continue working with Google to adopt the NextPluggab
 
 ## Acknowledgement
 
-We would like to thank Yiqiang Li, Zhoulong Jiang, Guizi Li, Yang Sheng, River Liu from the Intel® Extension for TensorFlow* development team, Ying Hu, Kai Wang, Jianyu Zhang, Huiyan Cao, Feng Ding, Zhaoqiong Zheng, Xigui Wang, etc. from AI support team, and Zhen Han from SCG SCSS Linux&AI E2E team for their contributions to Intel® Extension for OpenXLA*. We also offer special thanks to Sophie Chen, Eric Lin, and Jian Hui Li for their technical discussions and insights, and to collaborators from Google for their professional support and guidance. Finally, we would like to extend our gratitude to Wei Li and Fan Zhao for their great support.
+We would like to thank Yiqiang Li, Zhoulong Jiang, Guizi Li, Yang Sheng, River Liu from the Intel® Extension for TensorFlow* development team, Ying Hu, Kai Wang, Jianyu Zhang, Huiyan Cao, Feng Ding, Zhaoqiong Zheng, Xigui Wang, etc. from AI support team, and Zhen Han from Linux Engineering & AI enabling team for their contributions to Intel® Extension for OpenXLA*. We also offer special thanks to Sophie Chen, Eric Lin, and Jian Hui Li for their technical discussions and insights, and to collaborators from Google for their professional support and guidance. Finally, we would like to extend our gratitude to Wei Li and Fan Zhao for their great support.
 
 ## Benchmarking Hardware and Software Configuration
 
