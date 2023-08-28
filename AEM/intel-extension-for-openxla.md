@@ -181,7 +181,7 @@ images[0].save("img.png")
 ```
 #### Execute the Benchmark on Intel GPUs
 
-Setup environment variable to utilize 1 stack of the GPU (only for 2-stacks GPU, such as Max 1550 GPU) and use `numactl` to bind the process with GPU affinity NUMA node.
+Setup environment variable of [affinity mask](https://spec.oneapi.io/level-zero/latest/core/PROG.html#affinity-mask) to utilize 1 stack of the GPU (only for 2-stacks GPU, such as Max 1550 GPU) and use `numactl` to bind the process with GPU affinity NUMA node.
 ```bash
 export ZE_AFFINITY_MASK=0.0
 numactl -N 0 -m 0 python jax_sd.py
