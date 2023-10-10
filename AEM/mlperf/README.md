@@ -712,6 +712,9 @@ Save these output log files elsewhere when each test is completed as they will b
 ## Complinace Test
 To run compliance test please follow https://github.com/mlcommons/inference/tree/master/compliance/nvidia or use automation script introduced in next section.
 
+<br><br>
+***
+
 # Previous MLPerf v3.0 Submission 
 
 Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v3.0 submission with Intel optimized Docker images.
