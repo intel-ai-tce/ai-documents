@@ -1406,4 +1406,5 @@ Check the appropriate offline or server accuracy log file, either
 ``./logs/Offline/accuracy/.../mlperf_log_summary.txt``:
 
 Save these output log files elsewhere when each test is completed as they will be overwritten by the next test.
+
 </details>
