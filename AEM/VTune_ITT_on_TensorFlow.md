@@ -46,8 +46,21 @@ Simple sample showcasing how to profile with ITT feature
 
 ### Environment Setup
 
+```
+wget https://raw.githubusercontent.com/oneapi-src/oneAPI-samples/master/AI-and-Analytics/Getting-Started-Samples/IntelAIKitContainer_GettingStarted/run_oneapi_docker.sh
+chmod +x run_oneapi_docker.sh
+./run_oneapi_docker.sh intel/oneapi-aikit:2023.2.0-devel-ubuntu22.04
+```
+
+
+
+
 ### Profile simple TensorFlow sample with different profiling type
 [VTune analysis types](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-2/running-command-line-analysis.html)
+
+```
+vtune-backend --allow-remote-access option --data-directory=./
+```
 #### HotSpot Analysis
 ```
 vtune -collect hotspots -data-limit=5000 -knob sampling-mode=hw -knob sampling-interval=0.1  -result-dir r002hs -quiet  python TensorFlow_HelloWorld
