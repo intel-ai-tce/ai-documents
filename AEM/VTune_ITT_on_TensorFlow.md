@@ -63,36 +63,44 @@ vtune-backend --allow-remote-access option --data-directory=./
 ```
 #### HotSpot Analysis
 ```
-vtune -collect hotspots -data-limit=5000 -knob sampling-mode=hw -knob sampling-interval=0.1  -result-dir r002hs -quiet  python TensorFlow_HelloWorld
+vtune -collect hotspots -data-limit=5000 -knob sampling-mode=hw -knob sampling-interval=0.1  -result-dir r001hs -quiet  python TensorFlow_HelloWorld
 ```
+
+<img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/72912f3b-4d8f-4b0e-9a39-ae3bad1cface">
+
 
 #### Threading Analysis
 ```
 ulimit -n 128000; vtune -collect threading -data-limit=5000 -knob sampling-and-waits=hw  -knob sampling-interval=0.1 -result-dir r005tr -quiet  python TensorFlow_HelloWorld.py
 ```
+<img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/1650d20c-9a87-4d9c-b467-6ad04a7bc6f9">
+
 
 #### Microarchitecture Exploration Analysis
 ```
  vtune -collect uarch-exploration -data-limit=5000 -knob sampling-interval=0.1  -result-dir r008ue -quiet  python TensorFlow_HelloWorld.py
 ```
+<img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/6a245d50-f425-4991-b828-975bbe87855f">
 
-#### Microarchitecture Exploration Analysis
-```
- vtune -collect uarch-exploration -data-limit=5000 -knob sampling-interval=0.1  -result-dir r008ue -quiet  python TensorFlow_HelloWorld.py
-```
+
 #### High Performance Compute Analysis
 ```
 vtune -collect hpc-performance -data-limit=5000  -knob sampling-interval=0.1   -result-dir r010hpe -quiet  python TensorFlow_HelloWorld.py
 ```
+<img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/72faaa18-a699-4912-92a8-3725f70b33db">
+
 #### Memory Access Compute Analysis
 ```
 vtune -collect memory-access  -knob sampling-interval=0.1  -result-dir r011ma -quiet  python TensorFlow_HelloWorld.py
 ```
+<img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/46fe75a5-27f2-4238-801d-39805800e74c">
+
 
 #### Memory Consumption Compute Analysis
 ```
 vtune -collect memory-consumption  -data-limit=5000     -result-dir r009mc -quiet  python TensorFlow_HelloWorld.py
 ```
+<img width="700" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/5052fc66-939c-427a-b83e-1f51c8a60fc4">
 
 
 
