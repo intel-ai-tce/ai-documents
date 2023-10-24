@@ -52,81 +52,131 @@ For example, users can understand one inner primitive contains several GPU gen9_
 
 Simple sample showcasing how to profile with ITT feature
 --------------------
+We use a [simple TensorFlow workload](https://github.com/oneapi-src/oneAPI-samples/blob/master/AI-and-Analytics/Getting-Started-Samples/IntelTensorFlow_GettingStarted/TensorFlow_HelloWorld.py) with only convolution and relu operations from oneAPI sample github, and also use oneAPI AI Kit docker image with VTune and TensorFlow conda environment installed.  
+
 
 ### Environment Setup
-
+In this example, we use oneapi-aikit 2023.2 docker image, so users need to use below command to pull the docker image.
+After those commands, users will be in the bash shell with all AI Kit components ready for disposal. 
 ```
 wget https://raw.githubusercontent.com/oneapi-src/oneAPI-samples/master/AI-and-Analytics/Getting-Started-Samples/IntelAIKitContainer_GettingStarted/run_oneapi_docker.sh
 chmod +x run_oneapi_docker.sh
 ./run_oneapi_docker.sh intel/oneapi-aikit:2023.2.0-devel-ubuntu22.04
 ```
+In 2023.2 AI Kit, we have TensorFlow 2.13, and we need to upgrade to TensorFlow 2.14 to have this ITT new feature.
+USers could follow below commands to upgrade TensorFlow version in the docker instance.
 
-
+```
+conda create --name tensorflow-2.14 --clone tensorflow
+source activate tensorflow-2.14
+pip uninstall intel-tensorflow
+pip install tensorflow
+```
 
 
 ### Profile simple TensorFlow sample with different profiling type
-[VTune analysis types](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-2/running-command-line-analysis.html)
+There are different [VTune analysis types](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-2/running-command-line-analysis.html) and we demostrate how to use ITT feature among different profiling types below with the TensorFlow simple workload.
 
+First, get the simple TensorFlow workload and activate tensorflow-2.14 conda environment
 ```
-vtune-backend --allow-remote-access option --data-directory=./
+wget https://raw.githubusercontent.com/oneapi-src/oneAPI-samples/master/AI-and-Analytics/Getting-Started-Samples/IntelTensorFlow_GettingStarted/TensorFlow_HelloWorld.py
+source activate tensorflow-2.14
 ```
-#### HotSpot Analysis
+
+#### 1. HotSpot Analysis
+Analyze application flow and identify sections of code that take a long time to execute (hotspots).  
+Use below command to profile the TensorFlow workload with HotSpot profiling type.  
 ```
 vtune -collect hotspots -data-limit=5000 -knob sampling-mode=hw -knob sampling-interval=0.1  -result-dir r001hs -quiet  python TensorFlow_HelloWorld
 ```
+Once users finish profiling, users could use below command to launch the VTune Web UI and use web browser to view the result.
+```
+vtune-backend --allow-remote-access option --data-directory=./
+```
 
+We suggest to customize grouping for Bottom-up Tab, and group by "Task Domain / Task Type / Function / Call Stack".
+Users could refer to [menu customize grouping](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-2/menu-customize-grouping.html) for detail instructions.  
+For HotSpot profiling type, users could mainly focus on Task Time and Task Count.
 <img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/72912f3b-4d8f-4b0e-9a39-ae3bad1cface">
 
 
-#### Threading Analysis
+#### 2. Threading Analysis
+Collect data on how an application is using available logical CPU cores, discover where parallelism is incurring synchronization overhead, identify where an application is waiting on synchronization objects or I/O operations, and discover how waits affect application performance.  
+Use below command to profile the TensorFlow workload with Threading profiling type. 
 ```
-ulimit -n 128000; vtune -collect threading -data-limit=5000 -knob sampling-and-waits=hw  -knob sampling-interval=0.1 -result-dir r005tr -quiet  python TensorFlow_HelloWorld.py
+ulimit -n 128000; vtune -collect threading -data-limit=5000 -knob sampling-and-waits=hw  -knob sampling-interval=0.1 -result-dir r001tr -quiet  python TensorFlow_HelloWorld.py
 ```
+Once users finish profiling, users could use below command to launch the VTune Web UI and use web browser to view the result.
+```
+vtune-backend --allow-remote-access option --data-directory=./
+```
+We suggest to customize grouping for Bottom-up Tab, and group by "Task Domain / Task Type / Function / Call Stack".
+Users could refer to [menu customize grouping](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-2/menu-customize-grouping.html) for detail instructions.  
+For Threading profiling type, users could mainly focus on Spin Time, Preemption Wait Time and Sunc Wait Time.
 <img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/1650d20c-9a87-4d9c-b467-6ad04a7bc6f9">
 
 
-#### Microarchitecture Exploration Analysis
+#### 3. Microarchitecture Exploration Analysis
+Collect hardware events for analyzing a typical client application. This analysis calculates a set of predefined ratios used for the metrics and facilitates identifying hardware-level performance problems.  
+Use below command to profile the TensorFlow workload with Microarchitecture Exploration profiling type. 
 ```
- vtune -collect uarch-exploration -data-limit=5000 -knob sampling-interval=0.1  -result-dir r008ue -quiet  python TensorFlow_HelloWorld.py
+ vtune -collect uarch-exploration -data-limit=5000 -knob sampling-interval=0.1  -result-dir r001ue -quiet  python TensorFlow_HelloWorld.py
 ```
+Once users finish profiling, users could use below command to launch the VTune Web UI and use web browser to view the result.
+```
+vtune-backend --allow-remote-access option --data-directory=./
+```
+We suggest to customize grouping for Bottom-up Tab, and group by "Task Domain / Task Type / Function / Call Stack".
+Users could refer to [menu customize grouping](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-2/menu-customize-grouping.html) for detail instructions.  
+For Microarchitecture Exploration profiling type, users could mainly focus on L1, L2, L3, DRAM Bound and Core Bound..
 <img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/6a245d50-f425-4991-b828-975bbe87855f">
 
 
-#### High Performance Compute Analysis
+#### 4. High Performance Compute Analysis
+Identify opportunities to optimize CPU, memory, and FPU utilization for compute-intensive or throughput applications. 
+Use below command to profile the TensorFlow workload with Microarchitecture Exploration profiling type.  
 ```
-vtune -collect hpc-performance -data-limit=5000  -knob sampling-interval=0.1   -result-dir r010hpe -quiet  python TensorFlow_HelloWorld.py
+vtune -collect hpc-performance -data-limit=5000  -knob sampling-interval=0.1   -result-dir r001hpe -quiet  python TensorFlow_HelloWorld.py
 ```
+Once users finish profiling, users could use below command to launch the VTune Web UI and use web browser to view the result.
+```
+vtune-backend --allow-remote-access option --data-directory=./
+```
+We suggest to customize grouping for Bottom-up Tab, and group by "Task Domain / Task Type / Function / Call Stack".
+Users could refer to [menu customize grouping](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-2/menu-customize-grouping.html) for detail instructions.  
+For High Performance Compute profiling type, users could mainly focus on Spin Time, Memory Bound, and NUMA Remote Accesses.
 <img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/72faaa18-a699-4912-92a8-3725f70b33db">
 
-#### Memory Access Compute Analysis
+#### 5. Memory Access Analysis
+Identify memory-related issues, like NUMA problems and bandwidth-limited accesses, and attribute performance events to memory objects (data structures), which is provided due to instrumentation of memory allocations/de-allocations and getting static/global variables from symbol information.  
+Use below command to profile the TensorFlow workload with Memory Acces profiling type.  
 ```
-vtune -collect memory-access  -knob sampling-interval=0.1  -result-dir r011ma -quiet  python TensorFlow_HelloWorld.py
+vtune -collect memory-access  -knob sampling-interval=0.1  -result-dir r001ma -quiet  python TensorFlow_HelloWorld.py
 ```
+Once users finish profiling, users could use below command to launch the VTune Web UI and use web browser to view the result.  
+```
+vtune-backend --allow-remote-access option --data-directory=./
+```
+We suggest to customize grouping for Bottom-up Tab, and group by "Task Domain / Task Type / Function / Call Stack".  
+Users could refer to [menu customize grouping](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-2/menu-customize-grouping.html) for detail instructions.  
+For Memory Access profiling type, users could mainly focus on  Memory Bound, and LLC Miss Count.   
 <img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/46fe75a5-27f2-4238-801d-39805800e74c">
 
 
-#### Memory Consumption Compute Analysis
+#### 6. Memory Consumption Analysis
+Analyze memory consumption by your Linux application, its distinct memory objects and their allocation stacks.  
+Use below command to profile the TensorFlow workload with Memory Consumption profiling type.  
 ```
-vtune -collect memory-consumption  -data-limit=5000     -result-dir r009mc -quiet  python TensorFlow_HelloWorld.py
+vtune -collect memory-consumption  -data-limit=5000     -result-dir r001mc -quiet  python TensorFlow_HelloWorld.py
 ```
+Once users finish profiling, users could use below command to launch the VTune Web UI and use web browser to view the result.  
+```
+vtune-backend --allow-remote-access option --data-directory=./
+```
+We suggest to customize grouping for Bottom-up Tab, and group by "Task Domain / Task Type / Function / Call Stack".  
+Users could refer to [menu customize grouping](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/2023-2/menu-customize-grouping.html) for detail instructions.  
+For Memory Consumption profiling type, users could mainly focus on Allocation/Deallocation Delta.   
 <img width="700" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/5052fc66-939c-427a-b83e-1f51c8a60fc4">
 
 
-
-#### Get Intel® Optimization for TensorFlow\* Pre-Built Images
-
-<details>
-  <summary>Install the latest Intel® Optimization for TensorFlow\* from Anaconda\* Cloud</summary>
-  <br>
-Available for Linux\*, Windows\*, MacOS\*
-
-| **OS** | **TensorFlow\* version** | 
-| -------- | -------- | 
-| Linux\* | 2.12.0 | 
-| Windows\*| 2.10.0 | 
-| MacOS\* | 2.12.0 | 
-
-
-
-</details>
 
