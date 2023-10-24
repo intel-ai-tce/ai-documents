@@ -178,5 +178,31 @@ Users could refer to [menu customize grouping](https://www.intel.com/content/www
 For Memory Consumption profiling type, users could mainly focus on Allocation/Deallocation Delta.   
 <img width="700" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/5052fc66-939c-427a-b83e-1f51c8a60fc4">
 
+### Profile Region of Interest by itt-python
+itt-python Python bindings to instrumentation and tracing technology (ITT) APIs for VTune.
+
+#### Environment Setup
+
+```
+conda install -c conda-forge itt-python
+```
+#### Code Changes for Collection and Control
+```
+import itt
+# ... uninteresting code
+itt.resume()
+# ... very interesting code
+itt.pause()
+# ... boring stuff again
+itt.resume()
+# ... interesting code
+itt.detach()
+# ... uninteresting code like writing output (sheesh)
+```
+
+"-start-paused"
+```
+vtune -collect hotspots -start-paused -data-limit=5000 -knob sampling-mode=hw -knob sampling-interval=0.1  -result-dir r001hs -quiet  python TensorFlow_HelloWorld
+```
 
 
