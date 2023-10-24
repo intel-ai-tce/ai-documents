@@ -30,15 +30,24 @@ The advantage of ITT feature is to label time span of individual TensorFlow oper
 How ITT feature benefit TensorFlow Workloads profiling
 --------------------
 
-### Thread Oversubscription
+### 1. get the primitives timeline chart from VTune, and identify any protential performance issue.  
+For below diagrams, you can see convolution, inner production, eltwise and reorder primitives are tagged among 
+threads in the timeline chart. You could identify that there are two reorder operations between eltwise and convolution,  
+those reorder ops could be further reduced to improve performance.
+<img width="1000" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/6fb1844e-53fa-4e6e-aadc-f40840730839">
 
 
-### Thread Spin and Overhead
+### 2. get platform information such as L1/L2 cache miss or level of FP vectorization on primitive level   
+For below diagram, users can group profiling results by Task Types, and then VTune will group information by
+oneDNN primitives tagged as different Task Types.   
+Therefore, users can see platform level detail information like FP vectorization on primitives level.  
+Users can understand performance issues among each oneDNN primitives.  
+![group](https://github.com/intel-ai-tce/ai-documents/assets/21761437/478d8e68-e372-4f3e-baa1-045bb5aeeed4)
 
-
-### Remote NUMA Access
-
-### Memory Leak
+### 3. map primitive with related computation kernels.  
+By tagging primitives, users can also map primitive with computation kernels.  
+For example, users can understand one inner primitive contains several GPU gen9_gemm_nocopy_f32 kernels.  
+![ops_mapping](https://github.com/intel-ai-tce/ai-documents/assets/21761437/caaecea4-ac65-44da-bbaf-659b76c3701e)
 
 
 Simple sample showcasing how to profile with ITT feature
