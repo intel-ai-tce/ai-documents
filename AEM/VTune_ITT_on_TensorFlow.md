@@ -179,14 +179,21 @@ For Memory Consumption profiling type, users could mainly focus on Allocation/De
 <img width="700" alt="image" src="https://github.com/intel-ai-tce/ai-documents/assets/21761437/5052fc66-939c-427a-b83e-1f51c8a60fc4">
 
 ### Profile Region of Interest by itt-python
-itt-python Python bindings to instrumentation and tracing technology (ITT) APIs for VTune.
+For a AI workload, it might take hours to finish one run. 
+We can't and don't need to profile full runs in hours.  
+Therefore, we want to profile only the region of interest in minutes by using itt-python.  
+[itt-python](https://github.com/NERSC/itt-python) contains Python bindings to instrumentation and tracing technology (ITT) APIs for VTune.  
 
 #### Environment Setup
-
+To have itt-python support, users just need to install one [additional python package](https://anaconda.org/conda-forge/itt-python) following below command.  
 ```
 conda install -c conda-forge itt-python
 ```
 #### Code Changes for Collection and Control
+
+To only profile on region of interest, you need to identify the ROI in your codes.  
+After importing itt, you could identify the ROI by itt.resume and itt.detach/itt.pause.  
+Here are some pseudo codes for your reference.  
 ```
 import itt
 # ... uninteresting code
@@ -199,8 +206,8 @@ itt.resume()
 itt.detach()
 # ... uninteresting code like writing output (sheesh)
 ```
-
-"-start-paused"
+Users only need to add an additional arguement "-start-paused" when they start vtune profiling.  
+Here is an example to do hotspot profiling on the simple TensorFlow workload with this Collection and Control feature.  
 ```
 vtune -collect hotspots -start-paused -data-limit=5000 -knob sampling-mode=hw -knob sampling-interval=0.1  -result-dir r001hs -quiet  python TensorFlow_HelloWorld
 ```
