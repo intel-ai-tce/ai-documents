@@ -30,7 +30,59 @@ bash build_resnet50_contanier.sh
 | Memory          | 1024GB (16x64GB 4800MT/s [4800MT/s]) |
 | Disk            | 1TB NVMe                             |
 
-Best Known Configurations:
+## Recommmended BIOS Knobs:
+
+| BIOS Knobs     | Recommended Value                 |
+| --------------- | ------------------------------------ |
+| Hyperthreading  | Enabled                              |
+| Turbo Boost|  Enabled                                |
+| Core Prefetchers         |      Hardware,Adjacent Cache,DCU Streamer,DCU IP                              |
+| LLC Prefetch    |    Disable                            |
+| CPU Power and Perf Policy | Performance |
+| NUMA-based Cluster | Disabled |
+| Energy Perf Bias | Performance |
+| Energy Efficient Turbo | Disabled |
+
+Please also refer to [Eagle Stream Platform Performance & Power Optimization Guide](https://cdrdv2.intel.com/v1/dl/getContent/733546?explicitVersion=true) for more details.
+
+## Check System Health Using Intel® System Health Inspector:
+Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use svr-info first to check any system configuration issue before running any benchmark. Follow [the Quick Start Guide](https://github.com/intel/svr-info#quick-start) for downloading and installation. The following are several key factors effecting the model performance.
+
+<details>
+<summary> CPU </summary>
+Couple CPU features impact MLPerf performance via related BIOS knobs, so please double check the CPU features with your BIOS knobs.
+Some important CPU features are Hyperthreading, number of NUMA nodes, Prefetchers and Intel Turbo Boost.
+<br><img src="BIOS_examples/CPU_setting.png" width="300" height="600"><br>
+</details>
+
+<details>
+<summary> Memory </summary>
+One important system configuration is balanced DIMM population, which is suggested to set as balanced to get optimized performance. <br> 
+Populate as many channels per socket as possible prior to adding additional DIMMs to the channel.   
+It might impact the memory bandwidth if two dimm share one channel. <br>   
+Please also refer to Chapter 4 in <a href="https://cdrdv2.intel.com/v1/dl/getContent/733546?explicitVersion=true">Eagle Stream Platform Performance & Power Optimization Guide</a> for more details.  <br> 
+     
+From the results of svr-info, an example of unbalanced DIMM population is shown as follows,
+<br><img src="BIOS_examples/Unbalanced_DIMM.png" width="300" height="600"><br>
+
+An exmaple of Balanced DIMM population is shown as follows,     
+<br><img src="BIOS_examples/Balanced_DIMM.png" width="300" height="600"><br>
+
+You should also see good numbers for memory NUMA bandwidth if you also benchmark memory via svr-info. <br>
+Here are some reference numbers from a 2S SPR system.
+<br><img src="BIOS_examples/mem_bandwidth.png" width="200" height="150"><br>     
+     
+</details>
+
+<details>
+<summary> Power  </summary>
+We recommend the intel_pstate Frequency Driver. <br>
+For best performance, set the Frequency Governor and Power and Perf Policy to performance. <br>
+Here are related recommended power settings from svr-info. 
+<br><img src="BIOS_examples/power_setting.png" width="400" height="300"><br>
+</details>
+
+## Best Known Configurations:
 
 ```
 sudo bash run_clean.sh
@@ -39,18 +91,24 @@ sudo bash run_clean.sh
 ## Benchmarking using automation scripts
 
 For your convinience, we prepare a set of automation scritps to help you download data, create docker, do data and model preprocessing, run accuracy, performance and compliance test in a batch. Please refer to ./automation/README.md for details about the usage. 
-Example for using automation scripts:
+Example on for using automation scripts:
 ```
 cd <THIS_REPO>/closed/Intel/code/automation/
 
 # Download dataset
-bash download_dataset.sh resnet50 /data/mlperf_data
+bash download_dataset.sh <model> <location>
+# <model> can be resnet50, retinanet, rnnt, 3d-unet-99.9, bert-99, gptj-99, or dlrm2-99.9
+# <location> is where you save the data, which can be /data/mlperf_data
 
 # Test model performance
-PerformanceOnly="True" bash run.sh <model> <location> <postfix>
+PerformanceOnly="True" bash run.sh resnet50 <location>
+
+# Test model Auccuracy
+# Suppose you have done running the performance test workload, you can skip launching docker container and processing the data
+Skip_docker_build="True" Skip_data_proprocess="True" AccuracyOnly="True" bash run.sh resnet50 <location>
 ```
 
-For more details, please refer to the instructions in <THIS_REPO>/closed/Intel/code/automation/README.md.
+For more details, please refer to the instructions in https://github.com/mlcommons/inference_results_v3.1/blob/main/closed/Intel/code/automation/README.md.
 
 If you prefer to understand what the automation scripts do for you, we also provide instructions on how to run model performance/accuracy benchmarking step-by-step in the following sections.
 
