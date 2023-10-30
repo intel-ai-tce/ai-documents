@@ -7,14 +7,16 @@ translation, and others. The benchmark is representative of real-world
 workloads and as a fair and useful way to compare the performance of different
 machine learning systems.
 
-In this document, we'll show how to run Intel MLPerf v3.1 submission with Intel
-optimized Docker images.
+In this document, we'll show how to use the publicly accessible codes and scritps on [GitHub](https://github.com/mlcommons/inference_results_v3.1), which was published by Mlcommons, to run Intel MLPerf v3.1 submission with Intel optimized Docker images. The following contents will refer to this GitHub repository as <THIS_REPO>. 
 
 ## Intel Docker Images for MLPerf
 
 The Intel optimized Docker images for MLPerf v3.1 can be built using the Dockerfiles.
 Example for building docker image with Dockerfile:
 ```
+# Get the mlperf v3.1 workloads scritps from GitHub
+git clone https://github.com/mlcommons/inference_results_v3.1.git
+
 cd <THIS_REPO>/closed/Intel/code/resnet50/pytorch-cpu/docker/
 
 bash build_resnet50_contanier.sh
@@ -93,6 +95,10 @@ sudo bash run_clean.sh
 For your convinience, we prepare a set of automation scritps to help you download data, create docker, do data and model preprocessing, run accuracy, performance and compliance test in a batch. Please refer to ./automation/README.md for details about the usage. 
 Example on for using automation scripts:
 ```
+# Get the mlperf v3.1 workloads scritps from GitHub
+git clone https://github.com/mlcommons/inference_results_v3.1.git
+
+# Go to directory of automation scripts
 cd <THIS_REPO>/closed/Intel/code/automation/
 
 # Download dataset
@@ -101,11 +107,11 @@ bash download_dataset.sh <model> <location>
 # <location> is where you save the data, which can be /data/mlperf_data
 
 # Test model performance
-PerformanceOnly="True" bash run.sh resnet50 <location>
+PerformanceOnly="True" bash run.sh <model> <location>
 
 # Test model Auccuracy
 # Suppose you have done running the performance test workload, you can skip launching docker container and processing the data
-Skip_docker_build="True" Skip_data_proprocess="True" AccuracyOnly="True" bash run.sh resnet50 <location>
+Skip_docker_build="True" Skip_data_proprocess="True" AccuracyOnly="True" bash run.sh <model> <location>
 ```
 
 For more details, please refer to the instructions in https://github.com/mlcommons/inference_results_v3.1/blob/main/closed/Intel/code/automation/README.md.
@@ -116,177 +122,19 @@ If you prefer to understand what the automation scripts do for you, we also prov
 
 In the following sections, we'll show you how to set up and run each of the seven models:
 
-* [3DUNET](#get-started-with-3dunet)
-* [BERT](#get-started-with-bert)
 * [DLRM2](#get-started-with-dlrm2)
 * [GPT-J](#get-started-with-gpt-j)
+* [3DUNET](#get-started-with-3dunet)
+* [BERT](#get-started-with-bert)
 * [RESNET50](#get-started-with-resnet50)
 * [RETINANET](#get-started-with-retinanet)
 * [RNNT](#get-started-with-rnnt)
 
 ---
 
-
-## Get Started with 3DUNET
-If you haven't already done so, build the Intel optimized Docker image for 3DUNET using:
-```
-cd <THIS_REPO>/closed/Intel/code/3d-unet-99.9/pytorch-cpu/docker
-bash build_3dunet_container.sh
-```
-
-### Prerequisites
-Use these commands to prepare the 3DUNET dataset and model on your host system:
-
-```
-mkdir 3dunet
-cd 3dunet
-git clone https://github.com/neheller/kits19
-cd kits19
-pip3 install -r requirements.txt
-python3 -m starter_code.get_imaging
-cd ..
-```
-
-### Set Up Environment
-Follow these steps to set up the docker instance and preprocess the data.
-
-#### Start a Container
-Use ``docker run`` to start a container with the optimized Docker image we pulled earlier.
-Replace ``/path/of/3dunet`` with the 3dunet folder path created earlier:
-```
-docker run --name intel_3dunet --privileged -itd -v /path/to/3dunet:/root/mlperf_data/3dunet-kits --net=host --ipc=host mlperf_inference_3dunet:3.1
-```
-
-#### Login to Docker Instance
-Login into a bashrc shell in the Docker instance.
-```
-docker exec -it intel_3dunet bash
-```
-
-#### Preprocess Data
-If you need a proxy to access the internet, replace ``your host proxy`` with
-the proxy server for your environment.  If no proxy is needed, you can skip
-this step:
-
-```
-export http_proxy="your host proxy"
-export https_proxy="your host proxy"
-```
-
-Preprocess the data and download the model using the provided script:
-```
-cd code/3d-unet-99.9/pytorch-cpu/
-bash process_data_model.sh 
-```
-
-### Run the Benchmark
-
-```
-# 3dunet only has offline mode
-bash run.sh perf # offline performance
-bash run.sh acc  # offline accuracy
-```
-
-### Get the Results
-
-* Check log file. Performance results are in ``./output/mlperf_log_summary.txt``.
-  Verify that you see ``results is: valid``.
-
-* For offline mode performance, check the field ``Samples per second:``
-* Accuracy results are in ``./output/accuracy.txt``.  Check the field ``mean =``.
-* The performance result is controled by the value of "target_qps" in user.conf file. The scripts will automatically select user_default.conf file to calculate corresponding "target_qps" according to the number of sockets on customer's platform. Customers can also manully change the value of "target_qps" in corresponding user.conf files.
-  
-Save these output log files elsewhere when each test is completed as
-they will be overwritten by the next test.
+Note: All the codes and scripts are publicly accissible and can be downloaded from [GitHub](https://github.com/mlcommons/inference_results_v3.1). The following sessions will refer this GitHub repository as <THIS_REPO>.
 
 
-##  Get started with BERT
-The docker container can be created either by building it using the Dockerfile or pulling the image from Dockerhub (if available).
-
-### Build & Run Docker container from Dockerfile
-If you haven't already done so, build and run the Intel optimized Docker image for BERT using:
-```
-cd <THIS_REPO>/closed/Intel/code/bert-99/pytorch-cpu/docker/
-
-bash build_bert-99_contanier.sh
-```
-
-### Prerequisites
-Use these commands to prepare the BERT dataset and model on your host system:
-
-```
-cd /data/mlperf_data   # or path to where you want to store the data
-mkdir bert
-cd bert
-mkdir dataset
-wget https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v1.1.json -O dataset/dev-v1.1.json
-git clone https://huggingface.co/bert-large-uncased model
-cd model
-wget https://zenodo.org/record/4792496/files/pytorch_model.bin?download=1 -O pytorch_model.bin
-```
-Note: wget commands use IPv6 by default, if your system uses IPv4, please add -4 option into the wget command to force it to use IPv4.
-
-### Set Up Environment
-Follow these steps to set up the docker instance and preprocess the data.
-
-#### Start a Container
-Use ``docker run`` to start a container with the optimized Docker image we pulled or built earlier.
-Replace /path/of/bert with the bert folder path created earlier (i.e. /data/mlperf_data/bert):
-
-```
-docker run --name bert_3-1 --privileged -itd --net=host --ipc=host -v /path/of/bert:/data/mlperf_data/bert <bert docker image ID>
-```
-
-#### Login to Docker Instance
-Login into a bashrc shell in the Docker instance.
-```
-docker exec -it bert_3-1 bash
-```
-
-#### Convert Dataset and Model
-If you need a proxy to access the internet, replace ``your host proxy`` with
-the proxy server for your environment.  If no proxy is needed, you can skip
-this step:
-
-```
-export http_proxy="your host proxy"
-export https_proxy="your host proxy"
-```
-
-```
-cd code/bert-99/pytorch-cpu
-export DATA_PATH=/data/mlperf_data/bert
-bash convert.sh
-```
-
-### Run the Benchmark
-
-```
-bash run.sh                    #offline performance
-bash run.sh --accuracy         #offline accuracy
-bash run_server.sh             #server performance
-bash run_server.sh --accuracy  #server accuracy
-```
-
-
-### Get the Results
-
-Check the performance log file ``./test_log/mlperf_log_summary.txt``:
-
-* Verify you see ``results is: valid``.
-* For offline mode performance, check the field ``Samples per second:``
-* For server mode performance, check the field ``Scheduled samples per second:``
-* The performance result is controled by the value of "target_qps" in user.conf file. The scripts will automatically select user_default.conf file to calculate corresponding "target_qps" according to the number of sockets on customer's platform. Customers can also manully change the value of "target_qps" in corresponding user.conf files.
-
-
-Check the accuracy log file ``./test_log/accuracy.txt``.
-
-* Check the field ``f1``
-
-
-Save these output log files elsewhere when each test is completed as they will be overwritten by the next test.
-
----
 
 ## Get started with DLRM2
 If you haven't already done so, build the Intel optimized Docker image for DLRM using:
@@ -466,6 +314,167 @@ bash run_server.sh
 ```
 bash run_server_accuracy.sh
 ```
+
+---
+
+## Get Started with 3DUNET
+If you haven't already done so, build the Intel optimized Docker image for 3DUNET using:
+```
+cd <THIS_REPO>/closed/Intel/code/3d-unet-99.9/pytorch-cpu/docker
+bash build_3dunet_container.sh
+```
+
+### Prerequisites
+Use these commands to prepare the 3DUNET dataset and model on your host system:
+
+```
+mkdir 3dunet
+cd 3dunet
+git clone https://github.com/neheller/kits19
+cd kits19
+pip3 install -r requirements.txt
+python3 -m starter_code.get_imaging
+cd ..
+```
+
+### Set Up Environment
+Follow these steps to set up the docker instance and preprocess the data.
+
+#### Start a Container
+Use ``docker run`` to start a container with the optimized Docker image we pulled earlier.
+Replace ``/path/of/3dunet`` with the 3dunet folder path created earlier:
+```
+docker run --name intel_3dunet --privileged -itd -v /path/to/3dunet:/root/mlperf_data/3dunet-kits --net=host --ipc=host mlperf_inference_3dunet:3.1
+```
+
+#### Login to Docker Instance
+Login into a bashrc shell in the Docker instance.
+```
+docker exec -it intel_3dunet bash
+```
+
+#### Preprocess Data
+If you need a proxy to access the internet, replace ``your host proxy`` with
+the proxy server for your environment.  If no proxy is needed, you can skip
+this step:
+
+```
+export http_proxy="your host proxy"
+export https_proxy="your host proxy"
+```
+
+Preprocess the data and download the model using the provided script:
+```
+cd code/3d-unet-99.9/pytorch-cpu/
+bash process_data_model.sh 
+```
+
+### Run the Benchmark
+
+```
+# 3dunet only has offline mode
+bash run.sh perf # offline performance
+bash run.sh acc  # offline accuracy
+```
+
+### Get the Results
+
+* Check log file. Performance results are in ``./output/mlperf_log_summary.txt``.
+  Verify that you see ``results is: valid``.
+
+* For offline mode performance, check the field ``Samples per second:``
+* Accuracy results are in ``./output/accuracy.txt``.  Check the field ``mean =``.
+* The performance result is controled by the value of "target_qps" in user.conf file. The scripts will automatically select user_default.conf file to calculate corresponding "target_qps" according to the number of sockets on customer's platform. Customers can also manully change the value of "target_qps" in corresponding user.conf files.
+  
+Save these output log files elsewhere when each test is completed as
+they will be overwritten by the next test.
+
+
+##  Get started with BERT
+The docker container can be created either by building it using the Dockerfile or pulling the image from Dockerhub (if available).
+
+### Build & Run Docker container from Dockerfile
+If you haven't already done so, build and run the Intel optimized Docker image for BERT using:
+```
+cd <THIS_REPO>/closed/Intel/code/bert-99/pytorch-cpu/docker/
+
+bash build_bert-99_contanier.sh
+```
+
+### Prerequisites
+Use these commands to prepare the BERT dataset and model on your host system:
+
+```
+cd /data/mlperf_data   # or path to where you want to store the data
+mkdir bert
+cd bert
+mkdir dataset
+wget https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v1.1.json -O dataset/dev-v1.1.json
+git clone https://huggingface.co/bert-large-uncased model
+cd model
+wget https://zenodo.org/record/4792496/files/pytorch_model.bin?download=1 -O pytorch_model.bin
+```
+Note: wget commands use IPv6 by default, if your system uses IPv4, please add -4 option into the wget command to force it to use IPv4.
+
+### Set Up Environment
+Follow these steps to set up the docker instance and preprocess the data.
+
+#### Start a Container
+Use ``docker run`` to start a container with the optimized Docker image we pulled or built earlier.
+Replace /path/of/bert with the bert folder path created earlier (i.e. /data/mlperf_data/bert):
+
+```
+docker run --name bert_3-1 --privileged -itd --net=host --ipc=host -v /path/of/bert:/data/mlperf_data/bert <bert docker image ID>
+```
+
+#### Login to Docker Instance
+Login into a bashrc shell in the Docker instance.
+```
+docker exec -it bert_3-1 bash
+```
+
+#### Convert Dataset and Model
+If you need a proxy to access the internet, replace ``your host proxy`` with
+the proxy server for your environment.  If no proxy is needed, you can skip
+this step:
+
+```
+export http_proxy="your host proxy"
+export https_proxy="your host proxy"
+```
+
+```
+cd code/bert-99/pytorch-cpu
+export DATA_PATH=/data/mlperf_data/bert
+bash convert.sh
+```
+
+### Run the Benchmark
+
+```
+bash run.sh                    #offline performance
+bash run.sh --accuracy         #offline accuracy
+bash run_server.sh             #server performance
+bash run_server.sh --accuracy  #server accuracy
+```
+
+
+### Get the Results
+
+Check the performance log file ``./test_log/mlperf_log_summary.txt``:
+
+* Verify you see ``results is: valid``.
+* For offline mode performance, check the field ``Samples per second:``
+* For server mode performance, check the field ``Scheduled samples per second:``
+* The performance result is controled by the value of "target_qps" in user.conf file. The scripts will automatically select user_default.conf file to calculate corresponding "target_qps" according to the number of sockets on customer's platform. Customers can also manully change the value of "target_qps" in corresponding user.conf files.
+
+
+Check the accuracy log file ``./test_log/accuracy.txt``.
+
+* Check the field ``f1``
+
+
+Save these output log files elsewhere when each test is completed as they will be overwritten by the next test.
 
 ---
 ##  Get Started with ResNet50
