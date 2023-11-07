@@ -7,7 +7,50 @@ The library is designed for easy integration into deep learning (DL) frameworks,
 - Optimized for high performance on Intel® CPUs and GPUs.
 - Allows the tradeoff of compute for communication performance to drive scalability of communication patterns.
 - Enables efficient implementations of collectives that are heavily used for neural network training, including allreduce, and allgather.
-# 2021.10.0 Release
+# 2021.11.0 Release
+## Major Features Supported
+Table1
+
+| Functionality	| Subitems|	CPU	| GPU |
+| ------------- | --------| --- | --- |
+| Collective operations |	Allgatherv |	X	| X |
+||	Allreduce |	X |	X |
+|| 	Alltoall	| X	| X |
+|| 	Alltoallv	| X	| X |
+|| 	Barrier	| X	| X |
+|| 	Broadcast	| X | X |
+|| 	Reduce	| X	| X |
+|| 	ReduceScatter	| X | X |
+|Data types |	[u]int[8, 16, 32, 64] |	X	| X |
+|| 	fp[16, 32, 64], bf16 |X |	X |
+|Scaling |	Scale-up |	X |	X |
+| |	Scale-out |	X |	X |
+| Programming model	| Rank = device	| 1 rank per process |	1 rank per process |
+
+## Service functionality
+- Interoperability with SYCL*:
+  - Construction of oneCCL communicator object based on SYCL context and SYCL device
+  - Construction of oneCCL stream object based on SYCL queue
+  - Construction of oneCCL event object based on SYCL event
+  - Retrieving of SYCL event from oneCCL event associated with oneCCL collective operation
+  - Passing SYCL buffer as source/destination parameter of oneCCL collective operation
+## What's New
+- Added point to point blocking communication operations for send and receive. 
+- Performance optimizations for Reduce-Scatter.
+- Improved profiling with Intel® Instrumentation and Tracing Technology (ITT) profiling level. 
+- Directory layout changes for oneAPI V2
+## Removals
+- Support of Intel® C++ Compiler Classic (icc) is removed 
+
+## System Requirements
+please see [system requirements](https://www.intel.com/content/www/us/en/developer/articles/system-requirements/oneapi-collective-communication-library-system-requirements.html).
+ 
+# Previous Releases
+
+<details>
+<summary>2021.10.0</summary>
+<br>
+
 ## Major Features Supported
 Table1
 
@@ -41,10 +84,8 @@ Table1
 - Sockets provider will be removed starting with 2021.10 release
 - Support of Intel® C++ Compiler Classic (icc) will be removed starting with 2021.11 release
 
-## System Requirements
-please see [system requirements](https://www.intel.com/content/www/us/en/developer/articles/system-requirements/oneapi-collective-communication-library-system-requirements.html).
- 
-# Previous Releases
+
+</details> 
 
 <details>
 <summary>2021.9</summary>
