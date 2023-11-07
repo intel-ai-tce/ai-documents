@@ -1,5 +1,5 @@
 
-# 2021.10.0 release
+# 2021.11.0 release
 ## Hardware Requirements
 - CPU
     - Intel® Core™ Processor Family
@@ -10,8 +10,8 @@
 ## Software Requirements
 - Operating Systems:
     - Ubuntu* LTS v20.04 and v22.04
-    - SUSE* Linux Enterprise Server* 15 SP2 and SP3
-    - Red Hat* Enterprise Linux*  8
+    - SUSE* Linux Enterprise Server* 15 SP4 and SP5
+    - Red Hat* Enterprise Linux*  8 and 9
 - Compilers:
     - GNU*: C, C++ 4.8.5 or higher
     - Intel® C++ Compiler for Linux* OS 19.1 or higher
