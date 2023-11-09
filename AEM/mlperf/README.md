@@ -100,6 +100,26 @@ Here are related recommended power settings from svr-info.
 sudo bash run_clean.sh
 ```
 
+## Known Issues
+
+<details>
+<summary> "Too many open files" error  </summary>
+If users see "Too many open files" error while they build the docker image, the system configuratoin for the max number of open file might be too small.
+
+Users could check the current setting by below command.
+
+```
+sysctl -r fs.file-max
+```
+
+If users see a small value like 10000, users could set a large value such as 980000 by below command.
+
+```
+sysctl -w fs.file-max=980000
+```
+     
+</details>
+
 ## Benchmarking using automation scripts
 
 For your convinience, we prepare a set of automation scritps to help you download data, create docker, do data and model preprocessing, run accuracy, performance and compliance test in a batch. Please refer to ./automation/README.md for details about the usage. 
