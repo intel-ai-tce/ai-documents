@@ -100,6 +100,26 @@ Here are related recommended power settings from svr-info.
 sudo bash run_clean.sh
 ```
 
+## Known Issues
+
+<details>
+<summary> "Too many open files" error  </summary>
+If users see "Too many open files" error while they build the docker image, the system configuratoin for the max number of open file might be too small.
+
+Users could check the current setting by below command.
+
+```
+sysctl -r fs.file-max
+```
+
+If users see a small value like 10000, users could set a large value such as 980000 by below command.
+
+```
+sysctl -w fs.file-max=980000
+```
+     
+</details>
+
 ## Benchmarking using automation scripts
 
 For your convinience, we prepare a set of automation scritps to help you download data, create docker, do data and model preprocessing, run accuracy, performance and compliance test in a batch. Please refer to ./automation/README.md for details about the usage. 
@@ -146,7 +166,11 @@ Note: All the codes and scripts are publicly accissible and can be downloaded fr
 
 
 
-## Get started with DLRM2
+### Get started with DLRM2
+
+<details>
+<summary> step-by-step </summary>
+
 If you haven't already done so, build the Intel optimized Docker image for DLRM using:
 ```
 cd <THIS_REPO>/closed/Intel/code/dlrm-99.9/pytorch-cpu-int8/docker
@@ -256,10 +280,14 @@ source setup_env_server.sh
 bash run_main.sh server accuracy int8    
 ```
 
+</details>
 
----
-## Get Started with GPT-J
 
+### Get Started with GPT-J
+
+<details>
+<summary> step-by-step </summary>
+     
 ### Download and Prepare Dataset
 ```
 export WORKLOAD_DATA=/data/mlperf_data/gpt-j
@@ -325,9 +353,14 @@ bash run_server.sh
 bash run_server_accuracy.sh
 ```
 
----
+</details>
 
-## Get Started with 3DUNET
+
+### Get Started with 3DUNET
+
+<details>
+<summary> step-by-step </summary>
+
 If you haven't already done so, build the Intel optimized Docker image for 3DUNET using:
 ```
 cd <THIS_REPO>/closed/Intel/code/3d-unet-99.9/pytorch-cpu/docker
@@ -399,8 +432,14 @@ bash run.sh acc  # offline accuracy
 Save these output log files elsewhere when each test is completed as
 they will be overwritten by the next test.
 
+</details>
 
-##  Get started with BERT
+
+###  Get started with BERT
+
+<details>
+<summary> step-by-step </summary>
+
 The docker container can be created either by building it using the Dockerfile or pulling the image from Dockerhub (if available).
 
 ### Build & Run Docker container from Dockerfile
@@ -486,8 +525,14 @@ Check the accuracy log file ``./test_log/accuracy.txt``.
 
 Save these output log files elsewhere when each test is completed as they will be overwritten by the next test.
 
----
-##  Get Started with ResNet50
+</details>
+
+
+###  Get Started with ResNet50
+
+<details>
+<summary> step-by-step </summary>
+
 The docker container can be created either by building it using the Dockerfile or pulling the image from Dockerhub (if available). Please download the Imagenet dataset on the host system before starting the container.
 
 ### Download Imagenet Dataset for Calibration
@@ -588,9 +633,13 @@ Check the ``./offline_accuracy.txt`` or ``./server_accuracy.txt`` log file:
 
 Save these output log files elsewhere when each test is completed as they will be overwritten by the next test.
 
----
+</details>
 
-##  Get Started with Retinanet
+
+###  Get Started with Retinanet
+
+<details>
+<summary> step-by-step </summary>
 
 The docker container can be created either by building it using the Dockerfile or pulling the image from Dockerhub (if available). Please download the Imagenet dataset on the host system before starting the container.
 
@@ -703,7 +752,12 @@ Check the ``./accuracy.txt`` log file:
 
 Save these output log files elsewhere when each test is completed as they will be overwritten by the next test.
 
-## Get Started with RNNT
+</details>
+
+### Get Started with RNNT
+
+<details>
+<summary> step-by-step </summary>
 
 If you haven't already done so, build the Intel optimized Docker image for RNNT using:
 ```
@@ -785,6 +839,7 @@ Check the appropriate offline or server accuracy log file, either
 ``./logs/Offline/accuracy/.../mlperf_log_summary.txt``:
 
 Save these output log files elsewhere when each test is completed as they will be overwritten by the next test.
+</details>
 
 ## Complinace Test
 To run compliance test please follow https://github.com/mlcommons/inference/tree/master/compliance/nvidia or use automation script introduced in next section.
