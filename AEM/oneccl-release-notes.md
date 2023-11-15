@@ -21,6 +21,8 @@ Table1
 || 	Broadcast	| X | X |
 || 	Reduce	| X	| X |
 || 	ReduceScatter	| X | X |
+| Point to Point |	Send |	X	| X |
+|| 	Recv	| X	| X |
 |Data types |	[u]int[8, 16, 32, 64] |	X	| X |
 || 	fp[16, 32, 64], bf16 |X |	X |
 |Scaling |	Scale-up |	X |	X |
@@ -38,7 +40,6 @@ Table1
 - Added point to point blocking communication operations for send and receive. 
 - Performance optimizations for Reduce-Scatter.
 - Improved profiling with Intel® Instrumentation and Tracing Technology (ITT) profiling level. 
-- Directory layout changes for oneAPI V2
 ## Removals
 - Support of Intel® C++ Compiler Classic (icc) is removed 
 
