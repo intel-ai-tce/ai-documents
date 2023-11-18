@@ -39,9 +39,9 @@ Supported Installation Options
 |  | **Windows**: Main Channel | v2.10.0 |
 |  | **Windows**: Intel Channel | v2.8.0 |
 |  | **MacOS:** Main Channel | v2.12.0 |
-| _PIP Wheels_ | **Linux** | v2.13.0 |
-|  | **Windows** | v2.13.0 |
-| _Docker Containers_ | **Linux:** Intel containers | v2.12.0 |
+| _PIP Wheels_ | **Linux** | v2.14.0 |
+|  | **Windows** | v2.15.0 |
+| _Docker Containers_ | **Linux:** Intel containers | v2.14.0 |
 |  | **Linux:** Google DL containers | v2.13.0 |
 | _Build from source_ | **Linux** | NA |
 | _Build from source_ | **Windows** | NA |
@@ -140,21 +140,18 @@ After 2.9 :
 </details>
 
 <details>
-  <summary>Install Intel® Optimization for TensorFlow\* from Intel® AI Analytics Toolkit</summary>
+  <summary>Install Intel® Optimization for TensorFlow\* from Intel® AI Tools </summary>
   <br>
 
 Available for Linux\*
 
-TensorFlow\* version: 2.12.0
+TensorFlow\* version: 2.14.0
 
 Installation instructions:
 
-There are multiple options provided to download Intel® AI Analytics Toolkit, including Conda, online/offline installer, repositories and containers.
+There are multiple options provided to download Intel® AI Tools, including Conda, PIP and containers.
 
-*   Installation via [repositories](https://www.intel.com/content/www/us/en/develop/documentation/installation-guide-for-intel-oneapi-toolkits-linux/top/installation/install-using-package-managers/apt.html#apt)
-*   Installation via [Anaconda](https://www.intel.com/content/www/us/en/develop/documentation/installation-guide-for-intel-oneapi-toolkits-linux/top/installation/install-using-package-managers/conda/install-intel-ai-analytics-toolkit-via-conda.html)
-
-**All available download and installation guides can be found [here](https://www.intel.com/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit-download.html?operatingsystem=linux)**
+**All available download and installation guides can be found [here]([https://www.intel.com/content/www/us/en/developer/tools/oneapi/ai-analytics-toolkit-download.html?operatingsystem=linux](https://www.intel.com/content/www/us/en/developer/tools/oneapi/ai-tools-selector.html))**
 
 </details>
 
@@ -164,19 +161,19 @@ There are multiple options provided to download Intel® AI Analytics Toolkit, in
   <br>
 
 Run the below instruction to install the wheel into an existing Python* installation.
-> **Notes:** Starting from 2.12.0, Python versions supported are changed to 3.8, 3.9, 3.10, 3.11 
+> **Notes:** Starting from 2.14.0, Python versions supported are changed to 3.9, 3.10, 3.11 
 
 For Linux\* :
 
-`pip install intel-tensorflow==2.13.0 # or earlier`
+`pip install intel-tensorflow==2.14.0 # or earlier`
 
 For Windows\* (starting from TensorFlow 2.10.0) :
 
-`pip install tensorflow-intel==2.10.0 # or later`
+`pip install tensorflow-intel==2.15.0 # or later`
 
 If your machine has AVX512 instruction set supported please use the below packages for better performance.
 
-`pip install intel-tensorflow-avx512==2.13.0  # or earlier, linux only`
+`pip install intel-tensorflow-avx512==2.14.0  # or earlier, linux only`
 
 **Note: For TensorFlow versions 1.13, 1.14 and 1.15 with pip > 20.0, if you experience invalid wheel error, try to downgrade the pip version to < 20.0**
 
@@ -203,13 +200,13 @@ I tensorflow/core/platform/cpu\_feature\_guard.cc:142\] This TensorFlow binary i
 <br>
 Available for Linux\*
 
-TensorFlow version: 2.12.0
+TensorFlow version: 2.15.0
 
 Installation instructions:
 
-Run the below instruction to install the wheel into an existing Python\* installation. Python versions supported are 3.7, 3.8, 3.9, 3.10
+Run the below instruction to install the wheel into an existing Python\* installation. Python versions supported are 3.9, 3.10, 3.11
 
-`pip install tensorflow==2.12.0`
+`pip install tensorflow==2.15.0`
 
 The oneDNN CPU optimizations are enabled by default.
 
@@ -258,7 +255,7 @@ You can find all supported docker tags/configurations [here](https://cloud.googl
 <summary> Intel Containers at docker.com </summary>
 <br>
 
-Tensorflow Version: 2.12.0
+Tensorflow Version: 2.14.0
 
 These docker images are all published at [http://hub.docker.com](http://hub.docker.com) in [intel/intel-optimized-tensorflow](https://hub.docker.com/r/intel/intel-optimized-tensorflow) and [intel/intel-optimized-tensorflow-avx512](http://hub.docker.com/r/intel/intel-optimized-tensorflow-avx512/tags) namespaces and can be pulled with the following command:
 
@@ -314,7 +311,7 @@ Installation instructions:
 1.  Ensure numpy, keras-applications, keras-preprocessing, pip, six, wheel, mock packages are installed in the Python environment where TensorFlow is being built and installed.
 2.  Clone the TensorFlow source code and checkout a branch of your preference
     *   `git clone https://github.com/tensorflow/tensorflow`
-    *   `git checkout r2.13`
+    *   `git checkout r2.15`
 3.  Run "./configure" from the TensorFlow source directory
 4.  Execute the following commands to create a pip package that can be used to install the optimized TensorFlow build.
     *   PATH can be changed to point to a specific version of GCC compiler:
