@@ -39,9 +39,9 @@ Supported Installation Options
 |  | **Windows**: Main Channel | v2.10.0 |
 |  | **Windows**: Intel Channel | v2.8.0 |
 |  | **MacOS:** Main Channel | v2.12.0 |
-| _PIP Wheels_ | **Linux** | v2.13.0 |
-|  | **Windows** | v2.13.0 |
-| _Docker Containers_ | **Linux:** Intel containers | v2.12.0 |
+| _PIP Wheels_ | **Linux** | v2.14.0 |
+|  | **Windows** | v2.15.0 |
+| _Docker Containers_ | **Linux:** Intel containers | v2.14.0 |
 |  | **Linux:** Google DL containers | v2.13.0 |
 | _Build from source_ | **Linux** | NA |
 | _Build from source_ | **Windows** | NA |
@@ -255,7 +255,7 @@ You can find all supported docker tags/configurations [here](https://cloud.googl
 <summary> Intel Containers at docker.com </summary>
 <br>
 
-Tensorflow Version: 2.12.0
+Tensorflow Version: 2.14.0
 
 These docker images are all published at [http://hub.docker.com](http://hub.docker.com) in [intel/intel-optimized-tensorflow](https://hub.docker.com/r/intel/intel-optimized-tensorflow) and [intel/intel-optimized-tensorflow-avx512](http://hub.docker.com/r/intel/intel-optimized-tensorflow-avx512/tags) namespaces and can be pulled with the following command:
 
@@ -311,7 +311,7 @@ Installation instructions:
 1.  Ensure numpy, keras-applications, keras-preprocessing, pip, six, wheel, mock packages are installed in the Python environment where TensorFlow is being built and installed.
 2.  Clone the TensorFlow source code and checkout a branch of your preference
     *   `git clone https://github.com/tensorflow/tensorflow`
-    *   `git checkout r2.13`
+    *   `git checkout r2.15`
 3.  Run "./configure" from the TensorFlow source directory
 4.  Execute the following commands to create a pip package that can be used to install the optimized TensorFlow build.
     *   PATH can be changed to point to a specific version of GCC compiler:
