@@ -13,7 +13,7 @@ In this document, we'll show how to use the publicly accessible codes and scritp
 
 The Intel optimized Docker images for MLPerf v3.1 can be built using the Dockerfiles.
 Example for building docker image with Dockerfile:
-> **Notice** : please contact aice.mlperf@intel.com to get the latest patches for Intel mlperf inference release from mlcomm github repo
+> **Notice** : please contact aice.mlperf@intel.com or aice@intel.com to get the latest patches for Intel mlperf inference release from mlcomm github repo
 
 ```
 # Get the mlperf v3.1 workloads scritps from GitHub
