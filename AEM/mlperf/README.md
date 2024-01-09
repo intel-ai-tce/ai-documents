@@ -13,12 +13,18 @@ In this document, we'll show how to use the publicly accessible codes and scritp
 
 The Intel optimized Docker images for MLPerf v3.1 can be built using the Dockerfiles.
 Example for building docker image with Dockerfile:
+> **Notice** : please contact aice.mlperf@intel.com to get the latest patches for Intel mlperf inference release from mlcomm github repo
+
 ```
 # Get the mlperf v3.1 workloads scritps from GitHub
 git clone https://github.com/mlcommons/inference_results_v3.1.git
+cd <THIS_REPO>/
 
+# Get the latest patch from Intel to update Dockerfiles
+git am 0001-update-dockerfiles-from-4.0-version.patch
+
+# Use resnet50 docker build as an example to build all docker images
 cd <THIS_REPO>/closed/Intel/code/resnet50/pytorch-cpu/docker/
-
 bash build_resnet50_contanier.sh
 ```
 
