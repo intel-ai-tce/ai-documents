@@ -190,6 +190,11 @@ TypeError: __init__() missing 1 required positional argument: 'status'
 ```
 Solution: start docker serivce before launching the kit.
 
+<details>
+<summary> Performance regression dur to Round Robin MADT core enumeration </summary>
+![mlperf-band](/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Round-Robin.png).   
+  
+<details>
 
 <br><br>
 ***
