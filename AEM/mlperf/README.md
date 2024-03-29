@@ -1052,6 +1052,7 @@ Save these output log files elsewhere when each test is completed as they will b
 
 ## Complinace Test
 To run compliance test please follow https://github.com/mlcommons/inference/tree/master/compliance/nvidia or use automation script introduced in next section.
+<details>
 
 <details>
 <summary> Get Started with Intel MLPerf v3.0 Submission with Intel Optimized Docker Images </summary>
