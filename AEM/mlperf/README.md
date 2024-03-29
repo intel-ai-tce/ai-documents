@@ -192,9 +192,10 @@ Solution: start docker serivce before launching the kit.
 
 <details>
 <summary> Performance regaresssion due to "Round Robin" MADT core enumeration </summary>
+![Round Robin Scheduling](/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Round-Robin.png)  
 Solution: change "Round Robin" scheduling to "Linear"
   
-<details>
+</details>
 
 <br><br>
 ***
