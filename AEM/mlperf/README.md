@@ -190,6 +190,11 @@ TypeError: __init__() missing 1 required positional argument: 'status'
 ```
 Solution: start docker serivce before launching the kit.
 
+<details>
+<summary> Performance regaresssion due to "Round Robin" MADT core enumeration </summary>
+Solution: change "Round Robin" scheduling to "Linear"
+  
+<details>
 
 <br><br>
 ***
