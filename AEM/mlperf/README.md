@@ -67,6 +67,9 @@ Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessi
 Couple CPU features impact MLPerf performance via related BIOS knobs, so please double check the CPU features with your BIOS knobs.
 Some important CPU features are Hyperthreading, number of NUMA nodes, Prefetchers and Intel Turbo Boost.
 <br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/CPU_setting.png" width="300" height="600"><br>
+
+Please also check your CPU tempartures. The CPU temparture should not be higher than 50 degrees C.   
+Overheating will drop the CPU frequency and degrade the MLPerf performance.  
 </details>
 
 <details>
