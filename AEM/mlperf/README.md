@@ -1158,7 +1158,10 @@ Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessi
 <summary> CPU </summary>
 Couple CPU features impact MLPerf performance via related BIOS knobs, so please double check the CPU features with your BIOS knobs.
 Some important CPU features are Hyperthreading, number of NUMA nodes, Prefetchers and Intel Turbo Boost.
-<br><img src="BIOS_examples/CPU_setting.png" width="300" height="600"><br>
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/CPU_setting.png" width="300" height="600"><br>
+
+Please also check your CPU tempartures. The CPU temparture should not be higher than 50 degrees C.   
+Overheating will drop the CPU frequency and degrade the MLPerf performance.  
 </details>
 
 <details>
@@ -1169,14 +1172,14 @@ It might impact the memory bandwidth if two dimm share one channel. <br>
 Please also refer to Chapter 4 in <a href="https://cdrdv2.intel.com/v1/dl/getContent/733546?explicitVersion=true">Eagle Stream Platform Performance & Power Optimization Guide</a> for more details.  <br> 
      
 From the results of svr-info, an example of unbalanced DIMM population is shown as follows,
-<br><img src="BIOS_examples/Unbalanced_DIMM.png" width="300" height="600"><br>
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Unbalanced_DIMM.png" width="300" height="600"><br>
 
 An exmaple of Balanced DIMM population is shown as follows,     
-<br><img src="BIOS_examples/Balanced_DIMM.png" width="300" height="600"><br>
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Balanced_DIMM.png" width="300" height="600"><br>
 
 You should also see good numbers for memory NUMA bandwidth if you also benchmark memory via svr-info. <br>
 Here are some reference numbers from a 2S SPR system.
-<br><img src="BIOS_examples/mem_bandwidth.png" width="200" height="150"><br>     
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/mem_bandwidth.png" width="200" height="150"><br>     
      
 </details>
 
@@ -1185,7 +1188,7 @@ Here are some reference numbers from a 2S SPR system.
 We recommend the intel_pstate Frequency Driver. <br>
 For best performance, set the Frequency Governor and Power and Perf Policy to performance. <br>
 Here are related recommended power settings from svr-info. 
-<br><img src="BIOS_examples/power_setting.png" width="400" height="300"><br>
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/power_setting.png" width="400" height="300"><br>
 </details>
 
 
