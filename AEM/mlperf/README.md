@@ -67,6 +67,17 @@ Here are related recommended power settings from svr-info.
 </details>
 
 ## Prerequisite
+
+###  Get Intel MLPerf 4.0 Inferece package from MLCOMMONS
+Users could get the Intel MLPerf 4.0 Inferece package from https://github.com/mlcommons/inference_results_v4.0 hosted by MLCOMMONS.  
+Please follow below command to get the whole MLPerf 4.0 Inference package
+```bash
+git clone https://github.com/mlcommons/inference_results_v4.0.git
+```
+The Intel MLPerf Inference package is under inference_results_v4.0/closed/Intel folder.  
+The model codes are under code folder, and we recommended users to use automation script to run all models.
+
+### Environment Setup for the automation scripts from Intel Inference package
 We provides a kit to automate data ingestion, preprocessing, testing, log collection and submission checker. It requires the following software:
 * python 3.9/3.10, pip, docker, wget, unzip, rclone, miniconda3/anaconda3
 
@@ -79,7 +90,7 @@ For the option #2 and #3, you need to create the environment and activate it fir
 
 Install the dependencies by:
 ```bash
-cd <THIS_REPO>/closed/Intel/code/automation
+cd inference_results_v4.0/closed/Intel/code/automation
 pip3 install -r requirements.txt
 ```
 
@@ -87,6 +98,11 @@ If your servers are working behind network proxy, please ensure docker proxy and
 * http_proxy, HTTP_PROXY, https_proxy, HTTPS_PROXY, no_proxy, NO_PROXY, ftp_proxy, FTP_PROXY, socks_proxy, SOCKS_PROXY
 
 ## Downloading data and models by using automation scripts
+First, go to automation folder to automate the data and model downloading.
+```bash
+cd inference_results_v4.0/closed/Intel/code/automation
+```
+
 Conda is required for downloading datasets and models. Please install Conda before proceeding. Once Conda is installed, you can download the datasets and models using the following commands:
 ```bash
 model={resnet50,retinanet,rnnt,3d-unet,bert,gpt-j,dlrm_2,stable_diffusion,all} output_dir=<DATA_PATH> conda_path=<CONDA_ROOT_PATH> bash download_data.sh 
@@ -114,6 +130,12 @@ model=gpt-j output_dir=<DATA_PATH> conda_path=<CONDA_ROOT_PATH> dtype=int4 bash 
 
 
 ## Running Models by using automation scripts
+
+First, go to automation folder to run models with scripts.
+```bash
+cd inference_results_v4.0/closed/Intel/code/automation
+```
+
 Customize your test by the following parameters:
 ```bash
 DATA_DIR=<output_dir of download_data.sh>
@@ -196,6 +218,7 @@ python3 run.py -n bert-99 -d ${DATA_DIR}/bert/dataset -m ${DATA_DIR}/bert/model 
 2. Perform submission checker by running:
 
 ```bash
+cd inference_results_v4.0/closed/Intel/code/automation
 export TRUNCATED_OUTPUT_DIR=<a new directory to save truncated logs>
 python3 submission_checker.py -i ${OUTPUT_DIR} -o ${TRUNCATED_OUTPUT_DIR}
 ```
