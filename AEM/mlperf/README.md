@@ -9,7 +9,7 @@ machine learning systems.
 
 
 In this document, we'll show how to run Intel MLPerf v4.0 submission with Intel
-optimized Docker images.
+optimized Docker images and the automation scripts.
 
 ## HW configuration:
 
@@ -33,6 +33,38 @@ optimized Docker images.
 |Hardware P State|Native (based on OS guidance)
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
+
+## Check System Health Using Intel® System Health Inspector:
+Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use svr-info first to check any system configuration issue before running any benchmark. Follow [the Quick Start Guide](https://github.com/intel/svr-info#quick-start) for downloading and installation. The following are several key factors effecting the model performance.
+<details>
+<summary> CPU </summary>
+Couple CPU features impact MLPerf performance via related BIOS knobs, so please double check the CPU features with your BIOS knobs.
+Some important CPU features are Hyperthreading, number of NUMA nodes, Prefetchers and Intel Turbo Boost.
+<br><img src="BIOS_examples/CPU_setting.png" width="300" height="600"><br>
+</details>
+<details>
+<summary> Memory </summary>
+One important system configuration is balanced DIMM population, which is suggested to set as balanced to get optimized performance. <br> 
+Populate as many channels per socket as possible prior to adding additional DIMMs to the channel.   
+It might impact the memory bandwidth if two dimm share one channel. <br>   
+Please also refer to Chapter 4 in <a href="https://cdrdv2.intel.com/v1/dl/getContent/733546?explicitVersion=true">Eagle Stream Platform Performance & Power Optimization Guide</a> for more details.  <br> 
+     
+From the results of svr-info, an example of unbalanced DIMM population is shown as follows,
+<br><img src="BIOS_examples/Unbalanced_DIMM.png" width="300" height="600"><br>
+An exmaple of Balanced DIMM population is shown as follows,     
+<br><img src="BIOS_examples/Balanced_DIMM.png" width="300" height="600"><br>
+You should also see good numbers for memory NUMA bandwidth if you also benchmark memory via svr-info. <br>
+Here are some reference numbers from a 2S SPR system.
+<br><img src="BIOS_examples/mem_bandwidth.png" width="200" height="150"><br>     
+     
+</details>
+<details>
+<summary> Power  </summary>
+We recommend the intel_pstate Frequency Driver. <br>
+For best performance, set the Frequency Governor and Power and Perf Policy to performance. <br>
+Here are related recommended power settings from svr-info. 
+<br><img src="BIOS_examples/power_setting.png" width="400" height="300"><br>
+</details>
 
 ## Prerequisite
 We provides a kit to automate data ingestion, preprocessing, testing, log collection and submission checker. It requires the following software:
@@ -58,18 +90,9 @@ pip3 install -r requirements.txt
 ```
 
 If your servers are working behind network proxy, please ensure docker proxy and the following environment parameters are well configured:
-* http_proxy
-* HTTP_PROXY
-* https_proxy
-* HTTPS_PROXY
-* no_proxy
-* NO_PROXY
-* ftp_proxy
-* FTP_PROXY
-* socks_proxy
-* SOCKS_PROXY
+* http_proxy, HTTP_PROXY, https_proxy, HTTPS_PROXY, no_proxy, NO_PROXY, ftp_proxy, FTP_PROXY, socks_proxy, SOCKS_PROXY
 
-## Downloading data and models
+## Downloading data and models by using automation scripts
 Conda is required for downloading datasets and models. Please install Conda before proceeding. Once Conda is installed, you can download the datasets and models using the following commands:
 ```bash
 model={resnet50,retinanet,rnnt,3d-unet,bert,gpt-j,dlrm_2,stable_diffusion,all} output_dir=<DATA_PATH> conda_path=<CONDA_ROOT_PATH> bash download_data.sh 
@@ -96,7 +119,7 @@ model=gpt-j output_dir=<DATA_PATH> conda_path=<CONDA_ROOT_PATH> dtype=int4 bash 
 ```
 
 
-## Launching test
+## Running Models by using automation scripts
 Customize your test by the following parameters:
 ```bash
 DATA_DIR=<output_dir of download_data.sh>
