@@ -68,13 +68,7 @@ Here are related recommended power settings from svr-info.
 
 ## Prerequisite
 We provides a kit to automate data ingestion, preprocessing, testing, log collection and submission checker. It requires the following software:
-* python 3.9/3.10
-* pip
-* docker
-* wget
-* unzip
-* rclone
-* miniconda3/anaconda3
+* python 3.9/3.10, pip, docker, wget, unzip, rclone, miniconda3/anaconda3
 
 Note that the following approaches are supported for installing dependencies:
 1. Install directly
