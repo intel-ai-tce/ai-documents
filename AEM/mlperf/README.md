@@ -1,4 +1,4 @@
-# Get Started with Intel MLPerf v4.0 Submission with Intel Optimized Docker Images
+# Get Started with Intel MLPerf v4.1 Submission with Intel Optimized Docker Images
 
 MLPerf is a benchmark for measuring the performance of machine learning
 systems. It provides a set of performance metrics for a variety of machine
@@ -8,7 +8,7 @@ workloads and as a fair and useful way to compare the performance of different
 machine learning systems.
 
 
-In this document, we'll show how to run Intel MLPerf v4.0 submission with Intel
+In this document, we'll show how to run Intel MLPerf v4.1 submission with Intel
 optimized Docker images and the automation scripts.
 
 ## HW configuration:
@@ -69,34 +69,11 @@ Here are related recommended power settings from svr-info.
 <br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/power_setting.png" width="400" height="300"><br>   
 </details>
 
-## Published Performance Numbers
-
-All performance numbers are published in https://mlcommons.org/benchmarks/inference-datacenter/
-Here are submitted numbers on Intel 5th gen Xeon scalable server processor (EMR) from different organizations.
-| | | | |3d-unet-99.9|bert-99| |dlrm-v2-99.9| |gptj-99| |resnet| |retinanet| |rnnt| |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| | | | |Offline|Offline|Server|Offline|Server|Offline|Server|Offline|Server|Offline|Server|Offline|Server|
-|Organization|System Name (click + for details)|Host Processor Core Count|Processor|Samples/s|Samples/s|Queries/s|Samples/s|Queries/s|Samples/s|Queries/s|Samples/s|Queries/s|Samples/s|Queries/s|Samples/s|Queries/s|
-|Intel|1-node-2S-EMR-PyTorch|64|INTEL(R) XEON(R) PLATINUM 8592+|2.02|1,668.50|1,318.51|9,111.08|8,993.63|3.61|1.64|25,289.60|19,807.20|371.08|274.28|8,679.48|5,797.60|
-|Cisco|1-node-2S-C240M7-EMR-PyTorch-INT8|64|Intel(R) Xeon(R) Platinum 8592+| |1,693.17|1,318.51| | |2.39|1.03|25,704.90|19,807.20|389.26|303.84|8,904.66|5,797.60|
-|Dell|Dell PowerEdge R760|64|Intel(R) Xeon(R) Platinum 8592+|1.95|1,701.39|1,318.51|9,239.74|8,993.63|2.37|1.03|25,016.00|19,807.20|382.64|299.00|8,745.76|5,797.60|
-|Quanta_Cloud_Technology|1-node-2S-EMR-PyTorch-INT8|64|Intel(R) Xeon(R) Platinum 8592+|2.04|1,660.75|1,288.54|9,245.77|8,193.78|2.29|1.03|25,173.00|23,198.70|379.78|279.30|8,463.18|5,797.60|
-|Supermicro|1-node-2S-EMR-PyTorch-INT8|56|Intel(R) Xeon(R) Platinum 8592+|1.97| | | | | | |24,146.00|19,807.20| | | | |
-|Wiwynn|Wiwynn ES200G2 (1-node-1S-EMR-PyTorch)|32|INTEL(R) XEON(R) GOLD 6538Y+|0.67|467.94|328.85| | |0.64|0.26|7,402.87|4,951.10|109.10|61.23|2,195.42|1,448.78|
-
-
 
 
 ## Prerequisite
 
-###  Get Intel MLPerf 4.0 Inferece package from MLCOMMONS
-Users could get the Intel MLPerf 4.0 Inferece package from https://github.com/mlcommons/inference_results_v4.0 hosted by MLCOMMONS.  
-Please follow below command to get the whole MLPerf 4.0 Inference package
-```bash
-git clone https://github.com/mlcommons/inference_results_v4.0.git
-```
-The Intel MLPerf Inference package is under inference_results_v4.0/closed/Intel folder.  
-The model codes are under code folder, and we recommended users to use automation script to run all models.
+
 
 ### Environment Setup for the automation scripts from Intel Inference package
 We provides a kit to automate data ingestion, preprocessing, testing, log collection and submission checker. It requires the following software:
@@ -266,7 +243,7 @@ Solution: change "Round Robin" scheduling to "Linear"
 Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v4.0, v3.1 and v3.0 submission with Intel optimized Docker images.
 
 <details>
-<summary> Get Started with Intel MLPerf v3.1 Submission with Intel Optimized Docker Images </summary>
+<summary> Get Started with Intel MLPerf v4.0 Submission with Intel Optimized Docker Images </summary>
 
 # Get Started with Intel MLPerf v4.0 Submission with Intel Optimized Docker Images
 
