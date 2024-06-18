@@ -9,7 +9,7 @@ machine learning systems.
 
 
 In this document, we'll show how to run Intel MLPerf v4.1 submission with Intel
-optimized Docker images and the automation scripts.
+optimized Docker images and the prepared scripts.
 
 ## HW configuration:
 
