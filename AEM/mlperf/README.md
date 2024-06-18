@@ -261,9 +261,277 @@ Solution: change "Round Robin" scheduling to "Linear"
 <br><br>
 ***
 
-# Previous MLPerf v3.0 and v3.1 Submission 
+# Previous MLPerf v4.0, v3.1 and v3.0 Submission 
 
-Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v3.0 and v3.1 submission with Intel optimized Docker images.
+Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v4.0, v3.1 and v3.0 submission with Intel optimized Docker images.
+
+<details>
+<summary> Get Started with Intel MLPerf v3.1 Submission with Intel Optimized Docker Images </summary>
+
+# Get Started with Intel MLPerf v4.0 Submission with Intel Optimized Docker Images
+
+MLPerf is a benchmark for measuring the performance of machine learning
+systems. It provides a set of performance metrics for a variety of machine
+learning tasks, including image classification, object detection, machine
+translation, and others. The benchmark is representative of real-world
+workloads and as a fair and useful way to compare the performance of different
+machine learning systems.
+
+
+In this document, we'll show how to run Intel MLPerf v4.0 submission with Intel
+optimized Docker images and the automation scripts.
+
+## HW configuration:
+
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ |
+| CPU             | Intel 5th gen Xeon scalable server processor (EMR)   
+| OS              | CentOS  Stream 8                     |
+| Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
+| Memory          | 1024GB (16x64GB 5600MT/s [5600MT/s]) |
+| Disk            | 1TB NVMe                             |
+
+## BIOS settings:
+| BIOS setting    | Recommended value                    |
+| --------------- | ------------------------------------ |
+|Hyperthreading|Enabled
+|Turbo Boost|Enabled
+|Core Prefetchers|Hardware,Adjacent Cache,DCU Streamer,DCU IP
+|LLC Prefetch|Disable
+|CPU Power and Perf Policy|Performance
+|NUMA-based Cluster|SNC2
+|Hardware P State|Native (based on OS guidance)
+|Energy Perf Bias|OS Controls EPB
+|Energy Efficient Turbo|Disabled
+
+## Check System Health Using Intel® System Health Inspector:
+Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use svr-info first to check any system configuration issue before running any benchmark. Follow [the Quick Start Guide](https://github.com/intel/svr-info#quick-start) for downloading and installation. The following are several key factors effecting the model performance.
+<details>
+<summary> CPU </summary>
+Couple CPU features impact MLPerf performance via related BIOS knobs, so please double check the CPU features with your BIOS knobs.
+Some important CPU features are Hyperthreading, number of NUMA nodes, Prefetchers and Intel Turbo Boost.
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/CPU_setting.png" width="300" height="600"><br>
+     
+Please also check your CPU tempartures. The CPU temparture should not be higher than 50 degrees C.   
+Overheating will drop the CPU frequency and degrade the MLPerf performance.  
+</details>
+<details>
+<summary> Memory </summary>
+One important system configuration is balanced DIMM population, which is suggested to set as balanced to get optimized performance. <br> 
+Populate as many channels per socket as possible prior to adding additional DIMMs to the channel.   
+It might impact the memory bandwidth if two dimm share one channel. <br>   
+Please also refer to Chapter 4 in <a href="https://cdrdv2.intel.com/v1/dl/getContent/733546?explicitVersion=true">Eagle Stream Platform Performance & Power Optimization Guide</a> for more details.  <br> 
+     
+From the results of svr-info, an example of unbalanced DIMM population is shown as follows,
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Unbalanced_DIMM.png" width="300" height="600"><br>   
+An exmaple of Balanced DIMM population is shown as follows,     
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Balanced_DIMM.png"  width="300" height="600"><br> 
+You should also see good numbers for memory NUMA bandwidth if you also benchmark memory via svr-info. <br>
+Here are some reference numbers from a 2S SPR system.  
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/mem_bandwidth.png" width="300" height="600"><br>  
+     
+</details>
+<details>
+<summary> Power  </summary>
+We recommend the intel_pstate Frequency Driver. <br>
+For best performance, set the Frequency Governor and Power and Perf Policy to performance. <br>
+Here are related recommended power settings from svr-info. 
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/power_setting.png" width="400" height="300"><br>   
+</details>
+
+## Published Performance Numbers
+
+All performance numbers are published in https://mlcommons.org/benchmarks/inference-datacenter/
+Here are submitted numbers on Intel 5th gen Xeon scalable server processor (EMR) from different organizations.
+| | | | |3d-unet-99.9|bert-99| |dlrm-v2-99.9| |gptj-99| |resnet| |retinanet| |rnnt| |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | | | |Offline|Offline|Server|Offline|Server|Offline|Server|Offline|Server|Offline|Server|Offline|Server|
+|Organization|System Name (click + for details)|Host Processor Core Count|Processor|Samples/s|Samples/s|Queries/s|Samples/s|Queries/s|Samples/s|Queries/s|Samples/s|Queries/s|Samples/s|Queries/s|Samples/s|Queries/s|
+|Intel|1-node-2S-EMR-PyTorch|64|INTEL(R) XEON(R) PLATINUM 8592+|2.02|1,668.50|1,318.51|9,111.08|8,993.63|3.61|1.64|25,289.60|19,807.20|371.08|274.28|8,679.48|5,797.60|
+|Cisco|1-node-2S-C240M7-EMR-PyTorch-INT8|64|Intel(R) Xeon(R) Platinum 8592+| |1,693.17|1,318.51| | |2.39|1.03|25,704.90|19,807.20|389.26|303.84|8,904.66|5,797.60|
+|Dell|Dell PowerEdge R760|64|Intel(R) Xeon(R) Platinum 8592+|1.95|1,701.39|1,318.51|9,239.74|8,993.63|2.37|1.03|25,016.00|19,807.20|382.64|299.00|8,745.76|5,797.60|
+|Quanta_Cloud_Technology|1-node-2S-EMR-PyTorch-INT8|64|Intel(R) Xeon(R) Platinum 8592+|2.04|1,660.75|1,288.54|9,245.77|8,193.78|2.29|1.03|25,173.00|23,198.70|379.78|279.30|8,463.18|5,797.60|
+|Supermicro|1-node-2S-EMR-PyTorch-INT8|56|Intel(R) Xeon(R) Platinum 8592+|1.97| | | | | | |24,146.00|19,807.20| | | | |
+|Wiwynn|Wiwynn ES200G2 (1-node-1S-EMR-PyTorch)|32|INTEL(R) XEON(R) GOLD 6538Y+|0.67|467.94|328.85| | |0.64|0.26|7,402.87|4,951.10|109.10|61.23|2,195.42|1,448.78|
+
+
+
+
+## Prerequisite
+
+###  Get Intel MLPerf 4.0 Inferece package from MLCOMMONS
+Users could get the Intel MLPerf 4.0 Inferece package from https://github.com/mlcommons/inference_results_v4.0 hosted by MLCOMMONS.  
+Please follow below command to get the whole MLPerf 4.0 Inference package
+```bash
+git clone https://github.com/mlcommons/inference_results_v4.0.git
+```
+The Intel MLPerf Inference package is under inference_results_v4.0/closed/Intel folder.  
+The model codes are under code folder, and we recommended users to use automation script to run all models.
+
+### Environment Setup for the automation scripts from Intel Inference package
+We provides a kit to automate data ingestion, preprocessing, testing, log collection and submission checker. It requires the following software:
+* python 3.9/3.10, pip, docker, wget, unzip, rclone, miniconda3/anaconda3
+
+Note that the following approaches are supported for installing dependencies:
+1. Install directly
+2. Install in a conda environment
+3. Install in a python virtual environment
+
+For the option #2 and #3, you need to create the environment and activate it first before installation.
+
+Install the dependencies by:
+```bash
+cd inference_results_v4.0/closed/Intel/code/automation
+pip3 install -r requirements.txt
+```
+
+If your servers are working behind network proxy, please ensure docker proxy and the following environment parameters are well configured:
+* http_proxy, HTTP_PROXY, https_proxy, HTTPS_PROXY, no_proxy, NO_PROXY, ftp_proxy, FTP_PROXY, socks_proxy, SOCKS_PROXY
+
+## Downloading data and models by using automation scripts
+First, go to automation folder to automate the data and model downloading.
+```bash
+cd inference_results_v4.0/closed/Intel/code/automation
+```
+
+Conda is required for downloading datasets and models. Please install Conda before proceeding. Once Conda is installed, you can download the datasets and models using the following commands:
+```bash
+model={resnet50,retinanet,rnnt,3d-unet,bert,gpt-j,dlrm_2,stable_diffusion,all} output_dir=<DATA_PATH> conda_path=<CONDA_ROOT_PATH> bash download_data.sh 
+```
+Parameters:
+* model: specify a model name, `all` means all models.
+* output_dir: the directory to persist data and model.
+* conda_path: optional, ${HOME}/miniconda3 by default, root path of your conda, used by 3d-unet, retinanet and gpt-j only.
+* dtype: optional, int8 by default, data preicision, currently unused
+
+Download data for all models by using the following command:
+```bash
+model=all output_dir=<DATA_PATH> conda_path=<CONDA_ROOT_PATH> bash download_data.sh
+```
+
+For specific models, e.g. gpt-j, DLRMv2 and Stable Diffusion, Rclone is needed. If you don't have Rclone already installed, you can install it on Linux/MacOS with one simple command:
+```bash
+sudo -v ; curl https://rclone.org/install.sh | sudo bash  
+```
+
+For specific worload, e.g. gpt-j int4, use the following command:
+```bash
+model=gpt-j output_dir=<DATA_PATH> conda_path=<CONDA_ROOT_PATH> dtype=int4 bash download_data.sh  
+```
+
+
+## Running Models by using automation scripts
+
+First, go to automation folder to run models with scripts.
+```bash
+cd inference_results_v4.0/closed/Intel/code/automation
+```
+
+Customize your test by the following parameters:
+```bash
+DATA_DIR=<output_dir of download_data.sh>
+OUTPUT_DIR=<The directory to save logs and results>
+SUFFIX=<suffix to avoid duplicate container names>
+```
+Create output diretory if it does not exist:
+```bash
+mkdir -p ${OUTPUT_DIR}
+```
+Launch complete benchmark by using the following commands:
+| Benchmark              | Hardware    | Precision   | Command                                                                                                                                                 |
+|:-----------------------|:------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 3d-unet-99.9           | CPU         | int8        | `python3 run.py -n 3d-unet-99.9 -d ${DATA_DIR} -m ${DATA_DIR} -t ${OUTPUT_DIR} -x ${SUFFIX}`                                                            |
+| bert-99                | CPU         | int8        | `python3 run.py -n bert-99 -d ${DATA_DIR}/bert/dataset -m ${DATA_DIR}/bert/model -t ${OUTPUT_DIR} -x ${SUFFIX}`                                         |
+| dlrm-v2-99.9           | CPU         | int8        | `python3 run.py -n dlrm-v2-99.9 -i pytorch-cpu-int8 -d ${DATA_DIR}/dlrm_2/data -m ${DATA_DIR}/dlrm_2/model -t ${OUTPUT_DIR} -x ${SUFFIX}`             |
+| gptj-99                | CPU         | int4        | `python3 run.py -n gptj-99 -d ${DATA_DIR}/gpt-j/data -m ${DATA_DIR}/gpt-j/data -t ${OUTPUT_DIR} -y int4 -x ${SUFFIX}`                                   |
+| rnnt                   | CPU         | mix         | `python3 run.py -n rnnt -d ${DATA_DIR}/rnnt/mlperf-rnnt-librispeech -m ${DATA_DIR}/rnnt/mlperf-rnnt-librispeech -t ${OUTPUT_DIR} -y mix -x ${SUFFIX}`   |
+| resnet50               | CPU         | int8        | `python3 run.py -n resnet50 -d ${DATA_DIR}/resnet50 -m ${DATA_DIR}/resnet50 -t ${OUTPUT_DIR} -x ${SUFFIX}`                                              |
+| retinanet              | CPU         | int8        | `python3 run.py -n retinanet -d ${DATA_DIR}/retinanet/data -m ${DATA_DIR}/retinanet/data -t ${OUTPUT_DIR} -x ${SUFFIX}`                                 |
+
+More options to customize your tests:
+```
+usage: run.py [-h] -n {rnnt,bert-99,3d-unet-99.9,resnet50,retinanet,dlrm-v2-99.9}
+              [-i IMPLEMENTATION] [-y {int8,bf16,fp16,int4,fp32,mix}] -d DATASET -m MODEL_DIR
+              -t OUTPUT -x CONTAINER_NAME_SUFFIX [-p] [-a] [-o] [-s] [-c] [-b] [-r] [-z]
+
+options:
+  -h, --help            show this help message and exit
+  -n {rnnt,bert-99,3d-unet-99.9,resnet50,retinanet,dlrm-v2-99.9}, --model {rnnt,bert-99,3d-unet-99.9,resnet50,retinanet,dlrm-v2-99.9}
+                        Benchmarking model
+  -i IMPLEMENTATION, --implementation IMPLEMENTATION
+                        Implementation id
+  -y {int8,bf16,fp16,int4,fp32,mix}, --dtype {int8,bf16,fp16,int4,fp32,mix}
+                        Precision
+  -d DATASET, --dataset-dir DATASET_DIR
+                        path of the datasets
+  -m MODEL_DIR, --model-dir MODEL_DIR
+                        path of the models
+  -t OUTPUT, --output OUTPUT
+                        path of the outputs
+  -x CONTAINER_NAME_SUFFIX, --container-name-suffix CONTAINER_NAME_SUFFIX
+                        The suffix of docker container name, used for avoiding name conflicts.
+  -p, --performance-only
+                        The option of running performance test only.
+  -a, --accuracy-only   The option of running accuracy test only.
+  -o, --offline-only    The option of running offline scenario only.
+  -s, --server-only     The option of running server scenario only.
+  -c, --compliance-only
+                        The option of running compliance test only.
+  -b, --skip-docker-build
+                        The option of skipping building docker image.
+  -u, --skip-create-container
+                        The option of skipping docker build and container creation.  
+  -r, --skip-data-preprocess
+                        The option of skipping data preprocessing.
+  -z, --ci-run
+                        The option of running ci testings
+```
+To save time, rerun a benchmark directly within a running container without rebuilding the Docker image, creating the container and data preprocessing. For example, to rerun the bert-99 benchmark, use this command:
+```bash
+python3 run.py -n bert-99 -d ${DATA_DIR}/bert/dataset -m ${DATA_DIR}/bert/model -t ${OUTPUT_DIR} -x ${SUFFIX} -u -r
+```
+
+You can run a specific test of a benchmark in a specific mode. E.g. run bert-99 accuracy test at Offline mode by using the following command:
+```bash
+python3 run.py -n bert-99 -d ${DATA_DIR}/bert/dataset -m ${DATA_DIR}/bert/model -t ${OUTPUT_DIR} -x ${SUFFIX} -o -a
+```
+
+## Test outputs
+* Runtime log: `mlperf.log` 
+* Preprocessing log: `${OUTPUT_DIR}/preproc_<benchmark>_<implementation>_<precision>.log` 
+* Results of Performance/Accuracy run: `${OUTPUT_DIR}/<division>/Intel/results/<system_desc_id>/<benchmark>/<scenario>` 
+* Results of compliance test: `${OUTPUT_DIR}/<division>/Intel/compliance/<system_desc_id>/<benchmark>/<scenario>/<test_id>` 
+* Measurments: `${OUTPUT_DIR}/<division>/Intel/measurements/<system_desc_id>/<benchmark>/<scenario>` 
+* Runtime environment: `${OUTPUT_DIR}/env_<benchmark>_<impl>_<dtype>.log`
+
+## Performing Submission Checker
+1. Create `${OUTPUT_DIR}/<division>/<orgnization>/systems` directory, and within it, create the `<system_desc_id>.json` and `<system_desc_id>_<implementation_id>_<scenario>.json` files according to [submission rules](https://github.com/mlcommons/policies/blob/master/submission_rules.adoc).
+2. Perform submission checker by running:
+
+```bash
+cd inference_results_v4.0/closed/Intel/code/automation
+export TRUNCATED_OUTPUT_DIR=<a new directory to save truncated logs>
+python3 submission_checker.py -i ${OUTPUT_DIR} -o ${TRUNCATED_OUTPUT_DIR}
+```
+Please make sure you have read permission of `${OUTPUT_DIR}`, and r/w permission for `${TRUNCATED_OUTPUT_DIR}` and `/tmp`
+
+## Trouble Shooting
+```
+TypeError: __init__() missing 1 required positional argument: 'status'
+```
+Solution: start docker serivce before launching the kit.
+
+<details>
+<summary> Performance regaresssion due to "Round Robin" MADT core enumeration </summary>
+![Round Robin Scheduling](/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Round-Robin.png)  
+Solution: change "Round Robin" scheduling to "Linear"
+  
+</details>
+
+<br><br>
+***
+</details>
+
 
 <details>
 <summary> Get Started with Intel MLPerf v3.1 Submission with Intel Optimized Docker Images </summary>
