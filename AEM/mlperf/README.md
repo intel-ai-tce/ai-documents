@@ -1,3 +1,143 @@
+# Get Started with Intel MLPerf v4.1 Submission with Intel Optimized Docker Images
+
+MLPerf is a benchmark for measuring the performance of machine learning
+systems. It provides a set of performance metrics for a variety of machine
+learning tasks, including image classification, object detection, machine
+translation, and others. The benchmark is representative of real-world
+workloads and as a fair and useful way to compare the performance of different
+machine learning systems.
+
+
+In this document, we'll show how to run Intel MLPerf v4.1 submission with Intel
+optimized Docker images and the prepared scripts.
+
+## HW configuration:
+
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ |
+| CPU             | Intel 5th gen Xeon scalable server processor (EMR)   
+| OS              | CentOS  Stream 8                     |
+| Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
+| Memory          | 1024GB (16x64GB 5600MT/s [5600MT/s]) |
+| Disk            | 1TB NVMe                             |
+
+## BIOS settings:
+| BIOS setting    | Recommended value                    |
+| --------------- | ------------------------------------ |
+|Hyperthreading|Enabled
+|Turbo Boost|Enabled
+|Core Prefetchers|Hardware,Adjacent Cache,DCU Streamer,DCU IP
+|LLC Prefetch|Disable
+|CPU Power and Perf Policy|Performance
+|NUMA-based Cluster|SNC2
+|Hardware P State|Native (based on OS guidance)
+|Energy Perf Bias|OS Controls EPB
+|Energy Efficient Turbo|Disabled
+
+## Check System Health Using Intel® System Health Inspector:
+Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use svr-info first to check any system configuration issue before running any benchmark. Follow [the Quick Start Guide](https://github.com/intel/svr-info#quick-start) for downloading and installation. The following are several key factors effecting the model performance.
+<details>
+<summary> CPU </summary>
+Couple CPU features impact MLPerf performance via related BIOS knobs, so please double check the CPU features with your BIOS knobs.
+Some important CPU features are Hyperthreading, number of NUMA nodes, Prefetchers and Intel Turbo Boost.
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/CPU_setting.png" width="300" height="600"><br>
+     
+Please also check your CPU tempartures. The CPU temparture should not be higher than 50 degrees C.   
+Overheating will drop the CPU frequency and degrade the MLPerf performance.  
+</details>
+<details>
+<summary> Memory </summary>
+One important system configuration is balanced DIMM population, which is suggested to set as balanced to get optimized performance. <br> 
+Populate as many channels per socket as possible prior to adding additional DIMMs to the channel.   
+It might impact the memory bandwidth if two dimm share one channel. <br>   
+Please also refer to Chapter 4 in <a href="https://cdrdv2.intel.com/v1/dl/getContent/733546?explicitVersion=true">Eagle Stream Platform Performance & Power Optimization Guide</a> for more details.  <br> 
+     
+From the results of svr-info, an example of unbalanced DIMM population is shown as follows,
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Unbalanced_DIMM.png" width="300" height="600"><br>   
+An exmaple of Balanced DIMM population is shown as follows,     
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Balanced_DIMM.png"  width="300" height="600"><br> 
+You should also see good numbers for memory NUMA bandwidth if you also benchmark memory via svr-info. <br>
+Here are some reference numbers from a 2S SPR system.  
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/mem_bandwidth.png" width="300" height="600"><br>  
+     
+</details>
+<details>
+<summary> Power  </summary>
+We recommend the intel_pstate Frequency Driver. <br>
+For best performance, set the Frequency Governor and Power and Perf Policy to performance. <br>
+Here are related recommended power settings from svr-info. 
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/power_setting.png" width="400" height="300"><br>   
+</details>
+
+
+
+## Running Models with Intel Optimized Docker Image
+
+### Launch the Docker Image
+Set the directories on the host system where model, dataset, and log files will reside. These locations will retain model and data content between Docker sessions.
+```
+export DATA_DIR="${DATA_DIR:-${PWD}/data}"
+export MODEL_DIR="${MODEL_DIR:-${PWD}/model}"
+export LOG_DIR="${LOG_DIR:-${PWD}/logs}"
+```
+
+### Launch the Docker Image
+In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
+model={resnet50,retinanet,rnnt,3d-unet,bert,gpt-j,dlrm_2,stable_diffusion,all}
+If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
+```
+export DOCKER_IMAGE="${DOCKER_IMAGE:-amr-registry.caas.intel.com/aiops/mlperf:cpu_<model>_ww25}"
+# Please choose <model> from model={resnet50,retinanet,3d-unet,bert,gptj,dlrmv2,stable_diffusion,moe}
+
+docker run --privileged -it --rm \
+        --ipc=host --net=host --cap-add=ALL \
+        -e http_proxy=${http_proxy} \
+        -e https_proxy=${https_proxy} \
+        -v ${DATA_DIR}:/data \
+        -v ${MODEL_DIR}:/model \
+        -v ${LOG_DIR}:/logs \
+        --workdir /opt/workdir \
+        ${DOCKER_IMAGE} /bin/bash
+```
+
+### Download the Model [one-time operation]
+Run this step inside the Docker container.  This is a one-time operation which will preserve the model on the host system using the volume mapping above.
+```
+bash download_model.sh
+```
+
+### Download the Dataset [one-time operation]
+Run this step inside the Docker container.  This is a one-time operation which will preserve the dataset on the host system using the volume mapping above.
+```
+bash download_dataset.sh
+```
+
+## Calibrate the Model [one-time operation]
+Run this step inside the Docker container.  This is a one-time operation, and the resulting calibrated model will be stored along with the original model file.
+```
+bash run_calibration.sh
+```
+
+## Run Benchmark
+Select the appropriate scenario.  If this is the first time running this workload, the original model file will be calibrated to INT4 and stored alongside the original model file (one-time operation).
+```
+SCENARIO=Offline ACCURACY=false bash run_mlperf.sh
+SCENARIO=Server  ACCURACY=false bash run_mlperf.sh
+SCENARIO=Offline ACCURACY=true  bash run_mlperf.sh
+SCENARIO=Server  ACCURACY=true  bash run_mlperf.sh
+# 3D-UNet workload does not have Server mode
+```
+
+<br><br>
+***
+
+# Previous MLPerf v4.0, v3.1 and v3.0 Submission 
+
+Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v4.0, v3.1 and v3.0 submission with Intel optimized Docker images.
+
+<details>
+<summary> Get Started with Intel MLPerf v4.0 Submission with Intel Optimized Docker Images </summary>
+
 # Get Started with Intel MLPerf v4.0 Submission with Intel Optimized Docker Images
 
 MLPerf is a benchmark for measuring the performance of machine learning
@@ -260,10 +400,8 @@ Solution: change "Round Robin" scheduling to "Linear"
 
 <br><br>
 ***
+</details>
 
-# Previous MLPerf v3.0 and v3.1 Submission 
-
-Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v3.0 and v3.1 submission with Intel optimized Docker images.
 
 <details>
 <summary> Get Started with Intel MLPerf v3.1 Submission with Intel Optimized Docker Images </summary>
