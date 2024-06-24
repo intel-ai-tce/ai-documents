@@ -11,7 +11,7 @@ machine learning systems.
 In this document, we'll show how to run Intel MLPerf v4.1 submission with Intel
 optimized Docker images and the prepared scripts.
 
-## HW configuration:
+## Verified HW configuration:
 
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
@@ -99,7 +99,7 @@ docker run --privileged -it --rm \
         -v ${DATA_DIR}:/data \
         -v ${MODEL_DIR}:/model \
         -v ${LOG_DIR}:/logs \
-        --workdir /opt/workdir \
+        --workdir /workspace \
         ${DOCKER_IMAGE} /bin/bash
 ```
 
