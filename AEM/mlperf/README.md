@@ -1,4 +1,4 @@
-# Get Started with Intel MLPerf v4.1 Submission with Intel Optimized Docker Images
+# Get Started with Intel MLPerf v4.1 Inference Submission with Intel Optimized Docker Images
 
 MLPerf is a benchmark for measuring the performance of machine learning
 systems. It provides a set of performance metrics for a variety of machine
@@ -11,7 +11,7 @@ machine learning systems.
 In this document, we'll show how to run Intel MLPerf v4.1 submission with Intel
 optimized Docker images and the prepared scripts.
 
-## HW configuration:
+## Verified HW configuration:
 
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
@@ -95,7 +95,7 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 
 ```
 export DOCKER_IMAGE="${DOCKER_IMAGE:-keithachornintel/mlperf:mlperf-inference-4.1-<model>-r1}"
-# Please choose <model> from model={resnet50,retinanet,3d-unet,bert,gptj,dlrmv2,stable_diffusion,moe}
+# Please choose <model> from model={resnet50,gptj}
 
 docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
@@ -139,7 +139,7 @@ SCENARIO=Server  ACCURACY=true  bash run_mlperf.sh
 <br><br>
 ***
 
-# Previous MLPerf v4.0, v3.1 and v3.0 Submission 
+# Previous MLPerf v4.0, v3.1 and v3.0 Inference Submission 
 
 Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v4.0, v3.1 and v3.0 submission with Intel optimized Docker images.
 
