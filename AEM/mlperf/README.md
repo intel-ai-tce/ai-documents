@@ -16,8 +16,6 @@ optimized Docker images and the prepared scripts.
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
 | CPU             | Intel 5th gen Xeon scalable server processor (EMR)   
-| OS              | CentOS  Stream 8                     |
-| Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
 | Memory          | 1024GB (16x64GB 5600MT/s [5600MT/s]) |
 | Disk            | 1TB NVMe                             |
 
@@ -33,6 +31,13 @@ optimized Docker images and the prepared scripts.
 |Hardware P State|Native (based on OS guidance)
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
+
+## Verified OS configurations:
+
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ | 
+| OS              | CentOS  Stream 8                     |
+| Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
 
 ## Check System Health Using Intel® System Health Inspector:
 Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use svr-info first to check any system configuration issue before running any benchmark. Follow [the Quick Start Guide](https://github.com/intel/svr-info#quick-start) for downloading and installation. The following are several key factors effecting the model performance.
@@ -99,7 +104,7 @@ docker run --privileged -it --rm \
         -v ${DATA_DIR}:/data \
         -v ${MODEL_DIR}:/model \
         -v ${LOG_DIR}:/logs \
-        --workdir /workspace \
+        --workdir  /workspace \
         ${DOCKER_IMAGE} /bin/bash
 ```
 
