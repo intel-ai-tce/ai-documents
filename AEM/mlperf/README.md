@@ -95,7 +95,7 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 
 ```
 export DOCKER_IMAGE="${DOCKER_IMAGE:-keithachornintel/mlperf:mlperf-inference-4.1-<model>-r1}"
-# Please choose <model> from model={resnet50,gptj}
+# Please choose <model> from model={resnet50,gptj,retinanet}
 
 docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
