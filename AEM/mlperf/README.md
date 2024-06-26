@@ -94,7 +94,7 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 > Please contact aice.mlperf@intel.com for login credential  
 
 ```
-export DOCKER_IMAGE="${DOCKER_IMAGE:-keithachornintel/mlperf:mlperf-inference-4.1-<model>-r1}"
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-4.1-<model>-r1"
 # Please choose <model> from model={resnet50,gptj,retinanet}
 
 docker run --privileged -it --rm \
