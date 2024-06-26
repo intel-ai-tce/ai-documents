@@ -88,7 +88,7 @@ export LOG_DIR="${LOG_DIR:-${PWD}/logs}"
 
 ### Launch the Docker Image
 In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
-model={resnet50,retinanet,rnnt,3d-unet,bert,gpt-j,dlrm_2,stable_diffusion,all}
+model={resnet50,retinanet,gptj}
 If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
 >**Note** Users need to do docker login with related credential first before they pull/run the docker image.  
 > Please contact aice.mlperf@intel.com for login credential  
