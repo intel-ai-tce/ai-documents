@@ -1,4 +1,4 @@
-# Get Started with Intel MLPerf v4.1 Submission with Intel Optimized Docker Images
+# Get Started with Intel MLPerf v4.1 Inference Submission with Intel Optimized Docker Images
 
 MLPerf is a benchmark for measuring the performance of machine learning
 systems. It provides a set of performance metrics for a variety of machine
@@ -11,13 +11,11 @@ machine learning systems.
 In this document, we'll show how to run Intel MLPerf v4.1 submission with Intel
 optimized Docker images and the prepared scripts.
 
-## HW configuration:
+## Verified HW configuration:
 
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
 | CPU             | Intel 5th gen Xeon scalable server processor (EMR)   
-| OS              | CentOS  Stream 8                     |
-| Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
 | Memory          | 1024GB (16x64GB 5600MT/s [5600MT/s]) |
 | Disk            | 1TB NVMe                             |
 
@@ -33,6 +31,13 @@ optimized Docker images and the prepared scripts.
 |Hardware P State|Native (based on OS guidance)
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
+
+## Verified OS configurations:
+
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ | 
+| OS              | CentOS  Stream 8                     |
+| Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
 
 ## Check System Health Using Intel® System Health Inspector:
 Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use svr-info first to check any system configuration issue before running any benchmark. Follow [the Quick Start Guide](https://github.com/intel/svr-info#quick-start) for downloading and installation. The following are several key factors effecting the model performance.
@@ -83,11 +88,14 @@ export LOG_DIR="${LOG_DIR:-${PWD}/logs}"
 
 ### Launch the Docker Image
 In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
-model={resnet50,retinanet,rnnt,3d-unet,bert,gpt-j,dlrm_2,stable_diffusion,all}
+model={resnet50,retinanet,gptj}
 If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
+>**Note** Users need to do docker login with related credential first before they pull/run the docker image.  
+> Please contact aice.mlperf@intel.com for login credential  
+
 ```
-export DOCKER_IMAGE="${DOCKER_IMAGE:-amr-registry.caas.intel.com/aiops/mlperf:cpu_<model>_ww25}"
-# Please choose <model> from model={resnet50,retinanet,3d-unet,bert,gptj,dlrmv2,stable_diffusion,moe}
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-4.1-<model>-r1"
+# Please choose <model> from model={resnet50,gptj,retinanet}
 
 docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
@@ -96,7 +104,7 @@ docker run --privileged -it --rm \
         -v ${DATA_DIR}:/data \
         -v ${MODEL_DIR}:/model \
         -v ${LOG_DIR}:/logs \
-        --workdir /opt/workdir \
+        --workdir  /workspace \
         ${DOCKER_IMAGE} /bin/bash
 ```
 
@@ -131,7 +139,7 @@ SCENARIO=Server  ACCURACY=true  bash run_mlperf.sh
 <br><br>
 ***
 
-# Previous MLPerf v4.0, v3.1 and v3.0 Submission 
+# Previous MLPerf v4.0, v3.1 and v3.0 Inference Submission 
 
 Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v4.0, v3.1 and v3.0 submission with Intel optimized Docker images.
 
@@ -1946,3 +1954,10 @@ Check the appropriate offline or server accuracy log file, either
 Save these output log files elsewhere when each test is completed as they will be overwritten by the next test.
 
 </details>
+
+
+
+# Disclaimer
+To the extent that any data, datasets, or models are referenced by Intel or accessed using tools or code on this site such data, datasets and models are provided by the third party indicated as the source of such content. Intel does not create the data, datasets, or models, provide a license to any third-party data, datasets, or models referenced, and does not warrant their accuracy or quality. By accessing such data, dataset(s) or model(s) you agree to the terms associated with that content and that your use complies with the applicable license. 
+ 
+Intel expressly disclaims the accuracy, adequacy, or completeness of any data, datasets or models, and is not liable for any errors, omissions, or defects in such content, or for any reliance thereon. Intel also expressly disclaims any warranty of non-infringement with respect to such data, dataset(s), or model(s). Intel is not liable for any liability or damages relating to your use of such data, datasets, or models. 
