@@ -87,7 +87,7 @@ export LOG_DIR="${LOG_DIR:-${PWD}/logs}"
 ```
 
 
-### [DLRMv2 Only] Download the Dataset [one-time operation]
+### [Optional] Download the Dataset [one-time operation]
 For DLRM, the dataset cannot be obtained programatically. Instead, follow the steps using a web browser. This is a one-time operation.
 ```
 > Navigate to the following link and accept the 'CRITEO DATA TERMS OF USE FOR MLPerf Users': https://ailab.criteo.com/ressources/criteo-1tb-click-logs-dataset-for-mlperf/
