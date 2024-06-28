@@ -134,7 +134,8 @@ Run this step inside the Docker container.  This is a one-time operation which w
 bash download_dataset.sh
 ```
 
-### [DLRMv2 Only] Prepare the Dataset [one-time operation]
+### [Optional] Prepare the Dataset [one-time operation]
+>**NOTE** This section only applies to DLRMv2 model.
 NOTE: This is a time and resource-intense operation requiring several hours and 500G of disk space. Run this step inside the Docker container. This is a one-time operation which will process the dataset and preserve it on the host system using the volume mapping above.
 ```
 bash prepare_dataset.sh
