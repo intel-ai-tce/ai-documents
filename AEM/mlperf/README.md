@@ -78,12 +78,25 @@ Here are related recommended power settings from svr-info.
 
 ## Running Models with Intel Optimized Docker Image
 
-### Launch the Docker Image
+### Set Directories
 Set the directories on the host system where model, dataset, and log files will reside. These locations will retain model and data content between Docker sessions.
 ```
 export DATA_DIR="${DATA_DIR:-${PWD}/data}"
 export MODEL_DIR="${MODEL_DIR:-${PWD}/model}"
 export LOG_DIR="${LOG_DIR:-${PWD}/logs}"
+```
+
+
+### [DLRMv2 Only] Download the Dataset [one-time operation]
+For DLRM, the dataset cannot be obtained programatically. Instead, follow the steps using a web browser. This is a one-time operation.
+```
+> Navigate to the following link and accept the 'CRITEO DATA TERMS OF USE FOR MLPerf Users': https://ailab.criteo.com/ressources/criteo-1tb-click-logs-dataset-for-mlperf/
+> The source link above will direct you to the following new link: https://we.tl/t-TbdTn2os31 . Using a web browser:
+    > Select 'I Agree' to the Terms of Service.
+    > Select 'Preview'.
+    > Download only 'day_23.gz'.
+    > Transfer the file 'day_23.gz' to the appropriate data directory on your host system.
+> Complete the Dataset Calibration steps (later in this README) from inside the Docker container.
 ```
 
 ### Launch the Docker Image
@@ -95,7 +108,7 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 
 ```
 export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-4.1-<model>-r1"
-# Please choose <model> from model={resnet50,gptj,retinanet}
+# Please choose <model> from model={resnet50,gptj,retinanet,dlrmv2}
 
 docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
@@ -114,19 +127,25 @@ Run this step inside the Docker container.  This is a one-time operation which w
 bash download_model.sh
 ```
 
-### Download the Dataset [one-time operation]
+### [DLRMv2 Excluded] Download the Dataset [one-time operation]
 Run this step inside the Docker container.  This is a one-time operation which will preserve the dataset on the host system using the volume mapping above.
 ```
 bash download_dataset.sh
 ```
 
-## Calibrate the Model [one-time operation]
+### [DLRMv2 Only] Prepare the Dataset [one-time operation]
+NOTE: This is a time and resource-intense operation requiring several hours and 500G of disk space. Run this step inside the Docker container. This is a one-time operation which will process the dataset and preserve it on the host system using the volume mapping above.
+```
+bash prepare_dataset.sh
+```
+
+### Calibrate the Model [one-time operation]
 Run this step inside the Docker container.  This is a one-time operation, and the resulting calibrated model will be stored along with the original model file.
 ```
 bash run_calibration.sh
 ```
 
-## Run Benchmark
+### Run Benchmark
 Select the appropriate scenario.  If this is the first time running this workload, the original model file will be calibrated to INT4 and stored alongside the original model file (one-time operation).
 ```
 SCENARIO=Offline ACCURACY=false bash run_mlperf.sh
