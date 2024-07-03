@@ -83,7 +83,8 @@ Set the directories on the host system where model, dataset, and log files will 
 ```
 export DATA_DIR="${DATA_DIR:-${PWD}/data}"
 export MODEL_DIR="${MODEL_DIR:-${PWD}/model}"
-export LOG_DIR="${LOG_DIR:-${PWD}/logs}"
+export LOG_DIR="${LOG_DIR:-${PWD}/logs/<model>}"
+# Please choose <model> from model={resnet50,gptj,retinanet,dlrmv2}
 ```
 
 
