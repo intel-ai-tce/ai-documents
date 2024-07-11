@@ -84,7 +84,7 @@ Set the directories on the host system where model, dataset, and log files will 
 export DATA_DIR="${DATA_DIR:-${PWD}/data/<model>}"
 export MODEL_DIR="${MODEL_DIR:-${PWD}/model/<model>}"
 export LOG_DIR="${LOG_DIR:-${PWD}/logs/<model>}"
-# Please choose <model> from model={resnet50,gptj,retinanet,dlrmv2}
+# Please choose <model> from model={resnet50,gptj,retinanet,dlrmv2,bert}
 ```
 
 
@@ -109,7 +109,7 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 
 ```
 export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-4.1-<model>-r1"
-# Please choose <model> from model={resnet50,gptj,retinanet,dlrmv2}
+# Please choose <model> from model={resnet50,gptj,retinanet,dlrmv2,bert}
 
 docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
