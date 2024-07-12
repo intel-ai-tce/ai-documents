@@ -81,9 +81,9 @@ Here are related recommended power settings from svr-info.
 ### Set Directories
 Set the directories on the host system where model, dataset, and log files will reside. These locations will retain model and data content between Docker sessions.
 ```
-export DATA_DIR="${DATA_DIR:-${PWD}/data/<model>}"
-export MODEL_DIR="${MODEL_DIR:-${PWD}/model/<model>}"
-export LOG_DIR="${LOG_DIR:-${PWD}/logs/<model>}"
+export DATA_DIR=${PWD}/data/<model>
+export MODEL_DIR=${PWD}/model/<model>
+export LOG_DIR=${PWD}/logs/<model>
 # Please choose <model> from model={resnet50,gptj,retinanet,dlrmv2,bert}
 ```
 
