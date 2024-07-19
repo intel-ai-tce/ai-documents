@@ -81,10 +81,9 @@ Here are related recommended power settings from svr-info.
 ### Set Directories
 Set the directories on the host system where model, dataset, and log files will reside. These locations will retain model and data content between Docker sessions.
 ```
-export DATA_DIR=${PWD}/data/<model>
-export MODEL_DIR=${PWD}/model/<model>
-export LOG_DIR=${PWD}/logs/<model>
-# Please choose <model> from model={resnet50,gptj,retinanet,dlrmv2,bert,3dunet}
+export DATA_DIR=${PWD}/data
+export MODEL_DIR=${PWD}/model
+export LOG_DIR=${PWD}/logs
 ```
 
 
@@ -149,7 +148,7 @@ bash run_calibration.sh
 ```
 
 ### Run Benchmark
-Select the appropriate scenario.  If this is the first time running this workload, the original model file will be calibrated to INT4 and stored alongside the original model file (one-time operation).
+Select the appropriate scenario.  If this is the first time running this workload, the original model file will be calibrated to INT8 (INT4 for GPT-J) and stored alongside the original model file (one-time operation).
 ```
 SCENARIO=Offline ACCURACY=false bash run_mlperf.sh
 SCENARIO=Server  ACCURACY=false bash run_mlperf.sh
@@ -157,7 +156,35 @@ SCENARIO=Offline ACCURACY=true  bash run_mlperf.sh
 SCENARIO=Server  ACCURACY=true  bash run_mlperf.sh
 # 3D-UNet workload does not have Server mode
 ```
+You can also choose to run all benchmarks with one script.
+```
+bash run_all_scenarios.sh
+```
 
+### Run Compliance Tests
+>**NOTE** Please bypass this step for GPT-J model. Compliance tests are not required https://github.com/mlcommons/policies/blob/master/submission_rules.adoc#5132-inference. 
+
+Run this step inside the Docker container. After the benchmark scenarios have been run and results exist in {LOG_DIR}/results, run this step to complete compliance runs. Compliance output will be found in '{LOG_DIR}/compliance'.
+```
+bash run_compliance.sh
+```
+
+### Create Submission Content
+Run this step inside the Docker container. The following script will compile and structure the MLPerf Inference submission content into {LOG_DIR}, including 'code', 'calibration', 'measurements', and 'systems'. Ensure the system and measurement description files contained in '/workspace/descriptions' are correct and aligned with your institute before preceding. Optionally pass 'CLEAR_CONTENT=true' to delete any existing 'code', 'calibration', and 'measurements' content before populating.
+```
+# Ensure the correctness of '/workspace/descriptions/systems'.
+# Ensure the correctness of '/workspace/descriptions/measurements'.
+bash populate_submission.sh
+
+# [Optional] Alternatively, if you want to remove previously created contents:
+# SYSTEMS_FILE=/logs/systems/1-node-2S-EMR-PyTorch.json CLEAR_CONTENT=true bash populate_submission.sh
+```
+
+### Create Submission Content
+Run this step inside the Docker container. The following script will perform accuracy log truncation and run the submission checker on the contents of {LOG_DIR}. The source scripts are distributed as MLPerf Inference reference tools. Ensure the submission content has been populated before running. The script output is transient and removed after running. The original content of ${LOG_DIR} is not modified.
+```
+bash run_submission_checker.sh
+```
 <br><br>
 ***
 
