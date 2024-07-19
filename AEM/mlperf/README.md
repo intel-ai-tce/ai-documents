@@ -168,6 +168,9 @@ Run this step inside the Docker container. After the benchmark scenarios have be
 ```
 bash run_compliance.sh
 ```
+After the compliance test, the logs will reside in `/logs/compliance`.
+
+> NOTE : If users want to use previous benchmark results for compliance test, please put the previous results under `/logs/results/${SYSTEM}/${WORKLOAD}/${SCENARIO}`,e.g., "/logs/results/1-node-2S-EMR-PyTorch/resnet50/" for resnet50), inside the docker container before running `run_compliance.sh`. 
 
 ### Create Submission Content
 Run this step inside the Docker container. The following script will compile and structure the MLPerf Inference submission content into {LOG_DIR}, including 'code', 'calibration', 'measurements', and 'systems'. Ensure the system and measurement description files contained in '/workspace/descriptions' are correct and aligned with your institute before preceding. Optionally pass 'CLEAR_CONTENT=true' to delete any existing 'code', 'calibration', and 'measurements' content before populating.
