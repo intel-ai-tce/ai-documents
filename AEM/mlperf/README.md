@@ -180,7 +180,7 @@ bash populate_submission.sh
 # SYSTEMS_FILE=/logs/systems/1-node-2S-EMR-PyTorch.json CLEAR_CONTENT=true bash populate_submission.sh
 ```
 
-### Create Submission Content
+### Validate Submission Checker
 Run this step inside the Docker container. The following script will perform accuracy log truncation and run the submission checker on the contents of {LOG_DIR}. The source scripts are distributed as MLPerf Inference reference tools. Ensure the submission content has been populated before running. The script output is transient and removed after running. The original content of ${LOG_DIR} is not modified.
 ```
 bash run_submission_checker.sh
