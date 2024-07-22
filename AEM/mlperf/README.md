@@ -87,17 +87,6 @@ export LOG_DIR=${PWD}/logs
 ```
 
 
-### [Optional] Download the Dataset [one-time operation]
-For DLRM, the dataset cannot be obtained programatically. Instead, follow the steps using a web browser. This is a one-time operation.
-```
-> Navigate to the following link and accept the 'CRITEO DATA TERMS OF USE FOR MLPerf Users': https://ailab.criteo.com/ressources/criteo-1tb-click-logs-dataset-for-mlperf/
-> The source link above will direct you to the following new link: https://we.tl/t-TbdTn2os31 . Using a web browser:
-    > Select 'I Agree' to the Terms of Service.
-    > Select 'Preview'.
-    > Download only 'day_23.gz'.
-    > Transfer the file 'day_23.gz' to the appropriate data directory on your host system.
-> Complete the Dataset Calibration steps (later in this README) from inside the Docker container.
-```
 
 ### Launch the Docker Image
 In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
@@ -134,12 +123,6 @@ Run this step inside the Docker container.  This is a one-time operation which w
 bash download_dataset.sh
 ```
 
-### [Optional] Prepare the Dataset [one-time operation]
->**NOTE** This section only applies to DLRMv2 model.
-NOTE: This is a time and resource-intense operation requiring several hours and 500G of disk space. Run this step inside the Docker container. This is a one-time operation which will process the dataset and preserve it on the host system using the volume mapping above.
-```
-bash prepare_dataset.sh
-```
 
 ### Calibrate the Model [one-time operation]
 Run this step inside the Docker container.  This is a one-time operation, and the resulting calibrated model will be stored along with the original model file.
