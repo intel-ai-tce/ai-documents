@@ -117,7 +117,6 @@ bash download_model.sh
 ```
 
 ### Download the Dataset [one-time operation]
->**NOTE** Please bypass this step for DLRMv2 model.
 Run this step inside the Docker container.  This is a one-time operation which will preserve the dataset on the host system using the volume mapping above.
 ```
 bash download_dataset.sh
