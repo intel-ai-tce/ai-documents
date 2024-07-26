@@ -92,11 +92,9 @@ export LOG_DIR=${PWD}/logs
 In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
 model={resnet50,gptj,retinanet,bert,3dunet,dlrmv2}
 If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
->**Note** Users need to do docker login with related credential first before they pull/run the docker image.  
-> Please contact aice.mlperf@intel.com for login credential  
 
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-4.1-<model>-r3"
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-4.1-<model>"
 # Please choose <model> from model={resnet50,gptj,retinanet,bert,3dunet,dlrmv2}
 
 docker run --privileged -it --rm \
