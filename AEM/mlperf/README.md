@@ -142,7 +142,7 @@ bash run_all_scenarios.sh
 ```
 
 ### Run Compliance Tests
->**NOTE** Please bypass this step for GPT-J model. Compliance tests are not required https://github.com/mlcommons/policies/blob/master/submission_rules.adoc#5132-inference. 
+>**NOTE:** Please bypass this step for GPT-J model. Compliance tests are not required https://github.com/mlcommons/policies/blob/master/submission_rules.adoc#5132-inference. 
 
 Run this step inside the Docker container. After the benchmark scenarios have been run and results exist in {LOG_DIR}/results, run this step to complete compliance runs. Compliance output will be found in '{LOG_DIR}/compliance'.
 ```
@@ -150,7 +150,7 @@ bash run_compliance.sh
 ```
 After the compliance test, the logs will reside in `/logs/compliance`.
 
-> NOTE : If users want to use previous benchmark results for compliance test, please put the previous results under `/logs/results/${SYSTEM}/${WORKLOAD}/${SCENARIO}`,e.g., "/logs/results/1-node-2S-EMR-PyTorch/resnet50/" for resnet50), inside the docker container before running `run_compliance.sh`. The workload must match the name of the code folder for that particular model i.e. "3d-unet-99.9", not just "3d-unet".
+>**NOTE:** If users want to use previous benchmark results for compliance test, please put the previous results under `/logs/results/${SYSTEM}/${WORKLOAD}/${SCENARIO}`,e.g., "/logs/results/1-node-2S-EMR-PyTorch/resnet50/" for resnet50), inside the docker container before running `run_compliance.sh`. The workload must match the name of the code folder for that particular model i.e. "3d-unet-99.9", not just "3d-unet".
 
 ### Create Submission Content
 Run this step inside the Docker container. The following script will compile and structure the MLPerf Inference submission content into {LOG_DIR}, including 'code', 'calibration', 'measurements', and 'systems'. Ensure the system and measurement description files contained in '/workspace/descriptions' are correct and aligned with your institute before preceding. Optionally pass 'CLEAR_CONTENT=true' to delete any existing 'code', 'calibration', and 'measurements' content before populating.
@@ -164,7 +164,8 @@ bash populate_submission.sh
 ```
 
 ### Validate Submission Checker
-> *For submissions only:* There are several files you should modify before running the submission checker. Here are the changes:
+>**For submissions only:** There are several files you should modify before running the submission checker. Here are the changes:
+
 - In the *systems* folder, there is a JSON file. Change the following fields as needed: *submitter*, *system_name*, and *hw_notes*.
 - In *default.conf*, modify *SYSTEM_DEFAULT* as needed and ensure all paths in *DEL_FILES_DEFAULT* containers your company name rather than "OEM".
 - In *run_submission_checker.sh*, change *VENDOR* from "OEM" to your company name.
