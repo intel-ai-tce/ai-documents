@@ -153,7 +153,7 @@ After the compliance test, the logs will reside in `/logs/compliance`.
 >**NOTE:** If users want to use previous benchmark results for compliance test, please put the previous results under `/logs/results/${SYSTEM}/${WORKLOAD}/${SCENARIO}`,e.g., "/logs/results/1-node-2S-EMR-PyTorch/resnet50/" for resnet50), inside the docker container before running `run_compliance.sh`. The workload must match the name of the code folder for that particular model i.e. "3d-unet-99.9", not just "3d-unet".
 
 ### Create Submission Content
-Run this step inside the Docker container. The following script will compile and structure the MLPerf Inference submission content into {LOG_DIR}, including 'code', 'calibration', 'measurements', and 'systems'. Ensure the system and measurement description files contained in '/workspace/descriptions' are correct and aligned with your institute before preceding. Optionally pass 'CLEAR_CONTENT=true' to delete any existing 'code', 'calibration', and 'measurements' content before populating.
+Run this step inside the Docker container. The following script will compile and structure the MLPerf Inference submission content into {LOG_DIR}, including 'code', 'calibration', 'measurements', and 'systems'. Ensure the system and measurement description files contained in '/workspace/descriptions' are correct and aligned with your institute before preceding. Optionally pass 'CLEAR\_CONTENT=true' to delete any existing 'code', 'calibration', and 'measurements' content before populating.
 ```
 # Ensure the correctness of '/workspace/descriptions/systems'.
 # Ensure the correctness of '/workspace/descriptions/measurements'.
@@ -166,9 +166,9 @@ bash populate_submission.sh
 ### Validate Submission Checker
 >**For submissions only:** There are several files you should modify before running the submission checker. Here are the changes:
 
-- In the *systems* folder, there is a JSON file. Change the following fields as needed: *submitter*, *system_name*, and *hw_notes*.
-- In *default.conf*, modify *SYSTEM_DEFAULT* as needed and ensure all paths in *DEL_FILES_DEFAULT* containers your company name rather than "OEM".
-- In *run_submission_checker.sh*, change *VENDOR* from "OEM" to your company name.
+- In the *systems* folder, there is a JSON file. Change the following fields as needed: *submitter*, *system\_name*, and *hw_notes*.
+- In *default.conf*, modify *SYSTEM\_DEFAULT* as needed and ensure all paths in *DEL\_FILES\_DEFAULT* containers your company name rather than "OEM".
+- In *run\_submission\_checker.sh*, change *VENDOR* from "OEM" to your company name.
 
 Run this step inside the Docker container. The following script will perform accuracy log truncation and run the submission checker on the contents of {LOG_DIR}. The source scripts are distributed as MLPerf Inference reference tools. Ensure the submission content has been populated before running. The script output is transient and removed after running. The original content of ${LOG_DIR} is not modified.
 ```
