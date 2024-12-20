@@ -8,21 +8,21 @@ workloads and as a fair and useful way to compare the performance of different
 machine learning systems.
 
 
-In this document, we'll show how to run Intel MLPerf v4.1 submission with Intel
+In this document, we'll show how to run Intel MLPerf v5.0 submission with Intel
 optimized Docker images and the prepared scripts.
 
 ## Verified HW configuration:
 
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
-| CPU             | Intel 5th gen Xeon scalable server processor (EMR)   
-| Memory          | 1024GB (16x64GB 5600MT/s [5600MT/s]) |
+| CPU             | The Intel® Xeon® 6 Processor (GNR)   
+| Memory          | 2304GB (24x96GB 8800MT/s [8800MT/s]) |
 | Disk            | 1TB NVMe                             |
 
 ## BIOS settings:
 | BIOS setting    | Recommended value                    |
 | --------------- | ------------------------------------ |
-|Hyperthreading|Enabled
+|Hyperthreading|Disabled
 |Turbo Boost|Enabled
 |Core Prefetchers|Hardware,Adjacent Cache,DCU Streamer,DCU IP
 |LLC Prefetch|Disable
@@ -94,8 +94,8 @@ model={resnet50,gptj,retinanet,bert,3dunet,dlrmv2}
 If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
 
 ```
-export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-4.1-<model>"
-# Please choose <model> from model={resnet50,gptj,retinanet,bert,3dunet,dlrmv2}
+export DOCKER_IMAGE="•	keithachornintel/mlperf:mlperf-inference-5.0-<model>-r1"
+# Please choose <model> from model={resnet50,retinanet,3dunet,dlrmv2}
 
 docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
@@ -111,29 +111,34 @@ docker run --privileged -it --rm \
 ### Download the Model [one-time operation]
 Run this step inside the Docker container.  This is a one-time operation which will preserve the model on the host system using the volume mapping above.
 ```
-bash download_model.sh
+bash scripts/download_model.sh
 ```
 
 ### Download the Dataset [one-time operation]
 Run this step inside the Docker container.  This is a one-time operation which will preserve the dataset on the host system using the volume mapping above.
 ```
-bash download_dataset.sh
+bash scripts/download_dataset.sh
 ```
 
 
 ### Calibrate the Model [one-time operation]
 Run this step inside the Docker container.  This is a one-time operation, and the resulting calibrated model will be stored along with the original model file.
 ```
-bash run_calibration.sh
+bash scripts/run_calibration.sh
 ```
 
 ### Run Benchmark
 Select the appropriate scenario.  If this is the first time running this workload, the original model file will be calibrated to INT8 (INT4 for GPT-J) and stored alongside the original model file (one-time operation).
+#### Performance
 ```
-SCENARIO=Offline ACCURACY=false bash run_mlperf.sh
-SCENARIO=Server  ACCURACY=false bash run_mlperf.sh
-SCENARIO=Offline ACCURACY=true  bash run_mlperf.sh
-SCENARIO=Server  ACCURACY=true  bash run_mlperf.sh
+SCENARIO=Offline MODE=Performance bash run_mlperf.sh
+SCENARIO=Server  MODE=Performance bash run_mlperf.sh
+```
+
+#### Accuracy
+```
+SCENARIO=Offline MODE=Performance  bash run_mlperf.sh
+SCENARIO=Server  MODE=Performance  bash run_mlperf.sh
 # 3D-UNet workload does not have Server mode
 ```
 You can also choose to run all benchmarks with one script.
