@@ -16,7 +16,7 @@ optimized Docker images and the prepared scripts.
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
 | CPU             | The Intel® Xeon® 6 Processor (GNR)   
-| Memory          | 2304GB (24x96GB 8800MT/s [8800MT/s]) |
+| Memory          | 2304GB (24x96GB [8800MT/s])          |
 | Disk            | 1TB NVMe                             |
 
 ## BIOS settings:
@@ -93,10 +93,13 @@ In the Host OS environment, run the following after setting the proper Docker im
 model={resnet50,gptj,retinanet,bert,3dunet,dlrmv2}
 If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
 
-```
-export DOCKER_IMAGE="•	keithachornintel/mlperf:mlperf-inference-5.0-<model>-r1"
-# Please choose <model> from model={resnet50,retinanet,3dunet,dlrmv2}
+> Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
 
+```
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-r1"
+# Please choose <model> from model={resnet50,retinanet,3dunet,dlrmv2}
+```
+```
 docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
         -e http_proxy=${http_proxy} \
@@ -128,7 +131,7 @@ bash scripts/run_calibration.sh
 ```
 
 ### Run Benchmark
-Select the appropriate scenario.  If this is the first time running this workload, the original model file will be calibrated to INT8 (INT4 for GPT-J) and stored alongside the original model file (one-time operation).
+Run this step inside the Docker container. Select the appropriate scenario. If this is the first time running this workload, the original model file will be calibrated to INT8 and stored alongside the original model file (one-time operation). 
 #### Performance
 ```
 SCENARIO=Offline MODE=Performance bash run_mlperf.sh
@@ -141,43 +144,26 @@ SCENARIO=Offline MODE=Performance  bash run_mlperf.sh
 SCENARIO=Server  MODE=Performance  bash run_mlperf.sh
 # 3D-UNet workload does not have Server mode
 ```
-You can also choose to run all benchmarks with one script.
-```
-bash run_all_scenarios.sh
-```
 
 ### Run Compliance Tests
 >**NOTE:** Please bypass this step for GPT-J model. Compliance tests are not required https://github.com/mlcommons/policies/blob/master/submission_rules.adoc#5132-inference. 
 
 Run this step inside the Docker container. After the benchmark scenarios have been run and results exist in {LOG_DIR}/results, run this step to complete compliance runs. Compliance output will be found in '{LOG_DIR}/compliance'.
 ```
-bash run_compliance.sh
+SCENARIO=Offline MODE=Compliance  bash run_mlperf.sh
+SCENARIO=Server  MODE=Compliance  bash run_mlperf.sh
 ```
 After the compliance test, the logs will reside in `/logs/compliance`.
 
->**NOTE:** If users want to use previous benchmark results for compliance test, please put the previous results under `/logs/results/${SYSTEM}/${WORKLOAD}/${SCENARIO}`,e.g., "/logs/results/1-node-2S-EMR-PyTorch/resnet50/" for resnet50), inside the docker container before running `run_compliance.sh`. The workload must match the name of the code folder for that particular model i.e. "3d-unet-99.9", not just "3d-unet".
-
-### Create Submission Content
-Run this step inside the Docker container. The following script will compile and structure the MLPerf Inference submission content into {LOG_DIR}, including 'code', 'calibration', 'measurements', and 'systems'. Ensure the system and measurement description files contained in '/workspace/descriptions' are correct and aligned with your institute before preceding. Optionally pass 'CLEAR\_CONTENT=true' to delete any existing 'code', 'calibration', and 'measurements' content before populating.
-```
-# Ensure the correctness of '/workspace/descriptions/systems'.
-# Ensure the correctness of '/workspace/descriptions/measurements'.
-bash populate_submission.sh
-
-# [Optional] Alternatively, if you want to remove previously created contents:
-# SYSTEMS_FILE=/logs/systems/1-node-2S-EMR-PyTorch.json CLEAR_CONTENT=true bash populate_submission.sh
-```
-
 ### Validate Submission Checker
 >**For submissions only:** There are several files you should modify before running the submission checker. Here are the changes:
+> - In the *systems* folder, there is a JSON file. Change the following fields as needed: *submitter*, *system\_name*, and *hw_notes*.
+> - In *default.conf*, modify *SYSTEM\_DEFAULT* as needed and ensure all paths in *DEL\_FILES\_DEFAULT* containers your company name rather than "OEM".
+> - In *run\_submission\_checker.sh*, change *VENDOR* from "OEM" to your company name.
 
-- In the *systems* folder, there is a JSON file. Change the following fields as needed: *submitter*, *system\_name*, and *hw_notes*.
-- In *default.conf*, modify *SYSTEM\_DEFAULT* as needed and ensure all paths in *DEL\_FILES\_DEFAULT* containers your company name rather than "OEM".
-- In *run\_submission\_checker.sh*, change *VENDOR* from "OEM" to your company name.
-
-Run this step inside the Docker container. The following script will perform accuracy log truncation and run the submission checker on the contents of {LOG_DIR}. The source scripts are distributed as MLPerf Inference reference tools. Ensure the submission content has been populated before running. The script output is transient and removed after running. The original content of ${LOG_DIR} is not modified.
+Run this step inside the Docker container. The following script will perform accuracy log truncation and run the submission checker on the contents of {LOG_DIR}. The source scripts are distributed as MLPerf Inference reference tools. Ensure the submission content has been populated before running. The script output is transient and destroyed after running. The original content of ${LOG_DIR} is not modified.
 ```
-bash run_submission_checker.sh
+VENDOR=Intel bash prepare_submission.sh
 ```
 <br><br>
 ***
