@@ -17,7 +17,12 @@ docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_va
 > ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
 
 ### Install required packages inside docker
-First, you should install the requirements:
+First, you should install the optimum-habana:
+```bash
+pip install --upgrade-strategy eager optimum[habana]
+```
+
+Second, install the requirements:
 ```bash
 pip install -r requirements.txt
 ```
