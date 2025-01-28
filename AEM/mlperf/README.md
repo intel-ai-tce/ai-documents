@@ -90,14 +90,20 @@ export LOG_DIR=${PWD}/logs
 
 ### Launch the Docker Image
 In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
-model={resnet50,gptj,retinanet,bert,3dunet,dlrmv2}
 If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
+
+Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
+| Release Version     | Models                 |
+| ------------------- | ---------------------- |
+| r2                  | resnet50, 3dunet, gptj |
+| r1                  | retinanet, dlrmv2      |
 
 > Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
 
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-r1"
-# Please choose <model> from model={resnet50,retinanet,3dunet,dlrmv2}
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<release-version>"
+# Please choose <model> from model={resnet50,retinanet,3dunet,dlrmv2,gptj}
+# Please choose <release-version> from release-version={r1,r2}
 ```
 ```
 docker run --privileged -it --rm \
