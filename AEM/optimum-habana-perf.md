@@ -9,7 +9,7 @@ The docker image helps users to setup pytorch software and packages to run the s
 ### Docker Run
 After docker build, users could follow below command to run and docker instance and users will be in the docker instance under text-generation folder.
 ```bash
-docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD":/workspace --workdir  /workspace  vault.habana.ai/gaudi-docker/1.19.1/ubuntu24.04/habanalabs/pytorch-installer-2.5.1:latest
+docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD/../../":/workspace --workdir  /workspace/examples/text-generation  vault.habana.ai/gaudi-docker/1.19.1/ubuntu24.04/habanalabs/pytorch-installer-2.5.1:latest
 ```
 > [!NOTE]
 > The Huggingface model file size might be large, so we recommend to use an external disk as Huggingface hub folder. \
