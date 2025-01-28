@@ -134,6 +134,6 @@ QUANT_CONFIG=./quantization_config/maxabs_quant.json python ../gaudi_spawn.py \
 --max_input_tokens ${input_len} \
 --book_source \
 --warmup 2
-``
+```
 
 
