@@ -12,14 +12,22 @@ In this document, we'll show how to run Intel MLPerf v5.0 submission with Intel
 optimized Docker images and the prepared scripts.
 
 ## Verified HW configuration:
-
+### Xeon
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
 | CPU             | The Intel® Xeon® 6 Processor (GNR)   
 | Memory          | 2304GB (24x96GB [8800MT/s])          |
 | Disk            | 1TB NVMe                             |
 
+### Gaudi
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ |
+| CPU             | The Intel® Xeon® Platinum 8480+ (EMR)   
+| Memory          | 1 TGB          |
+| Disk            | 1TB NVMe    
+
 ## BIOS settings:
+### Xeon
 | BIOS setting    | Recommended value                    |
 | --------------- | ------------------------------------ |
 |Hyperthreading|Disabled
@@ -34,13 +42,23 @@ optimized Docker images and the prepared scripts.
 
 ## Verified OS configurations:
 
+### Xeon
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ | 
 | OS              | CentOS  Stream 8                     |
 | Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
 
-## Check System Health Using Intel® System Health Inspector:
-Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use svr-info first to check any system configuration issue before running any benchmark. Follow [the Quick Start Guide](https://github.com/intel/svr-info#quick-start) for downloading and installation. The following are several key factors effecting the model performance.
+### Gaudi
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ | 
+| OS              | Ubuntu 22.04                    |
+| Kernel          |             | 
+
+## Check System Health Using PerfSpect:
+PerfSpect  is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use PerfSpect first to check any system configuration issue before running any benchmark.   
+Follow [the Quick Start Guide](https://github.com/intel/PerfSpect?tab=readme-ov-file#getting-perfspect) for downloading and installation, and get the system configuration reports by using [perfspect report](https://github.com/intel/PerfSpect?tab=readme-ov-file#report-command)  
+### Xeon
+The following are several key factors effecting the model performance for Xeon.  
 <details>
 <summary> CPU </summary>
 Couple CPU features impact MLPerf performance via related BIOS knobs, so please double check the CPU features with your BIOS knobs.
@@ -80,13 +98,12 @@ Here are related recommended power settings from svr-info.
 
 ### Set Directories
 Set the directories on the host system where model, dataset, and log files will reside. These locations will retain model and data content between Docker sessions.
+
 ```
-export DATA_DIR=${PWD}/data
+export DATASET_DIR=${PWD}/data
 export MODEL_DIR=${PWD}/model
 export LOG_DIR=${PWD}/logs
 ```
-
-
 
 ### Launch the Docker Image
 In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
