@@ -109,6 +109,7 @@ export LOG_DIR=${PWD}/logs
 In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
 If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
 
+#### Xeon
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
@@ -134,13 +135,42 @@ docker run --privileged -it --rm \
         ${DOCKER_IMAGE} /bin/bash
 ```
 
+#### Gaudi
+Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
+| Release Version     | Models                 |
+| ------------------- | ---------------------- |
+| r1                  | llama2      |
+
+> Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
+
+```
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<release-version>"
+# Please choose <model> from model={llama2}
+# Please choose <release-version> from release-version={r1}
+```
+```
+docker run --privileged -it --rm -u root \
+        --ipc=host --net=host --cap-add=ALL \
+        -e http_proxy=${http_proxy} \
+        -e https_proxy=${https_proxy} \
+        -v ${DATA_DIR}:/data \
+        -v ${MODEL_DIR}:/model \
+        -v ${LOG_DIR}:/logs \
+        --workdir  /workspace \
+        ${DOCKER_IMAGE} /bin/bash
+```
+
 ### Download the Model [one-time operation]
+
+#### Xeon
 Run this step inside the Docker container.  This is a one-time operation which will preserve the model on the host system using the volume mapping above.
 ```
 bash scripts/download_model.sh
 ```
 
 ### Download the Dataset [one-time operation]
+
+#### Xeon
 Run this step inside the Docker container.  This is a one-time operation which will preserve the dataset on the host system using the volume mapping above.
 ```
 bash scripts/download_dataset.sh
@@ -148,12 +178,16 @@ bash scripts/download_dataset.sh
 
 
 ### Calibrate the Model [one-time operation]
+
+#### Xeon
 Run this step inside the Docker container.  This is a one-time operation, and the resulting calibrated model will be stored along with the original model file.
 ```
 bash scripts/run_calibration.sh
 ```
 
 ### Run Benchmark
+
+#### Xeon
 Run this step inside the Docker container. Select the appropriate scenario. If this is the first time running this workload, the original model file will be calibrated to INT8 and stored alongside the original model file (one-time operation). 
 #### Performance
 ```
@@ -166,6 +200,30 @@ SCENARIO=Server  MODE=Performance bash run_mlperf.sh
 SCENARIO=Offline MODE=Performance  bash run_mlperf.sh
 SCENARIO=Server  MODE=Performance  bash run_mlperf.sh
 # 3D-UNet workload does not have Server mode
+```
+
+#### Gaudi
+Run this step inside the Docker container. Select the appropriate scenario. If this is the first time running this workload, the original model file will be calibrated to INT8 and stored alongside the original model file (one-time operation). 
+
+Set envrionmental variables and Cache model storage (speedup model loading during run)
+```
+source init_env;python load_model.py;pkill -9 -f python
+```
+Run offline performance
+```
+./run_performance_offline.sh
+```
+Run offline accuracy
+```
+./run_accuracy_offline.sh
+```
+Run server performance
+```
+./run_performance_server.sh
+```
+Run server accuracy
+```
+./run_accuracy_server.sh
 ```
 
 ### Run Compliance Tests
