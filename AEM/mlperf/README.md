@@ -177,6 +177,13 @@ Run this step inside the Docker container.  This is a one-time operation which w
 bash scripts/download_model.sh
 ```
 
+### Gaudi
+Download Model by using your authentication credentials.
+```
+git lfs install
+HF_TOKEN=<insert-your-hf-token> git clone https://huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
+```
+
 ### Download the Dataset [one-time operation]
 
 #### Xeon
@@ -190,14 +197,9 @@ Dowload Dataset This requires rclone: The access and secret keys can be obtained
 sudo -v ; curl https://rclone.org/install.sh | sudo bash
 rclone config create mlc-inference s3 provider=Cloudflare access_key_id=<your-access-key-id> secret_access_key=<your-secret-access-key> endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com
 rclone copy mlc-inference:mlcommons-inference-wg-public/open_orca ${$DATA_DIR} -P
-
 gzip -d ${$DATA_DIR}/open_orca_gpt4_tokenized_llama.sampled_24576.pkl.gz
 ```
-Download Model First by using your authentication credentials.
-```
-git lfs install
-HF_TOKEN=<insert-your-hf-token> git clone https://huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
-```
+
 
 ### Calibrate the Model [one-time operation]
 
