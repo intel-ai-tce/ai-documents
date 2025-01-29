@@ -238,7 +238,7 @@ Run this step inside the Docker container. Select the appropriate scenario. If t
 
 Set envrionmental variables and Cache model storage (speedup model loading during run)
 ```
-source init_env;python load_model.py;pkill -9 -f python
+source init_env;export CHECKPOINT_PATH=/model/Llama-2-70b-chat-hf/; python load_model.py;pkill -9 -f python
 ```
 Run offline performance
 ```
