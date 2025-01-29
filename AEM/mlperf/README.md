@@ -100,7 +100,7 @@ Here are related recommended power settings from svr-info.
 Set the directories on the host system where model, dataset, and log files will reside. These locations will retain model and data content between Docker sessions.
 
 ```
-export DATASET_DIR=${PWD}/data
+export DATA_DIR=${PWD}/data
 export MODEL_DIR=${PWD}/model
 export LOG_DIR=${PWD}/logs
 ```
@@ -148,6 +148,10 @@ export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<relea
 # Please choose <model> from model={llama2}
 # Please choose <release-version> from release-version={r1}
 ```
+```
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-llama2-r1"
+```
+
 ```
 docker run --privileged -it --rm -u root \
         --ipc=host --net=host --cap-add=ALL \
