@@ -201,11 +201,11 @@ bash scripts/download_dataset.sh
 Dowload Dataset This requires rclone: The access and secret keys can be obtained from MLCommons inference at open-orca-dataset.
 ```
 sudo -v ; curl https://rclone.org/install.sh | sudo bash
-rclone config create mlc-inference s3 provider=Cloudflare access_key_id=f65ba5eef400db161ea49967de89f47b secret_access_key=fbea333914c292b854f14d3fe232bad6c5407bf0ab1bebf78833c2b359bdfd2b endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com
+rclone config create mlc-inference s3 provider=Cloudflare access_key_id=<your key id> secret_access_key=<your access key> endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com
 rclone copy mlc-inference:mlcommons-inference-wg-public/open_orca ${DATA_DIR} -P
 gzip -d ${DATA_DIR}/open_orca_gpt4_tokenized_llama.sampled_24576.pkl.gz
 ```
-
+> NOTE: you could refer to [this page](https://github-wiki-see.page/m/KrArunT/InfobellIT-Gen-AI/wiki/LLama2%E2%80%9070B%E2%80%90MLPerf-Benchmark-Setup-(NVIDIA)) for secret key.
 
 ### Calibrate the Model [one-time operation]
 
