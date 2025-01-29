@@ -12,14 +12,23 @@ In this document, we'll show how to run Intel MLPerf v5.0 submission with Intel
 optimized Docker images and the prepared scripts.
 
 ## Verified HW configuration:
-
+### Xeon
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
 | CPU             | The Intel® Xeon® 6 Processor (GNR)   
 | Memory          | 2304GB (24x96GB [8800MT/s])          |
 | Disk            | 1TB NVMe                             |
 
+### Gaudi
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ |
+| CPU             | 5th Gen Intel® Xeon® Processor(EMR)  
+|Accelerator |  Gaudi3 |
+| Memory          | 1 TGB          |
+| Disk            | 1TB NVMe    
+
 ## BIOS settings:
+### Xeon
 | BIOS setting    | Recommended value                    |
 | --------------- | ------------------------------------ |
 |Hyperthreading|Disabled
@@ -34,13 +43,23 @@ optimized Docker images and the prepared scripts.
 
 ## Verified OS configurations:
 
+### Xeon
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ | 
 | OS              | CentOS  Stream 8                     |
 | Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
 
-## Check System Health Using Intel® System Health Inspector:
-Intel® System Health Inspector (aka svr-info) is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use svr-info first to check any system configuration issue before running any benchmark. Follow [the Quick Start Guide](https://github.com/intel/svr-info#quick-start) for downloading and installation. The following are several key factors effecting the model performance.
+### Gaudi 
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ | 
+| OS              | Ubuntu 22.04                    |
+| Kernel          |  5.15 and above           | 
+
+## Check System Health Using PerfSpect:
+PerfSpect  is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use PerfSpect first to check any system configuration issue before running any benchmark.   
+Follow [the Quick Start Guide](https://github.com/intel/PerfSpect?tab=readme-ov-file#getting-perfspect) for downloading and installation, and get the system configuration reports by using [perfspect report](https://github.com/intel/PerfSpect?tab=readme-ov-file#report-command)  
+### Xeon
+The following are several key factors effecting the model performance for Xeon.  
 <details>
 <summary> CPU </summary>
 Couple CPU features impact MLPerf performance via related BIOS knobs, so please double check the CPU features with your BIOS knobs.
@@ -80,18 +99,18 @@ Here are related recommended power settings from svr-info.
 
 ### Set Directories
 Set the directories on the host system where model, dataset, and log files will reside. These locations will retain model and data content between Docker sessions.
+
 ```
 export DATA_DIR=${PWD}/data
 export MODEL_DIR=${PWD}/model
 export LOG_DIR=${PWD}/logs
 ```
 
-
-
 ### Launch the Docker Image
 In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
 If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
 
+#### Xeon
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
@@ -117,38 +136,125 @@ docker run --privileged -it --rm \
         ${DOCKER_IMAGE} /bin/bash
 ```
 
+#### Gaudi
+Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
+| Release Version     | Models                 |
+| ------------------- | ---------------------- |
+| r1                  | llama2      |
+
+> Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
+
+```
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<release-version>"
+# Please choose <model> from model={llama2}
+# Please choose <release-version> from release-version={r1}
+```
+
+ex: 
+```
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-llama2-r1"
+```
+
+```
+docker run --privileged -it --rm -u root \
+        --ipc=host --net=host --cap-add=ALL \
+        --runtime=habana \
+        -e HABANA_VISIBLE_DEVICES=all \
+        -e OMPI_MCA_btl_vader_single_copy_mechanism=none \
+        -e http_proxy=${http_proxy} \
+        -e https_proxy=${https_proxy} \
+        -v ${DATA_DIR}:/data \
+        -v ${MODEL_DIR}:/model \
+        -v ${LOG_DIR}:/logs \
+        --workdir  /workspace \
+        ${DOCKER_IMAGE} /bin/bash
+```
+
 ### Download the Model [one-time operation]
+
+#### Xeon
 Run this step inside the Docker container.  This is a one-time operation which will preserve the model on the host system using the volume mapping above.
 ```
 bash scripts/download_model.sh
 ```
 
+#### Gaudi
+Download Model by using your authentication credentials. 
+Please install git-lfs first. 
+ex: 
+```
+sudo apt-get install git-lfs
+```
+Please replace your_user_name and your_token with your huggingface credentials.
+```
+git lfs install
+git clone https://<your_user_name>:<your_token>huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
+```
+
 ### Download the Dataset [one-time operation]
+
+#### Xeon
 Run this step inside the Docker container.  This is a one-time operation which will preserve the dataset on the host system using the volume mapping above.
 ```
 bash scripts/download_dataset.sh
 ```
-
+#### Gaudi
+Dowload Dataset This requires rclone: The access and secret keys can be obtained from MLCommons inference at open-orca-dataset.
+```
+sudo -v ; curl https://rclone.org/install.sh | sudo bash
+rclone config create mlc-inference s3 provider=Cloudflare access_key_id=<your key id> secret_access_key=<your access key> endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com
+rclone copy mlc-inference:mlcommons-inference-wg-public/open_orca ${DATA_DIR} -P
+gzip -d ${DATA_DIR}/open_orca_gpt4_tokenized_llama.sampled_24576.pkl.gz
+```
+> NOTE: you could refer to [this page](https://github-wiki-see.page/m/KrArunT/InfobellIT-Gen-AI/wiki/LLama2%E2%80%9070B%E2%80%90MLPerf-Benchmark-Setup-(NVIDIA)) for secret key.
 
 ### Calibrate the Model [one-time operation]
+
+#### Xeon
 Run this step inside the Docker container.  This is a one-time operation, and the resulting calibrated model will be stored along with the original model file.
 ```
 bash scripts/run_calibration.sh
 ```
 
 ### Run Benchmark
+
+#### Xeon
 Run this step inside the Docker container. Select the appropriate scenario. If this is the first time running this workload, the original model file will be calibrated to INT8 and stored alongside the original model file (one-time operation). 
-#### Performance
+##### Performance
 ```
 SCENARIO=Offline MODE=Performance bash run_mlperf.sh
 SCENARIO=Server  MODE=Performance bash run_mlperf.sh
 ```
 
-#### Accuracy
+##### Accuracy
 ```
 SCENARIO=Offline MODE=Performance  bash run_mlperf.sh
 SCENARIO=Server  MODE=Performance  bash run_mlperf.sh
 # 3D-UNet workload does not have Server mode
+```
+
+#### Gaudi
+Run this step inside the Docker container. Select the appropriate scenario. If this is the first time running this workload, the original model file will be calibrated to INT8 and stored alongside the original model file (one-time operation). 
+
+Set envrionmental variables and Cache model storage (speedup model loading during run)
+```
+source init_env;python load_model.py;pkill -9 -f python
+```
+Run offline performance
+```
+./run_performance_offline.sh
+```
+Run offline accuracy
+```
+./run_accuracy_offline.sh
+```
+Run server performance
+```
+./run_performance_server.sh
+```
+Run server accuracy
+```
+./run_accuracy_server.sh
 ```
 
 ### Run Compliance Tests
