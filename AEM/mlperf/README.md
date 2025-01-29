@@ -242,20 +242,15 @@ source init_env;export CHECKPOINT_PATH=/model/Llama-2-70b-chat-hf/; python load_
 ```
 > NOTE: Before you run the model, please make sure to login your huggingface account by "huggingface-cli login"
 
-Run offline performance
+##### Performance
 ```
 ./run_performance_offline.sh
-```
-Run offline accuracy
-```
-./run_accuracy_offline.sh
-```
-Run server performance
-```
 ./run_performance_server.sh
 ```
-Run server accuracy
+
+##### Accuracy
 ```
+./run_accuracy_offline.sh
 ./run_accuracy_server.sh
 ```
 
