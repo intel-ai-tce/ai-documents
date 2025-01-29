@@ -178,7 +178,13 @@ bash scripts/download_model.sh
 ```
 
 ### Gaudi
-Download Model by using your authentication credentials.
+Download Model by using your authentication credentials. 
+Please install git-lfs first. 
+ex: 
+```
+sudo apt-get install git-lfs
+```
+
 ```
 git lfs install
 HF_TOKEN=<insert-your-hf-token> git clone https://huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
