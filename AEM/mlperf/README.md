@@ -151,6 +151,9 @@ export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<relea
 ```
 docker run --privileged -it --rm -u root \
         --ipc=host --net=host --cap-add=ALL \
+        --runtime=habana \
+        -e HABANA_VISIBLE_DEVICES=all \
+        -e OMPI_MCA_btl_vader_single_copy_mechanism=none \
         -e http_proxy=${http_proxy} \
         -e https_proxy=${https_proxy} \
         -v ${DATA_DIR}:/data \
@@ -175,7 +178,20 @@ Run this step inside the Docker container.  This is a one-time operation which w
 ```
 bash scripts/download_dataset.sh
 ```
+#### Gaudi
+Dowload Dataset This requires rclone: The access and secret keys can be obtained from MLCommons inference at open-orca-dataset.
+```
+sudo -v ; curl https://rclone.org/install.sh | sudo bash
+rclone config create mlc-inference s3 provider=Cloudflare access_key_id=<your-access-key-id> secret_access_key=<your-secret-access-key> endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com
+rclone copy mlc-inference:mlcommons-inference-wg-public/open_orca ${$DATA_DIR} -P
 
+gzip -d ${$DATA_DIR}/open_orca_gpt4_tokenized_llama.sampled_24576.pkl.gz
+```
+Download Model First by using your authentication credentials.
+```
+git lfs install
+HF_TOKEN=<insert-your-hf-token> git clone https://huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
+```
 
 ### Calibrate the Model [one-time operation]
 
