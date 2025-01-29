@@ -240,6 +240,8 @@ Set envrionmental variables and Cache model storage (speedup model loading durin
 ```
 source init_env;export CHECKPOINT_PATH=/model/Llama-2-70b-chat-hf/; python load_model.py;pkill -9 -f python
 ```
+> NOTE: Before you run the model, please make sure to login your huggingface account by "huggingface-cli login"
+
 Run offline performance
 ```
 ./run_performance_offline.sh
