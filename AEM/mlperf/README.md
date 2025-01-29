@@ -184,10 +184,10 @@ ex:
 ```
 sudo apt-get install git-lfs
 ```
-
+Please replace your_user_name and your_token with your huggingface credentials.
 ```
 git lfs install
-HF_TOKEN=<insert-your-hf-token> git clone https://huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
+git clone https://<your_user_name>:<your_token>huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
 ```
 
 ### Download the Dataset [one-time operation]
