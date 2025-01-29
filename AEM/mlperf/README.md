@@ -22,7 +22,8 @@ optimized Docker images and the prepared scripts.
 ### Gaudi
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
-| CPU             | The Intel® Xeon® Platinum 8480+ (EMR)   
+| CPU             | 5th Gen Intel® Xeon® Processor(EMR)  
+|Accelerator |  Gaudi3 |
 | Memory          | 1 TGB          |
 | Disk            | 1TB NVMe    
 
@@ -48,11 +49,11 @@ optimized Docker images and the prepared scripts.
 | OS              | CentOS  Stream 8                     |
 | Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
 
-### Gaudi
+### Gaudi 
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ | 
 | OS              | Ubuntu 22.04                    |
-| Kernel          |             | 
+| Kernel          |  5.15 and above           | 
 
 ## Check System Health Using PerfSpect:
 PerfSpect  is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use PerfSpect first to check any system configuration issue before running any benchmark.   
@@ -177,7 +178,7 @@ Run this step inside the Docker container.  This is a one-time operation which w
 bash scripts/download_model.sh
 ```
 
-### Gaudi
+#### Gaudi
 Download Model by using your authentication credentials. 
 Please install git-lfs first. 
 ex: 
@@ -219,13 +220,13 @@ bash scripts/run_calibration.sh
 
 #### Xeon
 Run this step inside the Docker container. Select the appropriate scenario. If this is the first time running this workload, the original model file will be calibrated to INT8 and stored alongside the original model file (one-time operation). 
-#### Performance
+##### Performance
 ```
 SCENARIO=Offline MODE=Performance bash run_mlperf.sh
 SCENARIO=Server  MODE=Performance bash run_mlperf.sh
 ```
 
-#### Accuracy
+##### Accuracy
 ```
 SCENARIO=Offline MODE=Performance  bash run_mlperf.sh
 SCENARIO=Server  MODE=Performance  bash run_mlperf.sh
