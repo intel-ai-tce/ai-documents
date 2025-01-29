@@ -148,6 +148,8 @@ export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<relea
 # Please choose <model> from model={llama2}
 # Please choose <release-version> from release-version={r1}
 ```
+
+ex: 
 ```
 export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-llama2-r1"
 ```
