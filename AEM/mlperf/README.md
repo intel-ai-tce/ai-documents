@@ -270,8 +270,6 @@ After the compliance test, the logs will reside in `/logs/compliance`.
 ### Validate Submission Checker
 >**For submissions only:** There are several files you should modify before running the submission checker. Here are the changes:
 > - In the *systems* folder, there are JSON files. Pick the right json file for your platform and change the following fields as needed: *submitter*, *system\_name*, and *hw_notes*.
-> - In *default.conf*, modify *SYSTEM\_DEFAULT* as needed and ensure all paths in *DEL\_FILES\_DEFAULT* containers your company name rather than "OEM".
-> - In *run\_submission\_checker.sh*, change *VENDOR* from "OEM" to your company name.
 
 Run this step inside the Docker container. The following script will perform accuracy log truncation and run the submission checker on the contents of {LOG_DIR}. The source scripts are distributed as MLPerf Inference reference tools. Ensure the submission content has been populated before running. The script output is transient and destroyed after running. The original content of ${LOG_DIR} is not modified.
 
