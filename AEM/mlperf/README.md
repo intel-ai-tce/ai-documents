@@ -261,22 +261,24 @@ source init_env;export CHECKPOINT_PATH=/model/Llama-2-70b-chat-hf/; python load_
 
 Run this step inside the Docker container. After the benchmark scenarios have been run and results exist in {LOG_DIR}/results, run this step to complete compliance runs. Compliance output will be found in '{LOG_DIR}/compliance'.
 
->**NOTE:** Please change the system to 1-node-2S-GNR_128C if you use Intel® Xeon® 6980P Processor
 ```
-SCENARIO=Offline SYSTEM=1-node-2S-GNR_86C MODE=Compliance  bash run_mlperf.sh
-SCENARIO=Server  SYSTEM=1-node-2S-GNR_86C MODE=Compliance  bash run_mlperf.sh
+SCENARIO=Offline MODE=Compliance  bash run_mlperf.sh
+SCENARIO=Server  MODE=Compliance  bash run_mlperf.sh
 ```
 After the compliance test, the logs will reside in `/logs/compliance`.
 
 ### Validate Submission Checker
 >**For submissions only:** There are several files you should modify before running the submission checker. Here are the changes:
-> - In the *systems* folder, there is a JSON file. Change the following fields as needed: *submitter*, *system\_name*, and *hw_notes*.
+> - In the *systems* folder, there are JSON files. Pick the right json file for your platform and change the following fields as needed: *submitter*, *system\_name*, and *hw_notes*.
 > - In *default.conf*, modify *SYSTEM\_DEFAULT* as needed and ensure all paths in *DEL\_FILES\_DEFAULT* containers your company name rather than "OEM".
 > - In *run\_submission\_checker.sh*, change *VENDOR* from "OEM" to your company name.
 
 Run this step inside the Docker container. The following script will perform accuracy log truncation and run the submission checker on the contents of {LOG_DIR}. The source scripts are distributed as MLPerf Inference reference tools. Ensure the submission content has been populated before running. The script output is transient and destroyed after running. The original content of ${LOG_DIR} is not modified.
+
+>**NOTE:** Please change the system to 1-node-2S-GNR_128C if you use Intel® Xeon® 6980P Processor
+
 ```
-VENDOR=Intel bash prepare_submission.sh
+VENDOR=Intel bash SYSTEM=1-node-2S-GNR_86C scripts/prepare_submission.sh
 ```
 <br><br>
 ***
