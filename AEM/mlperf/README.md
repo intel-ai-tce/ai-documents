@@ -15,9 +15,11 @@ optimized Docker images and the prepared scripts.
 ### Xeon
 | System Info     | Configuration detail                 |
 | --------------- | ------------------------------------ |
-| CPU             | The Intel® Xeon® 6 Processor (GNR)   
+| CPU             | The Intel® Xeon® 6980P and 6787P Processor (GNR)   
 | Memory          | 2304GB (24x96GB [8800MT/s])          |
 | Disk            | 1TB NVMe                             |
+
+
 
 ### Gaudi
 | System Info     | Configuration detail                 |
@@ -258,9 +260,11 @@ source init_env;export CHECKPOINT_PATH=/model/Llama-2-70b-chat-hf/; python load_
 >**NOTE:** Please bypass this step for GPT-J model. Compliance tests are not required https://github.com/mlcommons/policies/blob/master/submission_rules.adoc#5132-inference. 
 
 Run this step inside the Docker container. After the benchmark scenarios have been run and results exist in {LOG_DIR}/results, run this step to complete compliance runs. Compliance output will be found in '{LOG_DIR}/compliance'.
+
+>**NOTE:** Please change the system to 1-node-2S-GNR_128C if you use Intel® Xeon® 6980P Processor
 ```
-SCENARIO=Offline MODE=Compliance  bash run_mlperf.sh
-SCENARIO=Server  MODE=Compliance  bash run_mlperf.sh
+SCENARIO=Offline SYSTEM=1-node-2S-GNR_86C MODE=Compliance  bash run_mlperf.sh
+SCENARIO=Server  SYSTEM=1-node-2S-GNR_86C MODE=Compliance  bash run_mlperf.sh
 ```
 After the compliance test, the logs will reside in `/logs/compliance`.
 
