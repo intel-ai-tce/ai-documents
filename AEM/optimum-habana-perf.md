@@ -16,6 +16,12 @@ docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_va
 > Please export HF_HOME environment variable to your external disk and then export the mount point into docker instance. \
 > ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
 
+### Get examples from optimum-habana github repository
+To benchmark Llama2 and Llama3 models, we need to get optimum-habana from github repository by using below command.
+```bash
+git clone -b v1.15.0 https://github.com/huggingface/optimum-habana.git
+cd optimum-habana/examples/text-generation
+```
 ### Install required packages inside docker
 First, you should install the optimum-habana:
 ```bash
@@ -36,12 +42,6 @@ Then, if you plan to use [DeepSpeed-inference](https://docs.habana.ai/en/latest/
 ```bash
 pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.19.0
 ```
-### Get examples from optimum-habana github repository
-To benchmark Llama2 and Llama3 models, we need to get optimum-habana from github repository by using below command.
-```bash
-git clone -b v1.15.0 https://github.com/huggingface/optimum-habana.git
-cd optimum-habana/examples/text-generation
-```
 
 
 # Tensor quantization statistics measurement
@@ -53,16 +53,16 @@ Users could export different values to below enivironment variables to change pa
 | Environment Variable | Values |
 |------------------|------------|
 | model_name | meta-llama/Llama-2-70b-hf ,  meta-llama/Llama-2-7b-hf |
-| word_size | 1,2,8 |
+| world_size | 1,2,8 |
 
 ```bash
 export model_name=meta-llama/Llama-2-70b-hf
-export word_size=8
+export world_size=8
 ```
 
 ```bash
 QUANT_CONFIG=./quantization_config/maxabs_measure.json python ../gaudi_spawn.py \
---use_deepspeed --world_size ${word_size} run_lm_eval.py \
+--use_deepspeed --world_size ${world_size} run_lm_eval.py \
 -o acc_${model_name}_bs1_measure.txt \
 --model_name_or_path ${model_name} \
 --attn_softmax_bf16 \
@@ -85,16 +85,16 @@ Users could export different values to below environment variables to change par
 | Environment Variable | Values |
 |------------------|------------|
 | model_name | meta-llama/Llama-3.1-405B-Instruct , meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
-| word_size | 8 |
+| world_size | 8 |
 
 ```bash
 export model_name=meta-llama/Llama-3.1-405B-Instruct
-export word_size=8
+export world_size=8
 ```
 
 ```bash
 QUANT_CONFIG=./quantization_config/maxabs_measure_include_outputs.json python ../gaudi_spawn.py \
---use_deepspeed --world_size ${word_size} run_lm_eval.py \
+--use_deepspeed --world_size ${world_size} run_lm_eval.py \
 -o acc_${model_name}_bs1_quant.txt \
 --model_name_or_path ${model_name} \
 --use_hpu_graphs \
@@ -119,7 +119,7 @@ Users could export different values to below enivironment variables to change pa
 | input_len | 128, 2048, and etc |
 | output_len | 128, 2048, and etc |
 | batch_size | 350, 1512, 1750, and etc |
-| word_size | 1,2, 8 |
+| world_size | 1,2, 8 |
 
 > Please note that Llama3-405B requires minimum 8 cards Gaudi3.
 
@@ -129,12 +129,12 @@ export model_name=meta-llama/Llama-2-70b-hf
 export input_len=128
 export output_len=128
 export batch_size=1750
-export word_size=8
+export world_size=8
 ```
 After setting the environment variables, users could run the fp8 model by below command.  
 ```bash
 QUANT_CONFIG=./quantization_config/maxabs_quant.json python ../gaudi_spawn.py \
---use_deepspeed --world_size ${word_size} run_generation.py \
+--use_deepspeed --world_size ${world_size} run_generation.py \
 --model_name_or_path ${model_name} \
 --attn_softmax_bf16 \
 --use_hpu_graphs \
