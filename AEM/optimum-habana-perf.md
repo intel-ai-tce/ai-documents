@@ -6,7 +6,7 @@ We suggest to use pytorch docker image to run below examples.
 To use dockerfile provided for the sample, please follow [Docker Installation](https://docs.habana.ai/en/latest/Installation_Guide/Additional_Installation/Docker_Installation.html) to setup habana runtime for Docker images.  
 The docker image helps users to setup pytorch software and packages to run the samples. Users still need to install required packages like deepspeed to run the samples.  
 
-## Docker Run
+### Docker Run
 After docker build, users could follow below command to run and docker instance and users will be in the docker instance under text-generation folder.
 ```bash
 docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD/../../":/workspace --workdir  /workspace/examples/text-generation  vault.habana.ai/gaudi-docker/1.19.1/ubuntu24.04/habanalabs/pytorch-installer-2.5.1:latest
@@ -16,13 +16,13 @@ docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_va
 > Please export HF_HOME environment variable to your external disk and then export the mount point into docker instance. \
 > ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
 
-## Get examples from optimum-habana github repository
+### Get examples from optimum-habana github repository
 To benchmark Llama2 and Llama3 models, we need to get optimum-habana from github repository by using below command.
 ```bash
 git clone -b v1.15.0 https://github.com/huggingface/optimum-habana.git
 cd optimum-habana/examples/text-generation
 ```
-## Install required packages inside docker
+### Install required packages inside docker
 First, you should install the optimum-habana:
 ```bash
 pip install --upgrade-strategy eager optimum[habana]
@@ -46,7 +46,7 @@ pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.19.0
 
 # Tensor quantization statistics measurement
 
-## Llama2
+### Llama2
 Here is an example to measure the tensor quantization statistics on LLama2:
 
 Users could export different values to below enivironment variables to change parameters for tensor quantization statisics  
@@ -77,7 +77,7 @@ QUANT_CONFIG=./quantization_config/maxabs_measure.json python ../gaudi_spawn.py 
 --batch_size 1
 ```
 
-## Llama3
+### Llama3
 Here is an example to measure the tensor quantization statistics on Llama3 with 8 cards:
 > Please note that Llama3-405B requires minimum 8 cards Gaudi3.
 
