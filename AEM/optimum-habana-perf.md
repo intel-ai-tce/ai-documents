@@ -6,6 +6,13 @@ We suggest to use pytorch docker image to run below examples.
 To use dockerfile provided for the sample, please follow [Docker Installation](https://docs.habana.ai/en/latest/Installation_Guide/Additional_Installation/Docker_Installation.html) to setup habana runtime for Docker images.  
 The docker image helps users to setup pytorch software and packages to run the samples. Users still need to install required packages like deepspeed to run the samples.  
 
+### Get examples from optimum-habana github repository
+To benchmark Llama2 and Llama3 models, we need to get optimum-habana from github repository by using below command.
+```bash
+git clone -b v1.15.0 https://github.com/huggingface/optimum-habana.git
+cd optimum-habana/examples/text-generation
+```
+
 ### Docker Run
 After docker build, users could follow below command to run and docker instance and users will be in the docker instance under text-generation folder.
 ```bash
@@ -16,12 +23,6 @@ docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_va
 > Please export HF_HOME environment variable to your external disk and then export the mount point into docker instance. \
 > ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
 
-### Get examples from optimum-habana github repository
-To benchmark Llama2 and Llama3 models, we need to get optimum-habana from github repository by using below command.
-```bash
-git clone -b v1.15.0 https://github.com/huggingface/optimum-habana.git
-cd optimum-habana/examples/text-generation
-```
 ### Install required packages inside docker
 First, you should install the optimum-habana:
 ```bash
