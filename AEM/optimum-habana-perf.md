@@ -44,7 +44,7 @@ pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.19.0
 ```
 
 
-# Tensor quantization statistics measurement
+# Tensor quantization statisics measurement
 
 ### Llama2
 Here is an example to measure the tensor quantization statistics on LLama2:
@@ -52,8 +52,8 @@ Here is an example to measure the tensor quantization statistics on LLama2:
 Users could export different values to below enivironment variables to change parameters for tensor quantization statisics  
 | Environment Variable | Values |
 |------------------|------------|
-| model_name | meta-llama/Llama-2-70b-hf ,  meta-llama/Llama-2-7b-hf |
-| world_size | 1,2,8 |
+| model_name | meta-llama/Llama-2-70b-hf,  meta-llama/Llama-2-7b-hf |
+| world_size | 1, 2, 8 |
 
 ```bash
 export model_name=meta-llama/Llama-2-70b-hf
@@ -84,7 +84,7 @@ Here is an example to measure the tensor quantization statistics on Llama3 with 
 Users could export different values to below environment variables to change parameters for tensor quantization statisics  
 | Environment Variable | Values |
 |------------------|------------|
-| model_name | meta-llama/Llama-3.1-405B-Instruct , meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
+| model_name | meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
 | world_size | 8 |
 
 ```bash
@@ -115,11 +115,11 @@ Here is an example to quantize the model based on previous measurements for LLam
 Users could export different values to below enivironment variables to change parameters for benchmarking
 | Environment Variable | Values |
 |------------------|------------|
-| model_name | meta-llama/Llama-2-70b-hf , meta-llama/Llama-2-7b-hf, meta-llama/Llama-3.1-405B-Instruct , meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
+| model_name | meta-llama/Llama-2-70b-hf, meta-llama/Llama-2-7b-hf, meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
 | input_len | 128, 2048, and etc |
 | output_len | 128, 2048, and etc |
 | batch_size | 350, 1512, 1750, and etc |
-| world_size | 1,2, 8 |
+| world_size | 1, 2, 8 |
 
 > Please note that Llama3-405B requires minimum 8 cards Gaudi3.
 
