@@ -9,7 +9,7 @@ The docker image helps users to setup pytorch software and packages to run the s
 ### Docker Run
 After docker build, users could follow below command to run and docker instance and users will be in the docker instance under text-generation folder.
 ```bash
-docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD/../../":/workspace --workdir  /workspace/examples/text-generation  vault.habana.ai/gaudi-docker/1.19.1/ubuntu24.04/habanalabs/pytorch-installer-2.5.1:latest
+docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD/../../":/workspace --workdir  /workspace/examples/text-generation  vault.habana.ai/gaudi-docker/1.19.0/ubuntu24.04/habanalabs/pytorch-installer-2.5.1:latest
 ```
 > [!NOTE]
 > The Huggingface model file size might be large, so we recommend to use an external disk as Huggingface hub folder. \
@@ -49,7 +49,7 @@ pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.19.0
 ### Llama2
 Here is an example to measure the tensor quantization statistics on LLama2:
 
-Users could export different values to below enivironment variables to change parameters for tensor quantization statisics  
+Users could export different values to below environment variables to change parameters for tensor quantization statisics  
 | Environment Variable | Values |
 |------------------|------------|
 | model_name | meta-llama/Llama-2-70b-hf,  meta-llama/Llama-2-7b-hf |
@@ -112,7 +112,7 @@ QUANT_CONFIG=./quantization_config/maxabs_measure_include_outputs.json python ..
 
 Here is an example to quantize the model based on previous measurements for LLama2 or 3 models:
 
-Users could export different values to below enivironment variables to change parameters for benchmarking
+Users could export different values to below environment variables to change parameters for benchmarking
 | Environment Variable | Values |
 |------------------|------------|
 | model_name | meta-llama/Llama-2-70b-hf, meta-llama/Llama-2-7b-hf, meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
