@@ -62,9 +62,9 @@ export world_size=8
 ```
 
 ```bash
-QUANT_CONFIG=./quantization_config/maxabs_measure.json python ../gaudi_spawn.py \
+QUANT_CONFIG=./quantization_config/maxabs_measure.json python3 ../gaudi_spawn.py \
 --use_deepspeed --world_size ${world_size} run_lm_eval.py \
--o acc_${model_name}_bs1_measure.txt \
+-o acc_llama2_bs1_measure.txt \
 --model_name_or_path ${model_name} \
 --attn_softmax_bf16 \
 --use_hpu_graphs \
@@ -94,9 +94,9 @@ export world_size=8
 ```
 
 ```bash
-QUANT_CONFIG=./quantization_config/maxabs_measure_include_outputs.json python ../gaudi_spawn.py \
+QUANT_CONFIG=./quantization_config/maxabs_measure_include_outputs.json python3 ../gaudi_spawn.py \
 --use_deepspeed --world_size ${world_size} run_lm_eval.py \
--o acc_${model_name}_bs1_quant.txt \
+-o acc_llama3_bs1_quant.txt \
 --model_name_or_path ${model_name} \
 --use_hpu_graphs \
 --use_kv_cache \
@@ -130,11 +130,11 @@ export model_name=meta-llama/Llama-2-70b-hf
 export input_len=128
 export output_len=128
 export batch_size=1750
-export world_size=8
+export world_size=2
 ```
 After setting the environment variables, users could run the fp8 model by below command.  
 ```bash
-QUANT_CONFIG=./quantization_config/maxabs_quant.json python ../gaudi_spawn.py \
+QUANT_CONFIG=./quantization_config/maxabs_quant.json python3 ../gaudi_spawn.py \
 --use_deepspeed --world_size ${world_size} run_generation.py \
 --model_name_or_path ${model_name} \
 --attn_softmax_bf16 \
