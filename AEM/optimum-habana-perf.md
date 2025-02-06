@@ -46,7 +46,9 @@ pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.19.0
 
 
 # Tensor quantization statisics measurement
-
+Users just need to do once among different models with related world size values.  
+Users will get hqt_output after this step and it will be used for fp8 run. 
+If users plan to change models for fp8 run, they need to do this step again to get relted hqt_output.  
 ### Llama2
 Here is an example to measure the tensor quantization statistics on LLama2:
 
@@ -58,7 +60,7 @@ Users could export different values to below environment variables to change par
 
 ```bash
 export model_name=meta-llama/Llama-2-70b-hf
-export world_size=8
+export world_size=2
 ```
 
 ```bash
