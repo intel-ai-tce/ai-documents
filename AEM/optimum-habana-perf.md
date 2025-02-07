@@ -124,7 +124,7 @@ Export different values to the following environment variables to change paramet
 | batch_size | 350, 1512, 1750, and etc |
 | world_size | 1, 2, 8 |
 
-> Please note that Llama3-405B requires minimum 8 Gaudi3 cards.
+> Please note that Llama3-405B requires a minimum of 8 Gaudi3 cards.
 
 Here is an example to run llama2-70b with input tokens length=128, output tokens length=128 and batch size = 1750 
 ```bash
