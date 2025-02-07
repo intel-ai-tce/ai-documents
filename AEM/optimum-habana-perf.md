@@ -1,30 +1,30 @@
 # Setup Instructions
 
-Please make sure to follow [Driver Installation](https://docs.habana.ai/en/latest/Installation_Guide/Driver_Installation.html) to install Gaudi driver on the system.
-We suggest to use pytorch docker image to run below examples.
+Please make sure to follow [Driver Installation](https://docs.habana.ai/en/latest/Installation_Guide/Driver_Installation.html) to install the Gaudi driver on the system.  
+It is recommended to use the PyTorch Docker image to run the examples below.
 
-To use dockerfile provided for the sample, please follow [Docker Installation](https://docs.habana.ai/en/latest/Installation_Guide/Additional_Installation/Docker_Installation.html) to setup habana runtime for Docker images.  
-The docker image helps users to setup pytorch software and packages to run the samples. Users still need to install required packages like deepspeed to run the samples.  
+To use the provided Dockerfile for the sample, follow the [Docker Installation guide](https://docs.habana.ai/en/latest/Installation_Guide/Additional_Installation/Docker_Installation.html) to setup the Habana runtime for Docker images.  
+The Docker image assists in setting up the PyTorch software and packages to run the samples. However, installing additional required packages like DeepSpeed is still necessary to run the samples. 
 
 ### Get examples from optimum-habana github repository
-To benchmark Llama2 and Llama3 models, we need to get optimum-habana from github repository by using below command.
+To benchmark Llama2 and Llama3 models, obtain optimum-habana from the GitHub repository using the following command.
 ```bash
 git clone -b v1.15.0 https://github.com/huggingface/optimum-habana.git
 cd optimum-habana/examples/text-generation
 ```
 
 ### Docker Run
-After docker build, users could follow below command to run and docker instance and users will be in the docker instance under text-generation folder.
+After building the Docker image, run the following command to start a Docker instance, which will open in the text-generation folder inside the docker instance.
 ```bash
 docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD/../../":/workspace --workdir  /workspace/examples/text-generation  vault.habana.ai/gaudi-docker/1.19.0/ubuntu24.04/habanalabs/pytorch-installer-2.5.1:latest
 ```
 >**NOTE:**
-> The Huggingface model file size might be large, so we recommend to use an external disk as Huggingface hub folder. \
-> Please export HF_HOME environment variable to your external disk and then export the mount point into docker instance. \
+> The Huggingface model file size might be large, so it is recommended to use an external disk as the Huggingface hub folder. \
+> Export the HF_HOME environment variable to the external disk and then export the mount point into the Docker instance. \
 > ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
 
 ### Install required packages inside docker
-First, you should install the optimum-habana:
+First, install the optimum-habana:
 ```bash
 pip install --upgrade-strategy eager optimum[habana]
 ```
@@ -39,20 +39,20 @@ For `run_lm_eval.py`:
 pip install -r requirements_lm_eval.txt
 ```
 
-Then, if you plan to use [DeepSpeed-inference](https://docs.habana.ai/en/latest/PyTorch/DeepSpeed/Inference_Using_DeepSpeed.html), you should install DeepSpeed as follows:
+Then, to use [DeepSpeed-inference](https://docs.habana.ai/en/latest/PyTorch/DeepSpeed/Inference_Using_DeepSpeed.html), install DeepSpeed as follows: 
 ```bash
 pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.19.0
 ```
 
 
 # Tensor quantization statisics measurement
-Users just need to do once among different models with related world size values.  
-Users will get hqt_output after this step and it will be used for fp8 run.  
-If users plan to change models for fp8 run, they need to do this step again to get relted hqt_output.   
+This step needs to be completed only once for each model with the corresponding world size values.  
+The hqt_output generated after this step will be used for the FP8 run.  
+If changing models for the FP8 run, repeat this step to obtain the relevant hqt_output.  
 ### Llama2
 Here is an example to measure the tensor quantization statistics on LLama2:
 
-Users could export different values to below environment variables to change parameters for tensor quantization statisics  
+Export different values to the following environment variables to change parameters for tensor quantization statistics:    
 | Environment Variable | Values |
 |------------------|------------|
 | model_name | meta-llama/Llama-2-70b-hf,  meta-llama/Llama-2-7b-hf |
@@ -84,7 +84,7 @@ QUANT_CONFIG=./quantization_config/maxabs_measure.json python3 ../gaudi_spawn.py
 Here is an example to measure the tensor quantization statistics on Llama3 with 8 cards:
 > Please note that Llama3-405B requires minimum 8 Gaudi3 cards.
 
-Users could export different values to below environment variables to change parameters for tensor quantization statisics  
+Export different values to the following environment variables to change parameters for tensor quantization statistics:  
 | Environment Variable | Values |
 |------------------|------------|
 | model_name | meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
@@ -115,7 +115,7 @@ QUANT_CONFIG=./quantization_config/maxabs_measure_include_outputs.json python3 .
 
 Here is an example to quantize the model based on previous measurements for LLama2 or 3 models:
 
-Users could export different values to below environment variables to change parameters for benchmarking
+Export different values to the following environment variables to change parameters for tensor quantization statistics:  
 | Environment Variable | Values |
 |------------------|------------|
 | model_name | meta-llama/Llama-2-70b-hf, meta-llama/Llama-2-7b-hf, meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
@@ -134,7 +134,7 @@ export output_len=128
 export batch_size=1750
 export world_size=2
 ```
-After setting the environment variables, users could run the fp8 model by below command.  
+After setting the environment variables, run the FP8 model using the following command:  
 ```bash
 QUANT_CONFIG=./quantization_config/maxabs_quant.json python3 ../gaudi_spawn.py \
 --use_deepspeed --world_size ${world_size} run_generation.py \
