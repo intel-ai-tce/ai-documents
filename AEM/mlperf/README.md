@@ -230,8 +230,8 @@ SCENARIO=Server  MODE=Performance bash run_mlperf.sh
 
 ##### Accuracy
 ```
-SCENARIO=Offline MODE=Performance  bash run_mlperf.sh
-SCENARIO=Server  MODE=Performance  bash run_mlperf.sh
+SCENARIO=Offline MODE=Accuracy  bash run_mlperf.sh
+SCENARIO=Server  MODE=Accuracy  bash run_mlperf.sh
 # 3D-UNet workload does not have Server mode
 ```
 
