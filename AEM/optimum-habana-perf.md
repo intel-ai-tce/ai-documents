@@ -82,7 +82,7 @@ QUANT_CONFIG=./quantization_config/maxabs_measure.json python3 ../gaudi_spawn.py
 
 ### Llama3
 Here is an example to measure the tensor quantization statistics on Llama3 with 8 cards:
-> Please note that Llama3-405B requires minimum 8 Gaudi3 cards.
+> Please note that Llama3-405B requires a minimum of 8 Gaudi3 cards.
 
 Export different values to the following environment variables to change parameters for tensor quantization statistics:  
 | Environment Variable | Values |
