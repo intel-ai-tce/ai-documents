@@ -144,7 +144,6 @@ QUANT_CONFIG=./quantization_config/maxabs_quant.json python3 ../gaudi_spawn.py \
 --limit_hpu_graphs \
 --trim_logits \
 --use_kv_cache \
---reuse_cache \
 --use_flash_attention \
 --flash_attention_recompute \
 --flash_attention_causal_mask  \
