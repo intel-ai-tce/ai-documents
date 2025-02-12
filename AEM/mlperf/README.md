@@ -146,8 +146,9 @@ Here is a table of the currently supported models and release versions. It is re
 | r3                  | llama2-70b    |
 | r1                  | llama2    |
 
-> Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
+> Note : Do "docker login  -u keithachornintel" before pulling below docker images before those images are uploaded to docker hub under intel/intel-optimized-pytorch
 
+> Note : To access Llama2 70b model from Huggingface, export user's HF token into docker instance.
 ```
 export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<release-version>"
 # Please choose <model> from model={llama2-70b}
@@ -157,6 +158,7 @@ export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<relea
 ex: 
 ```
 export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-llama2-70b-r3"
+export HF_TOKEN=<USER_TOKEN>
 ```
 
 ```
@@ -165,6 +167,7 @@ docker run --privileged -it --rm -u root \
         --runtime=habana \
         -e HABANA_VISIBLE_DEVICES=all \
         -e OMPI_MCA_btl_vader_single_copy_mechanism=none \
+        -e HF_TOKEN=${HF_TOKEN} \ 
         -e http_proxy=${http_proxy} \
         -e https_proxy=${https_proxy} \
         -v ${DATA_DIR}:/data \
@@ -203,12 +206,6 @@ Please replace your_user_name and your_token with your huggingface credentials.
 ```
 git lfs install
 git clone https://<your_user_name>:<your_token>huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
-```
-##### Initialize HuggingFace
-To utilize the dataset for Llama2-70B, an authorized HuggingFace key must be shared once per sesion. Run the following, with the user's unique HuggingFace authorization token:  
-
-```
-export HF_TOKEN=<USER_TOKEN>
 ```
 
 ### Download the Dataset [one-time operation]
