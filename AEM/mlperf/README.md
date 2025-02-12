@@ -167,7 +167,7 @@ docker run --privileged -it --rm -u root \
         --runtime=habana \
         -e HABANA_VISIBLE_DEVICES=all \
         -e OMPI_MCA_btl_vader_single_copy_mechanism=none \
-        -e HF_TOKEN=${HF_TOKEN} \ 
+        -e HF_TOKEN=${HF_TOKEN} \
         -e http_proxy=${http_proxy} \
         -e https_proxy=${https_proxy} \
         -v ${DATA_DIR}:/data \
