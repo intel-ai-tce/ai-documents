@@ -144,6 +144,7 @@ Here is a table of the currently supported models and release versions. It is re
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
 | r3                  | llama2-70b    |
+| r1                  | llama2    |
 
 > Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
 
@@ -173,6 +174,13 @@ docker run --privileged -it --rm -u root \
         ${DOCKER_IMAGE} /bin/bash
 ```
 
+> **NOTE**: More information for docker run on Gaudi are in [the Habana Doc](https://docs.habana.ai/en/v1.19.2/Installation_Guide/Additional_Installation/Docker_Installation.html).
+
+>**NOTE:**
+> The Huggingface model file size might be large, so it is recommended to use an external disk as the Huggingface hub folder. \
+> Export the HF_HOME environment variable to the external disk and then export the mount point into the Docker instance. \
+> ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
+
 ### Download the Model [one-time operation]
 
 #### Xeon
@@ -183,6 +191,9 @@ bash scripts/download_model.sh
 
 #### Gaudi
 Download Model by using your authentication credentials. 
+
+> NOTE: Model download script is only available in R1 release for now. 
+
 Please install git-lfs first. 
 ex: 
 ```
@@ -192,6 +203,12 @@ Please replace your_user_name and your_token with your huggingface credentials.
 ```
 git lfs install
 git clone https://<your_user_name>:<your_token>huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
+```
+##### Initialize HuggingFace
+To utilize the dataset for Llama2-70B, an authorized HuggingFace key must be shared once per sesion. Run the following, with the user's unique HuggingFace authorization token:  
+
+```
+export HF_TOKEN=<USER_TOKEN>
 ```
 
 ### Download the Dataset [one-time operation]
@@ -203,6 +220,9 @@ bash scripts/download_dataset.sh
 ```
 #### Gaudi
 Dowload Dataset This requires rclone: The access and secret keys can be obtained from MLCommons inference at open-orca-dataset.
+
+> NOTE: Dataset download script is only available in R1 release for now. 
+
 ```
 sudo -v ; curl https://rclone.org/install.sh | sudo bash
 rclone config create mlc-inference s3 provider=Cloudflare access_key_id=<your key id> secret_access_key=<your access key> endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com
