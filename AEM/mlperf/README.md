@@ -143,19 +143,19 @@ docker run --privileged -it --rm \
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
-| r1                  | llama2      |
+| r3                  | llama2-70b    |
 
 > Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
 
 ```
 export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<release-version>"
-# Please choose <model> from model={llama2}
-# Please choose <release-version> from release-version={r1}
+# Please choose <model> from model={llama2-70b}
+# Please choose <release-version> from release-version={r3}
 ```
 
 ex: 
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-llama2-r1"
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-llama2-70b-r3"
 ```
 
 ```
@@ -244,6 +244,8 @@ Set envrionmental variables and Cache model storage (speedup model loading durin
 source init_env;export CHECKPOINT_PATH=/model/Llama-2-70b-chat-hf/; python load_model.py;pkill -9 -f python
 ```
 > NOTE: Before you run the model, please make sure to login your huggingface account by "huggingface-cli login"
+
+> NOTE: To get the best server performance vaule, update the Server QPS in /workspace/user.conf from 54.4 to 68.0
 
 ##### Performance
 ```
