@@ -212,7 +212,8 @@ Run this step inside the Docker container. Select the appropriate scenario. If t
 SCENARIO=Offline MODE=Performance bash run_mlperf.sh
 SCENARIO=Server  MODE=Performance bash run_mlperf.sh
 ```
-> NOTE: To change target QPS for offline or server run, export OFFLINE_QPS=xxxxxx for Offline run and export SERVER_QPS=xxxxx for server run. 
+> NOTE: To change target QPS for offline or server run, export OFFLINE_QPS=xxxxxx for Offline run and export SERVER_QPS=xxxxx for Xeon server run. 
+> To update Gaudi3 QPS, update the Server QPS in /workspace/user.conf
 
 #### Accuracy
 ```
