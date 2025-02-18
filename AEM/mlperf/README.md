@@ -116,8 +116,8 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
-| r3                  | resnet50, dlrmv2, retinanet       |
-| r2                  | 3dunet, gptj           |
+| r4                  | resnet50, dlrmv2, retinanet, 3dunet  |
+| r2                  | gptj           |
 
 > Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
 
@@ -143,7 +143,6 @@ Here is a table of the currently supported models and release versions. It is re
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
 | r3                  | llama2-70b    |
-| r1                  | llama2    |
 
 > Note : Do "docker login  -u keithachornintel" before pulling below docker images before those images are uploaded to docker hub under intel/intel-optimized-pytorch
 
@@ -185,47 +184,17 @@ docker run --privileged -it --rm -u root \
 
 ### Download the Model [one-time operation]
 
-#### Xeon
 Run this step inside the Docker container.  This is a one-time operation which will preserve the model on the host system using the volume mapping above.
 ```
 bash scripts/download_model.sh
 ```
 
-#### Gaudi
-Download Model by using your authentication credentials. 
-
-> NOTE: Model download script is only available in R1 release for now. 
-
-Please install git-lfs first. 
-ex: 
-```
-sudo apt-get install git-lfs
-```
-Please replace your_user_name and your_token with your huggingface credentials.
-```
-git lfs install
-git clone https://<your_user_name>:<your_token>huggingface.co/meta-llama/Llama-2-70b-chat-hf ${MODEL_DIR}/Llama-2-70b-chat-hf
-```
-
 ### Download the Dataset [one-time operation]
 
-#### Xeon
 Run this step inside the Docker container.  This is a one-time operation which will preserve the dataset on the host system using the volume mapping above.
 ```
 bash scripts/download_dataset.sh
 ```
-#### Gaudi
-Dowload Dataset This requires rclone: The access and secret keys can be obtained from MLCommons inference at open-orca-dataset.
-
-> NOTE: Dataset download script is only available in R1 release for now. 
-
-```
-sudo -v ; curl https://rclone.org/install.sh | sudo bash
-rclone config create mlc-inference s3 provider=Cloudflare access_key_id=<your key id> secret_access_key=<your access key> endpoint=https://c2686074cb2caf5cbaf6d134bdba8b47.r2.cloudflarestorage.com
-rclone copy mlc-inference:mlcommons-inference-wg-public/open_orca ${DATA_DIR} -P
-gzip -d ${DATA_DIR}/open_orca_gpt4_tokenized_llama.sampled_24576.pkl.gz
-```
-> NOTE: you could refer to [this page](https://github-wiki-see.page/m/KrArunT/InfobellIT-Gen-AI/wiki/LLama2%E2%80%9070B%E2%80%90MLPerf-Benchmark-Setup-(NVIDIA)) for secret key.
 
 ### Calibrate the Model [one-time operation]
 
@@ -237,42 +206,19 @@ bash scripts/run_calibration.sh
 
 ### Run Benchmark
 
-#### Xeon
 Run this step inside the Docker container. Select the appropriate scenario. If this is the first time running this workload, the original model file will be calibrated to INT8 and stored alongside the original model file (one-time operation). 
-##### Performance
+#### Performance
 ```
 SCENARIO=Offline MODE=Performance bash run_mlperf.sh
 SCENARIO=Server  MODE=Performance bash run_mlperf.sh
 ```
+> NOTE: To change target QPS for offline or server run, export OFFLINE_QPS=xxxxxx for Offline run and export SERVER_QPS=xxxxx for server run. 
 
-##### Accuracy
+#### Accuracy
 ```
 SCENARIO=Offline MODE=Accuracy  bash run_mlperf.sh
 SCENARIO=Server  MODE=Accuracy  bash run_mlperf.sh
 # 3D-UNet workload does not have Server mode
-```
-
-#### Gaudi
-Run this step inside the Docker container. Select the appropriate scenario. If this is the first time running this workload, the original model file will be calibrated to INT8 and stored alongside the original model file (one-time operation). 
-
-Set envrionmental variables and Cache model storage (speedup model loading during run)
-```
-source init_env;export CHECKPOINT_PATH=/model/Llama-2-70b-chat-hf/; python load_model.py;pkill -9 -f python
-```
-> NOTE: Before you run the model, please make sure to login your huggingface account by "huggingface-cli login"
-
-> NOTE: To get the best server performance vaule, update the Server QPS in /workspace/user.conf from 54.4 to 68.0
-
-##### Performance
-```
-./run_performance_offline.sh
-./run_performance_server.sh
-```
-
-##### Accuracy
-```
-./run_accuracy_offline.sh
-./run_accuracy_server.sh
 ```
 
 ### Run Compliance Tests
