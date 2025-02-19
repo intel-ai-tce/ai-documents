@@ -213,7 +213,7 @@ SCENARIO=Offline MODE=Performance bash run_mlperf.sh
 SCENARIO=Server  MODE=Performance bash run_mlperf.sh
 ```
 > NOTE: To change target QPS for offline or server run, export OFFLINE_QPS=xxxxxx for Offline run and export SERVER_QPS=xxxxx for Xeon server run. 
-> To update Gaudi3 QPS, update the Server QPS in /workspace/user.conf
+> To update Gaudi3 QPS, update the Server QPS in /workspace/systems/user.conf.GAUDI3_8C
 
 #### Accuracy
 ```
