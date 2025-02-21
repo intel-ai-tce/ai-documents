@@ -141,7 +141,7 @@ docker run --privileged -it --rm \
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
-| r3                  | llama2-70b    |
+| r4                  | llama2-70b    |
 
 > Note : Do "docker login  -u keithachornintel" before pulling below docker images before those images are uploaded to docker hub under intel/intel-optimized-pytorch
 
@@ -149,7 +149,7 @@ Here is a table of the currently supported models and release versions. It is re
 ```
 export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<release-version>"
 # Please choose <model> from model={llama2-70b}
-# Please choose <release-version> from release-version={r3}
+# Please choose <release-version> from release-version={r3, r4}
 ```
 
 ex: 
