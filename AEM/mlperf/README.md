@@ -116,8 +116,7 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
-| r4                  | resnet50, dlrmv2, retinanet, 3dunet  |
-| r2                  | gptj           |
+| r4                  | resnet50, dlrmv2, retinanet, 3dunet, gptj  |
 
 > Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
 
