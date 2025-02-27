@@ -16,7 +16,7 @@ cd optimum-habana/examples/text-generation
 ### Docker Run
 After building the Docker image, run the following command to start a Docker instance, which will open in the text-generation folder inside the docker instance.
 ```bash
-docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD/../../":/workspace --workdir  /workspace/examples/text-generation  vault.habana.ai/gaudi-docker/1.19.0/ubuntu24.04/habanalabs/pytorch-installer-2.5.1:latest
+docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD/../../":/workspace --workdir  /workspace/examples/text-generation  vault.habana.ai/gaudi-docker/1.20.0/ubuntu24.04/habanalabs/pytorch-installer-2.6.0:latest
 ```
 >**NOTE:**
 > The Huggingface model file size might be large, so it is recommended to use an external disk as the Huggingface hub folder. \
@@ -41,7 +41,7 @@ pip install -r requirements_lm_eval.txt
 
 Then, to use [DeepSpeed-inference](https://docs.habana.ai/en/latest/PyTorch/DeepSpeed/Inference_Using_DeepSpeed.html), install DeepSpeed as follows: 
 ```bash
-pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.19.0
+pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.20.0
 ```
 
 
@@ -49,50 +49,19 @@ pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.19.0
 This step needs to be completed only once for each model with the corresponding world size values.  
 The hqt_output generated after this step will be used for the FP8 run.  
 If changing models for the FP8 run, repeat this step to obtain the relevant hqt_output.  
-### Llama2
-Here is an example to measure the tensor quantization statistics on LLama2:
 
-Export different values to the following environment variables to change parameters for tensor quantization statistics:    
-| Environment Variable | Values |
-|------------------|------------|
-| model_name | meta-llama/Llama-2-70b-hf,  meta-llama/Llama-2-7b-hf |
-| world_size | 1, 2, 8 |
-
-```bash
-export model_name=meta-llama/Llama-2-70b-hf
-export world_size=2
-```
-
-```bash
-QUANT_CONFIG=./quantization_config/maxabs_measure.json python3 ../gaudi_spawn.py \
---use_deepspeed --world_size ${world_size} run_lm_eval.py \
--o acc_llama2_bs1_measure.txt \
---model_name_or_path ${model_name} \
---attn_softmax_bf16 \
---use_hpu_graphs \
---trim_logits \
---use_kv_cache \
---bucket_size=128 \
---bucket_internal \
---use_flash_attention \
---flash_attention_recompute \
---bf16 \
---batch_size 1
-```
-
-### Llama3
-Here is an example to measure the tensor quantization statistics on Llama3 with 8 cards:
+Here is an example to measure the tensor quantization statistics for LLama2 or 3 models:  
 > Please note that Llama3-405B requires a minimum of 8 Gaudi3 cards.
 
 Export different values to the following environment variables to change parameters for tensor quantization statistics:  
 | Environment Variable | Values |
 |------------------|------------|
-| model_name | meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
-| world_size | 8 |
+| model_name | meta-llama/Llama-2-70b-hf,  meta-llama/Llama-2-7b-hf, meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
+| world_size | 1, 2, 8 |
 
 ```bash
-export model_name=meta-llama/Llama-3.1-405B-Instruct
-export world_size=8
+export model_name=meta-llama/Llama-2-70b-hf
+export world_size=2
 ```
 
 ```bash
@@ -106,6 +75,7 @@ QUANT_CONFIG=./quantization_config/maxabs_measure_include_outputs.json python3 .
 --batch_size 1 \
 --bf16 \
 --reuse_cache \
+--attn_softmax_bf16 \
 --use_flash_attention \
 --flash_attention_recompute \
 --flash_attention_causal_mask
@@ -153,8 +123,8 @@ QUANT_CONFIG=./quantization_config/maxabs_quant.json python3 ../gaudi_spawn.py \
 --batch_size ${batch_size} \
 --max_new_tokens ${output_len} \
 --max_input_tokens ${input_len} \
---book_source \
 --warmup 2
 ```
+> Please note that Llama3-405B requires --book_source additionally to achieve better performance.
 
 
