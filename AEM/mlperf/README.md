@@ -244,7 +244,7 @@ Run this step inside the Docker container. The following script will perform acc
 >**NOTE:** Please change the system to 1-node-2S-GNR_128C if you use Intel® Xeon® 6980P Processor or 1-node-8C-GAUDI3.json for 8 Gaudi3 cards.
 
 ```
-VENDOR=Intel bash SYSTEM=1-node-2S-GNR_86C scripts/prepare_submission.sh
+VENDOR=Intel SYSTEM=1-node-2S-GNR_86C bash scripts/prepare_submission.sh
 ```
 <br><br>
 ***
