@@ -95,6 +95,25 @@ Here are related recommended power settings from svr-info.
 <br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/power_setting.png" width="400" height="300"><br>   
 </details>
 
+### Gaudi
+Gaudi Status can be tracked by using PerfSpect telemetry command during runtime.  
+<details>
+<summary> Gaudi Utilization, Memory Usage and Power Consumption  </summary>
+By following <a href="https://github.com/intel/PerfSpect?tab=readme-ov-file#telemetry-command">PerfSpect Telemetry Section</a>, Gaudi status is tracked during mlperf runs.  
+
+e.g. 
+capture Gaudi status for 120 second.  
+```
+perfspect telemetry --duration 120
+```
+Here is an example for captured Gaudi Status     
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Gaudi_Status.png" width="300" height="600"><br>
+     
+ Potential issues might be abled to be identified by looking into those Gaudi statistics during runtime.
+ 
+</details>
+
+
 
 
 ## Running Models with Intel Optimized Docker Image
