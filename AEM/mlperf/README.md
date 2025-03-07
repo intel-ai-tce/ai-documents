@@ -1,3 +1,284 @@
+# Get Started with Intel MLPerf v5.0 Inference Submission with Intel Optimized Docker Images
+
+MLPerf is a benchmark for measuring the performance of machine learning
+systems. It provides a set of performance metrics for a variety of machine
+learning tasks, including image classification, object detection, machine
+translation, and others. The benchmark is representative of real-world
+workloads and as a fair and useful way to compare the performance of different
+machine learning systems.
+
+
+In this document, we'll show how to run Intel MLPerf v5.0 submission with Intel
+optimized Docker images and the prepared scripts.
+
+## Verified HW configuration:
+### Xeon
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ |
+| CPU             | The Intel® Xeon® 6980P and 6787P Processor (GNR)   
+| Memory          | 2304GB (24x96GB [8800MT/s])          |
+| Disk            | 1TB NVMe                             |
+
+
+
+### Gaudi
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ |
+| CPU             | 5th Gen Intel® Xeon® Processor(EMR)  
+|Accelerator |  Gaudi3 |
+| Memory          | 1 TGB          |
+| Disk            | 1TB NVMe    
+
+## BIOS settings:
+### Xeon
+| BIOS setting    | Recommended value                    |
+| --------------- | ------------------------------------ |
+|Hyperthreading|Disabled
+|Turbo Boost|Enabled
+|Core Prefetchers|Hardware,Adjacent Cache,DCU Streamer,DCU IP
+|LLC Prefetch|Disable
+|CPU Power and Perf Policy|Performance
+|NUMA-based Cluster|SNC2
+|Hardware P State|Native (based on OS guidance)
+|Energy Perf Bias|OS Controls EPB
+|Energy Efficient Turbo|Disabled
+
+## Verified OS configurations:
+
+### Xeon
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ | 
+| OS              | CentOS  Stream 8                     |
+| Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
+
+### Gaudi 
+| System Info     | Configuration detail                 |
+| --------------- | ------------------------------------ | 
+| OS              | Ubuntu 22.04                    |
+| Kernel          |  5.15 and above           | 
+
+## Check System Health Using PerfSpect:
+PerfSpect  is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use PerfSpect first to check any system configuration issue before running any benchmark.   
+Follow [the Quick Start Guide](https://github.com/intel/PerfSpect?tab=readme-ov-file#getting-perfspect) for downloading and installation, and get the system configuration reports by using [perfspect report](https://github.com/intel/PerfSpect?tab=readme-ov-file#report-command)  
+### Xeon
+The following are several key factors effecting the model performance for Xeon.  
+<details>
+<summary> CPU </summary>
+Couple CPU features impact MLPerf performance via related BIOS knobs, so please double check the CPU features with your BIOS knobs.
+Some important CPU features are Hyperthreading, number of NUMA nodes, Prefetchers and Intel Turbo Boost.
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/CPU_setting.png" width="300" height="600"><br>
+     
+Please also check your CPU tempertures. The CPU temperture should not be higher than 50 degrees C.   
+Overheating will drop the CPU frequency and degrade the MLPerf performance.  
+</details>
+<details>
+<summary> Memory </summary>
+One important system configuration is balanced DIMM population, which is suggested to set as balanced to get optimized performance. <br> 
+Populate as many channels per socket as possible prior to adding additional DIMMs to the channel.   
+It might impact the memory bandwidth if two dimm share one channel. <br>   
+Please also refer to Chapter 4 in <a href="https://cdrdv2.intel.com/v1/dl/getContent/733546?explicitVersion=true">Eagle Stream Platform Performance & Power Optimization Guide</a> for more details.  <br> 
+     
+From the results of svr-info, an example of unbalanced DIMM population is shown as follows,
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Unbalanced_DIMM.png" width="300" height="600"><br>   
+An exmaple of Balanced DIMM population is shown as follows,     
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Balanced_DIMM.png"  width="300" height="600"><br> 
+You should also see good numbers for memory NUMA bandwidth if you also benchmark memory via svr-info. <br>
+Here are some reference numbers from a 2S SPR system.  
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/mem_bandwidth.png" width="300" height="600"><br>  
+     
+</details>
+<details>
+<summary> Power  </summary>
+We recommend the intel_pstate Frequency Driver. <br>
+For best performance, set the Frequency Governor and Power and Perf Policy to performance. <br>
+Here are related recommended power settings from svr-info. 
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/power_setting.png" width="400" height="300"><br>   
+</details>
+
+### Gaudi
+Gaudi Status can be tracked by using PerfSpect telemetry command during runtime.  
+<details>
+<summary> Gaudi Utilization, Memory Usage and Power Consumption  </summary>
+By following <a href="https://github.com/intel/PerfSpect?tab=readme-ov-file#telemetry-command">PerfSpect Telemetry Section</a>, Gaudi status is tracked during mlperf runs.  
+
+e.g. 
+capture Gaudi status for 120 second.  
+```
+perfspect telemetry --duration 120
+```
+Here is an example for captured Gaudi Status     
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Gaudi_Status.png" width="300" height="600"><br>
+     
+ Potential issues might be abled to be identified by looking into those Gaudi statistics during runtime.
+ 
+</details>
+
+
+
+
+## Running Models with Intel Optimized Docker Image
+
+### Set Directories
+Set the directories on the host system where model, dataset, and log files will reside. These locations will retain model and data content between Docker sessions.
+
+```
+export DATA_DIR=${PWD}/data
+export MODEL_DIR=${PWD}/model
+export LOG_DIR=${PWD}/logs
+```
+
+### Launch the Docker Image
+In the Host OS environment, run the following after setting the proper Docker image. If the Docker image is not on the system already, it will be retrieved from the registry.
+If retrieving the model or dataset, ensure any necessary proxy settings are run inside the container.
+
+#### Xeon
+Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
+ | Models                 |
+ | ---------------------- |
+ | resnet50, dlrmv2, retinanet, 3dunet, gptj, rgat  |
+
+
+```
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-<model>"
+# Please choose <model> from model={resnet50,retinanet,3dunet,dlrmv2,gptj}
+```
+
+e.g.
+```
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-resnet50"
+```
+
+```
+docker run --privileged -it --rm \
+        --ipc=host --net=host --cap-add=ALL \
+        -e http_proxy=${http_proxy} \
+        -e https_proxy=${https_proxy} \
+        -v ${DATA_DIR}:/data \
+        -v ${MODEL_DIR}:/model \
+        -v ${LOG_DIR}:/logs \
+        --workdir  /workspace \
+        ${DOCKER_IMAGE} /bin/bash
+```
+
+#### Gaudi
+Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
+| Models                 |
+| ---------------------- |
+| llama2-70b    |
+| llama2-70b_interactive    |
+| llama3.1_405b    |
+
+
+> Note: The release requires Gaudi 1.20 FW/SW. 
+
+> Note : To access Llama2 70b model from Huggingface, export user's HF token into docker instance.
+
+```
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-<model>"
+# Please choose <model> from model={llama2-70b, llama2-70b_interactive, llama3.1_405b}
+```
+
+e.g.
+```
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-llama2_70b"
+export HF_TOKEN=<USER_TOKEN>
+```
+
+```
+docker run --privileged -it --rm -u root \
+        --ipc=host --net=host --cap-add=ALL \
+        --runtime=habana \
+        -e HABANA_VISIBLE_DEVICES=all \
+        -e OMPI_MCA_btl_vader_single_copy_mechanism=none \
+        -e HF_TOKEN=${HF_TOKEN} \
+        -e http_proxy=${http_proxy} \
+        -e https_proxy=${https_proxy} \
+        -v ${DATA_DIR}:/data \
+        -v ${MODEL_DIR}:/model \
+        -v ${LOG_DIR}:/logs \
+        --workdir  /workspace \
+        ${DOCKER_IMAGE} /bin/bash
+```
+
+> **NOTE**: More information for docker run on Gaudi are in [the Habana Doc](https://docs.habana.ai/en/v1.19.2/Installation_Guide/Additional_Installation/Docker_Installation.html).
+
+>**NOTE:**
+> The Huggingface model file size might be large, so it is recommended to use an external disk as the Huggingface hub folder. \
+> Export the HF_HOME environment variable to the external disk and then export the mount point into the Docker instance. \
+> ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
+
+### Download the Model [one-time operation]
+
+Run this step inside the Docker container.  This is a one-time operation which will preserve the model on the host system using the volume mapping above.
+```
+bash scripts/download_model.sh
+```
+
+### Download the Dataset [one-time operation]
+
+Run this step inside the Docker container.  This is a one-time operation which will preserve the dataset on the host system using the volume mapping above.
+```
+bash scripts/download_dataset.sh
+```
+
+### Calibrate the Model [one-time operation]
+
+#### Xeon
+Run this step inside the Docker container.  This is a one-time operation, and the resulting calibrated model will be stored along with the original model file.
+```
+bash scripts/run_calibration.sh
+```
+
+### Run Benchmark
+
+Run this step inside the Docker container. Select the appropriate scenario. If this is the first time running this workload, the original model file will be calibrated to INT8 and stored alongside the original model file (one-time operation). 
+#### Performance
+```
+SCENARIO=Offline MODE=Performance bash run_mlperf.sh
+SCENARIO=Server  MODE=Performance bash run_mlperf.sh
+```
+> NOTE: To change target QPS for offline or server run, export OFFLINE_QPS=xxxxxx for Offline run and export SERVER_QPS=xxxxx for Xeon server run. 
+> To update Gaudi3 QPS, update the Server QPS in /workspace/systems/user.conf.GAUDI3_8C
+
+#### Accuracy
+```
+SCENARIO=Offline MODE=Accuracy  bash run_mlperf.sh
+SCENARIO=Server  MODE=Accuracy  bash run_mlperf.sh
+# 3D-UNet workload does not have Server mode
+```
+
+### Run Compliance Tests
+>**NOTE:** Please bypass this step for GPT-J model. Compliance tests are not required https://github.com/mlcommons/policies/blob/master/submission_rules.adoc#5132-inference. 
+
+Run this step inside the Docker container. After the benchmark scenarios have been run and results exist in {LOG_DIR}/results, run this step to complete compliance runs. Compliance output will be found in '{LOG_DIR}/compliance'.
+
+```
+SCENARIO=Offline MODE=Compliance  bash run_mlperf.sh
+SCENARIO=Server  MODE=Compliance  bash run_mlperf.sh
+```
+After the compliance test, the logs will reside in `/logs/compliance`.
+
+### Validate Submission Checker
+>**For submissions only:** There are several files you should modify before running the submission checker. Here are the changes:
+> - In the *systems* folder, there are JSON files. Pick the right json file for your platform and change the following fields as needed: *submitter*, *system\_name*, and *hw_notes*.
+
+Run this step inside the Docker container. The following script will perform accuracy log truncation and run the submission checker on the contents of {LOG_DIR}. The source scripts are distributed as MLPerf Inference reference tools. Ensure the submission content has been populated before running. The script output is transient and destroyed after running. The original content of ${LOG_DIR} is not modified.
+
+>**NOTE:** Please change the system to 1-node-2S-GNR_128C if you use Intel® Xeon® 6980P Processor or 1-node-8C-GAUDI3.json for 8 Gaudi3 cards.
+
+```
+VENDOR=Intel SYSTEM=1-node-2S-GNR_86C bash scripts/prepare_submission.sh
+```
+<br><br>
+***
+
+# Previous MLPerf v4.0, v3.1 and v3.0 Inference Submission 
+
+Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v4.1, v4.0, v3.1 and v3.0 submission with Intel optimized Docker images.
+
+<details>
+<summary> Get Started with Intel MLPerf v4.1 Submission with Intel Optimized Docker Images </summary>
+     
 # Get Started with Intel MLPerf v4.1 Inference Submission with Intel Optimized Docker Images
 
 MLPerf is a benchmark for measuring the performance of machine learning
@@ -177,9 +458,7 @@ bash run_submission_checker.sh
 <br><br>
 ***
 
-# Previous MLPerf v4.0, v3.1 and v3.0 Inference Submission 
-
-Intel has participated in Mleprf submissions since the very beginning of the foundation of MLcommons. In December 2018 Intel published the first Mlperf training benchmark suite together with Goodle and Nvidia. So far, there have been more than 100 results were submitted on Xeon. This session will show how to run Intel MLPerf v4.0, v3.1 and v3.0 submission with Intel optimized Docker images.
+</details>
 
 <details>
 <summary> Get Started with Intel MLPerf v4.0 Submission with Intel Optimized Docker Images </summary>
