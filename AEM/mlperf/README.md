@@ -114,17 +114,21 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 
 #### Xeon
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
-| Release Version     | Models                 |
-| ------------------- | ---------------------- |
-| r4                  | resnet50, dlrmv2, retinanet, 3dunet, gptj  |
+ | Models                 |
+ | ---------------------- |
+ | resnet50, dlrmv2, retinanet, 3dunet, gptj, rgat  |
 
-> Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
 
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<release-version>"
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-<model>"
 # Please choose <model> from model={resnet50,retinanet,3dunet,dlrmv2,gptj}
-# Please choose <release-version> from release-version={r4}
 ```
+
+e.g.
+```
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-resnet50"
+```
+
 ```
 docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
@@ -139,25 +143,25 @@ docker run --privileged -it --rm \
 
 #### Gaudi
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
-| Release Version     | Models                 |
-| ------------------- | ---------------------- |
-| r5                  | llama2-70b    |
-| r4                  | llama2-70b    |
+| Models                 |
+| ---------------------- |
+| llama2-70b    |
+| llama2-70b_interactive    |
+| llama3.1_405b    |
 
-> Note: r5 release requires Gaudi 1.20 FW/SW. 
 
-> Note : Do "docker login  -u keithachornintel" before pulling below docker images before those images are uploaded to docker hub under intel/intel-optimized-pytorch
+> Note: The release requires Gaudi 1.20 FW/SW. 
 
 > Note : To access Llama2 70b model from Huggingface, export user's HF token into docker instance.
+
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-<model>-<release-version>"
-# Please choose <model> from model={llama2-70b}
-# Please choose <release-version> from release-version={r4, r5}
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-<model>"
+# Please choose <model> from model={llama2-70b, llama2-70b_interactive, llama3.1_405b}
 ```
 
-ex: 
+e.g.
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.0-llama2-70b-r3"
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-llama2_70b"
 export HF_TOKEN=<USER_TOKEN>
 ```
 
