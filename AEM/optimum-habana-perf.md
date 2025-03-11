@@ -65,16 +65,20 @@ export world_size=2
 ```
 
 ```bash
-QUANT_CONFIG=./quantization_config/maxabs_measure_include_outputs.json python3 ../gaudi_spawn.py \
+QUANT_CONFIG=./quantization_config/maxabs_measure.json python3 ../gaudi_spawn.py \
 --use_deepspeed --world_size ${world_size} run_lm_eval.py \
--o acc_llama3_bs1_quant.txt \
+-o acc_llama_quant.json \
 --model_name_or_path ${model_name} \
+--warmup 0 \
 --use_hpu_graphs \
 --use_kv_cache \
 --trim_logits \
 --batch_size 1 \
+--bucket_size=128 \
+--bucket_internal \
+--trust_remote_code \
+--tasks hellaswag lambada_openai piqa winogrande 
 --bf16 \
---reuse_cache \
 --attn_softmax_bf16 \
 --use_flash_attention \
 --flash_attention_recompute \
