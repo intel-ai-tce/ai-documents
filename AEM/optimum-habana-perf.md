@@ -77,7 +77,7 @@ HF_DATASETS_TRUST_REMOTE_CODE=true QUANT_CONFIG=./quantization_config/maxabs_mea
 --bucket_size=128 \
 --bucket_internal \
 --trust_remote_code \
---tasks hellaswag lambada_openai piqa winogrande 
+--tasks hellaswag lambada_openai piqa winogrande \
 --bf16 \
 --attn_softmax_bf16 \
 --use_flash_attention \
