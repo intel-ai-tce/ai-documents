@@ -9,7 +9,7 @@ The Docker image assists in setting up the PyTorch software and packages to run 
 ### Get examples from optimum-habana github repository
 To benchmark Llama2 and Llama3 models, obtain optimum-habana from the GitHub repository using the following command.
 ```bash
-git clone -b v1.15.0 https://github.com/huggingface/optimum-habana.git
+git clone -b v1.16.0 https://github.com/huggingface/optimum-habana.git
 cd optimum-habana/examples/text-generation
 ```
 
@@ -123,6 +123,7 @@ QUANT_CONFIG=./quantization_config/maxabs_quant.json python3 ../gaudi_spawn.py \
 --flash_attention_causal_mask  \
 --bucket_size=128 \
 --bucket_internal \
+--attn_batch_split 2  \
 --bf16 \
 --batch_size ${batch_size} \
 --max_new_tokens ${output_len} \
