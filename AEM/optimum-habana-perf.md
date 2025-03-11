@@ -65,7 +65,7 @@ export world_size=2
 ```
 
 ```bash
-QUANT_CONFIG=./quantization_config/maxabs_measure.json python3 ../gaudi_spawn.py \
+HF_DATASETS_TRUST_REMOTE_CODE=true QUANT_CONFIG=./quantization_config/maxabs_measure.json TQDM_DISABLE=1 python3 ../gaudi_spawn.py \
 --use_deepspeed --world_size ${world_size} run_lm_eval.py \
 -o acc_llama_quant.json \
 --model_name_or_path ${model_name} \
@@ -110,7 +110,7 @@ export world_size=2
 ```
 After setting the environment variables, run the FP8 model using the following command:  
 ```bash
-QUANT_CONFIG=./quantization_config/maxabs_quant.json python3 ../gaudi_spawn.py \
+HF_DATASETS_TRUST_REMOTE_CODE=true QUANT_CONFIG=./quantization_config/maxabs_quant.json TQDM_DISABLE=1 python3 ../gaudi_spawn.py \
 --use_deepspeed --world_size ${world_size} run_generation.py \
 --model_name_or_path ${model_name} \
 --attn_softmax_bf16 \
