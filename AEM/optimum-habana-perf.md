@@ -130,6 +130,7 @@ HF_DATASETS_TRUST_REMOTE_CODE=true QUANT_CONFIG=./quantization_config/maxabs_qua
 --max_input_tokens ${input_len} \
 --warmup 2
 ```
-> Please note that Llama3-405B requires --book_source additionally to achieve better performance.
+> Please note that Llama3-405B requires --book_source additionally to achieve better performance.  
+> Llama3.3-70B model also doesn't require the "--attn_batch_split 2" argument.
 
 
