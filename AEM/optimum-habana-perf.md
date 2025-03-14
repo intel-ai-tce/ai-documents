@@ -56,7 +56,7 @@ Here is an example to measure the tensor quantization statistics for LLama2 or 3
 Export different values to the following environment variables to change parameters for tensor quantization statistics:  
 | Environment Variable | Values |
 |------------------|------------|
-| model_name | meta-llama/Llama-2-70b-hf,  meta-llama/Llama-2-7b-hf, meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
+| model_name | meta-llama/Llama-2-70b-hf,  meta-llama/Llama-2-7b-hf, meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, meta-llama/Llama-3.3-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
 | world_size | 1, 2, 8 |
 
 ```bash
@@ -92,7 +92,7 @@ Here is an example to quantize the model based on previous measurements for LLam
 Export different values to the following environment variables to change parameters for tensor quantization statistics:  
 | Environment Variable | Values |
 |------------------|------------|
-| model_name | meta-llama/Llama-2-70b-hf, meta-llama/Llama-2-7b-hf, meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
+| model_name | meta-llama/Llama-2-70b-hf, meta-llama/Llama-2-7b-hf, meta-llama/Llama-3.1-405B-Instruct, meta-llama/Llama-3.1-70B-Instruct, meta-llama/Llama-3.3-70B-Instruct, and meta-llama/Llama-3.1-8B-Instruct |
 | input_len | 128, 2048, and etc |
 | output_len | 128, 2048, and etc |
 | batch_size | 350, 1512, 1750, and etc |
