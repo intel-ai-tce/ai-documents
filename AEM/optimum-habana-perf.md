@@ -18,7 +18,7 @@ After building the Docker image, run the following command to start a Docker ins
 ```bash
 docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD/../../":/workspace --workdir  /workspace/examples/text-generation  vault.habana.ai/gaudi-docker/1.20.0/ubuntu24.04/habanalabs/pytorch-installer-2.6.0:latest
 ```
-{:.note}**NOTE:** The Huggingface model file size might be large, so it is recommended to use an external disk as the Huggingface hub folder. Export the HF_HOME environment variable to the external disk and then export the mount point into the Docker instance. ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
+{:.note}**NOTE:** The Huggingface model file size might be large, so it is recommended to use an external disk as the Huggingface hub folder. Export the HF\_HOME environment variable to the external disk and then export the mount point into the Docker instance. ex: "-e HF\_HOME=/mnt/huggingface -v /mnt:/mnt"
 
 ### Install required packages inside docker
 First, install the optimum-habana:
@@ -127,6 +127,6 @@ HF_DATASETS_TRUST_REMOTE_CODE=true QUANT_CONFIG=./quantization_config/maxabs_qua
 --max_input_tokens ${input_len} \
 --warmup 2
 ```
-{:.note}Please note that Llama3-405B requires --book_source additionally to achieve better performance. Llama3.3-70B model also doesn't require the "--attn_batch_split 2" argument.
+{:.note}Please note that Llama3-405B requires --book\_source additionally to achieve better performance. Llama3.3-70B model also doesn't require the "--attn\_batch\_split 2" argument.
 
 
