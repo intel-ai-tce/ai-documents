@@ -107,7 +107,7 @@ capture Gaudi status for 120 second.
 perfspect telemetry --duration 120
 ```
 Here is an example for captured Gaudi Status     
-<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/Gaudi_Status.png" width="300" height="600"><br>
+<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/gaudi-status.png" width="300" height="600"><br>
      
  Potential issues might be abled to be identified by looking into those Gaudi statistics during runtime.
  
