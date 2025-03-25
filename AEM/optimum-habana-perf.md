@@ -129,4 +129,6 @@ HF_DATASETS_TRUST_REMOTE_CODE=true QUANT_CONFIG=./quantization_config/maxabs_qua
 ```
 {:.note}Please note that Llama3-405B requires --book\_source additionally to achieve better performance. Llama3.3-70B model also doesn't require the "--attn\_batch\_split 2" argument.
 
+{:.note} To enable performance profiling, add "--profiling_steps 1" and "--profiling_record_shapes" along with fp8 run instruction to get pytorch profiling result.
+
 
