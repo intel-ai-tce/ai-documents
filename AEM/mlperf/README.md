@@ -21,14 +21,6 @@ optimized Docker images and the prepared scripts.
 
 
 
-### Gaudi
-| System Info     | Configuration detail                 |
-| --------------- | ------------------------------------ |
-| CPU             | 5th Gen Intel® Xeon® Processor(EMR)  
-|Accelerator |  Gaudi3 |
-| Memory          | 1 TGB          |
-| Disk            | 1TB NVMe    
-
 ## BIOS settings:
 ### Xeon
 | BIOS setting    | Recommended value                    |
@@ -51,11 +43,6 @@ optimized Docker images and the prepared scripts.
 | OS              | CentOS  Stream 8                     |
 | Kernel          | 6.6.8-1.el8.elrepo.x86_64            | 
 
-### Gaudi 
-| System Info     | Configuration detail                 |
-| --------------- | ------------------------------------ | 
-| OS              | Ubuntu 22.04                    |
-| Kernel          |  5.15 and above           | 
 
 ## Check System Health Using PerfSpect:
 PerfSpect  is a Linux OS utility for assessing the state and health of Intel Xeon computers. It is suggested to use PerfSpect first to check any system configuration issue before running any benchmark.   
@@ -94,25 +81,6 @@ For best performance, set the Frequency Governor and Power and Perf Policy to pe
 Here are related recommended power settings from svr-info. 
 <br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/power_setting.png" width="400" height="300"><br>   
 </details>
-
-### Gaudi
-Gaudi Status can be tracked by using PerfSpect telemetry command during runtime.  
-<details>
-<summary> Gaudi Utilization, Memory Usage and Power Consumption  </summary>
-By following <a href="https://github.com/intel/PerfSpect?tab=readme-ov-file#telemetry-command">PerfSpect Telemetry Section</a>, Gaudi status is tracked during mlperf runs.  
-
-e.g. 
-capture Gaudi status for 120 second.  
-```
-perfspect telemetry --duration 120
-```
-Here is an example for captured Gaudi Status     
-<br><img src="/content/dam/developer/articles/guide/get-started-mlperf-intel-optimized-docker-images/gaudi-status.png" width="300" height="600"><br>
-     
- Potential issues might be abled to be identified by looking into those Gaudi statistics during runtime.
- 
-</details>
-
 
 
 
@@ -159,53 +127,6 @@ docker run --privileged -it --rm \
         --workdir  /workspace \
         ${DOCKER_IMAGE} /bin/bash
 ```
-
-#### Gaudi
-Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
-| Models                 |
-| ---------------------- |
-| llama2-70b    |
-| llama2-70b_interactive    |
-| llama3.1_405b    |
-
-
-> Note: The release requires Gaudi 1.20 FW/SW. 
-
-> Note : To access Llama2 70b model from Huggingface, export user's HF token into docker instance.
-
-```
-export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-<model>"
-# Please choose <model> from model={llama2-70b, llama2-70b_interactive, llama3.1_405b}
-```
-
-e.g.
-```
-export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.0-llama2_70b"
-export HF_TOKEN=<USER_TOKEN>
-```
-
-```
-docker run --privileged -it --rm -u root \
-        --ipc=host --net=host --cap-add=ALL \
-        --runtime=habana \
-        -e HABANA_VISIBLE_DEVICES=all \
-        -e OMPI_MCA_btl_vader_single_copy_mechanism=none \
-        -e HF_TOKEN=${HF_TOKEN} \
-        -e http_proxy=${http_proxy} \
-        -e https_proxy=${https_proxy} \
-        -v ${DATA_DIR}:/data \
-        -v ${MODEL_DIR}:/model \
-        -v ${LOG_DIR}:/logs \
-        --workdir  /workspace \
-        ${DOCKER_IMAGE} /bin/bash
-```
-
-> **NOTE**: More information for docker run on Gaudi are in [the Habana Doc](https://docs.habana.ai/en/v1.19.2/Installation_Guide/Additional_Installation/Docker_Installation.html).
-
->**NOTE:**
-> The Huggingface model file size might be large, so it is recommended to use an external disk as the Huggingface hub folder. \
-> Export the HF_HOME environment variable to the external disk and then export the mount point into the Docker instance. \
-> ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
 
 ### Download the Model [one-time operation]
 
