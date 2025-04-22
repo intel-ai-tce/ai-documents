@@ -8,44 +8,45 @@ To use the provided Dockerfile for the sample, follow the [Docker Installation g
 ## Build and Run the Benchmark Docker instance 
 
 ### Get Dockerfile and Benchmark scripts
-First, get the Dockerfile and Benchmark scripts from Gaudi-Tutorial GitHub Repositroy following below command.  
+First, obtain the Dockerfile and benchmark scripts from the Gaudi-Tutorial GitHub repository using the command below.  
 
 ```bash
 git clone https://github.com/HabanaAI/Gaudi-tutorials.git
 cd Gaudi-tutorials/PyTorch/Hugging_Face_pipelines/Benchmarking_on_Optimum-habana_with_fp8
 ```
 ### Docker Build
-To build the image from the Dockerfile, please follow below command to build the optimum-habana-text-gen image.
+To build the image from the Dockerfile, please use the command below to create the optimum-habana-text-gen image.
 ```bash
 docker build --no-cache -t optimum-habana-text-gen:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy -f Dockerfile .
 ```
 ### Docker Run
-After docker build, users could follow below command to run and docker instance and users will be in the docker instance under text-generation folder.
+After building the Docker image, users can use the command below to run a Docker instance, which will place them in the text-generation folder within the instance.
 ```bash
 docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host optimum-habana-text-gen:latest
 ```
 > [!NOTE]
-> The Huggingface model file size might be large, so we recommend to use an external disk as Huggingface hub folder. \
-> Please export HF_HOME environment variable to your external disk and then export the mount point into docker instance. \
+> The Huggingface model file size might be large. Using an external disk to house the Huggingface hub folder is recommended. \
+> Please export HF_HOME environment variable pointing to the external disk housing Huggingface hub folder. \
+> In the meantime, export the mount point of the external disk into docker instance. \
 > ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
 
 # Run Benchmark with Benchmark.py
-Benchmark script will run all the models with different input len, output len and batch size and generate a report to compare all published numbers in [Gaudi Model Performance](https://www.intel.com/content/www/us/en/developer/platform/gaudi/model-performance.html).  
+The benchmark script will run all the models with different input len, output len and batch size and generate a report to compare all published numbers in [Gaudi Model Performance](https://www.intel.com/content/www/us/en/developer/platform/gaudi/model-performance.html).  
 
 ## Gaudi3
-Different json file are provided for different Gaudi Software version like 1.19 and 1.20 on Gaudi3.
+Different json files are provided for different Intel® Gaudi Software versions like 1.19 and 1.20 on Gaudi3.
 To do benchmarking on a machine with 8 Gaudi3 cards, just run the below command inside the docker instance. 
 ```bash
 python3 Benchmark.py
 ```
 ## Gaudi2
-To do benchmarking on a machine with 8 Gaudi2 cards, just run the below command instead inside the docker instance. 
+To do benchmarking on a machine with 8 Gaudi2 cards, run the same Benchmark.py command but specify the Gaudi version using the GAUDI_VER environment variable. 
 ```bash
 GAUDI_VER=2 python3 Benchmark.py
 ```
 ## HTML Report
-A html report will be generated under a folder with timestamp.  
-The [html report](https://github.com/HabanaAI/Gaudi-tutorials/tree/main/PyTorch/Hugging_Face_pipelines/Benchmarking_on_Optimum-habana_with_fp8#html-report) also has a perf_ratio column to compare the measure numbers with reference perf numbers. 
+An HTML report will be generated in a timestamped folder created at the time of execution.  
+The [html report](https://github.com/HabanaAI/Gaudi-tutorials/tree/main/PyTorch/Hugging_Face_pipelines/Benchmarking_on_Optimum-habana_with_fp8#html-report) also has a perf_ratio column to compare the measured numbers with reference perf numbers. 
 
 # Run Benchmark without Benchmark.py
 <details>
