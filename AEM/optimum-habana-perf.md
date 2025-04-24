@@ -46,7 +46,7 @@ GAUDI_VER=2 python3 Benchmark.py
 ```
 ## HTML Report
 An HTML report will be generated in a timestamped folder created at the time of execution.  
-The [html report](https://github.com/HabanaAI/Gaudi-tutorials/tree/main/PyTorch/Hugging_Face_pipelines/Benchmarking_on_Optimum-habana_with_fp8#html-report) also has a perf_ratio column to compare the measured numbers with reference perf numbers. 
+The [html report](https://github.com/HabanaAI/Gaudi-tutorials/tree/main/PyTorch/Hugging_Face_pipelines/Benchmarking_on_Optimum-habana_with_fp8#html-report) also has a perf_ratio column to compare the measured numbers with previous benchmark results. 
 
 # Run Benchmark without Benchmark.py
 <details>
