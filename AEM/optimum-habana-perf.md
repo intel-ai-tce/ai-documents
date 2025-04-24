@@ -1,48 +1,58 @@
 # Setup Instructions
 
 Please make sure to follow [Driver Installation](https://docs.habana.ai/en/latest/Installation_Guide/Driver_Installation.html) to install the Gaudi driver on the system.  
-It is recommended to use the PyTorch Docker image to run the examples below.
+It is recommended to use the Optimum-Habana fp8 Benchmark [Dockerfile](https://github.com/HabanaAI/Gaudi-tutorials/blob/main/PyTorch/Hugging_Face_pipelines/Benchmarking_on_Optimum-habana_with_fp8/Dockerfile) to run the examples below.
 
 To use the provided Dockerfile for the sample, follow the [Docker Installation guide](https://docs.habana.ai/en/latest/Installation_Guide/Additional_Installation/Docker_Installation.html) to setup the Habana runtime for Docker images.  
-The Docker image assists in setting up the PyTorch software and packages to run the samples. However, installing additional required packages like DeepSpeed is still necessary to run the samples. 
 
-### Get examples from optimum-habana github repository
-To benchmark Llama2 and Llama3 models, obtain optimum-habana from the GitHub repository using the following command.
+## Build and Run the Benchmark Docker instance 
+
+### Get Dockerfile and Benchmark scripts
+First, obtain the Dockerfile and benchmark scripts from the Gaudi-Tutorial GitHub repository using the command below.  
+
 ```bash
-git clone -b v1.16.0 https://github.com/huggingface/optimum-habana.git
-cd optimum-habana/examples/text-generation
+git clone https://github.com/HabanaAI/Gaudi-tutorials.git
+cd Gaudi-tutorials/PyTorch/Hugging_Face_pipelines/Benchmarking_on_Optimum-habana_with_fp8
 ```
-
+### Docker Build
+To build the image from the Dockerfile, please use the command below to create the optimum-habana-text-gen image.
+```bash
+docker build --no-cache -t optimum-habana-text-gen:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy -f Dockerfile .
+```
 ### Docker Run
-After building the Docker image, run the following command to start a Docker instance, which will open in the text-generation folder inside the docker instance.
+After building the Docker image, users can use the command below to run a Docker instance, which will place them in the text-generation folder within the instance.
 ```bash
-docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host  -v "$PWD/../../":/workspace --workdir  /workspace/examples/text-generation  vault.habana.ai/gaudi-docker/1.20.0/ubuntu24.04/habanalabs/pytorch-installer-2.6.0:latest
+docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host optimum-habana-text-gen:latest
 ```
-{:.note}**NOTE:** The Huggingface model file size might be large, so it is recommended to use an external disk as the Huggingface hub folder. Export the HF\_HOME environment variable to the external disk and then export the mount point into the Docker instance. ex: "-e HF\_HOME=/mnt/huggingface -v /mnt:/mnt"
+> [!NOTE]
+> The Huggingface model file size might be large. Using an external disk to house the Huggingface hub folder is recommended. \
+> Please export HF_HOME environment variable pointing to the external disk housing Huggingface hub folder. \
+> In the meantime, export the mount point of the external disk into docker instance. \
+> ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
 
-### Install required packages inside docker
-First, install the optimum-habana:
+# Run Benchmark with Benchmark.py
+The benchmark script will run all the models with different input len, output len and batch size and generate a report to compare all published numbers in [Gaudi Model Performance](https://www.intel.com/content/www/us/en/developer/platform/gaudi/model-performance.html).  
+
+## Gaudi3
+Different json files are provided for different Intel® Gaudi Software versions like 1.19 and 1.20 on Gaudi3.
+To do benchmarking on a machine with 8 Gaudi3 cards, just run the below command inside the docker instance. 
 ```bash
-pip install --upgrade-strategy eager optimum[habana]
+python3 Benchmark.py
 ```
-
-Second, install the requirements:
+## Gaudi2
+To do benchmarking on a machine with 8 Gaudi2 cards, run the same Benchmark.py command but specify the Gaudi version using the GAUDI_VER environment variable. 
 ```bash
-pip install -r requirements.txt
+GAUDI_VER=2 python3 Benchmark.py
 ```
+## HTML Report
+An HTML report will be generated in a timestamped folder created at the time of execution.  
+The [html report](https://github.com/HabanaAI/Gaudi-tutorials/tree/main/PyTorch/Hugging_Face_pipelines/Benchmarking_on_Optimum-habana_with_fp8#html-report) also has a perf_ratio column to compare the measured numbers with previous benchmark results. 
 
-For `run_lm_eval.py`:
-```bash
-pip install -r requirements_lm_eval.txt
-```
-
-Then, to use [DeepSpeed-inference](https://docs.habana.ai/en/latest/PyTorch/DeepSpeed/Inference_Using_DeepSpeed.html), install DeepSpeed as follows: 
-```bash
-pip install git+https://github.com/HabanaAI/DeepSpeed.git@1.20.0
-```
-
-
-# Tensor quantization statisics measurement
+# Run Benchmark without Benchmark.py
+<details>
+<summary> Run instructions without using the Benchmark script  </summary>
+  
+## Tensor quantization statisics measurement
 This step needs to be completed only once for each model with the corresponding world size values.  
 The hqt_output generated after this step will be used for the FP8 run.  
 If changing models for the FP8 run, repeat this step to obtain the relevant hqt_output.  
@@ -82,7 +92,7 @@ HF_DATASETS_TRUST_REMOTE_CODE=true QUANT_CONFIG=./quantization_config/maxabs_mea
 --flash_attention_causal_mask
 ```
 
-# Quantize and run the fp8 model
+## Quantize and run the fp8 model
 
 Here is an example to quantize the model based on previous measurements for LLama2 or 3 models:
 
@@ -128,5 +138,5 @@ HF_DATASETS_TRUST_REMOTE_CODE=true QUANT_CONFIG=./quantization_config/maxabs_qua
 --warmup 2
 ```
 {:.note}Please note that Llama3-405B requires --book\_source additionally to achieve better performance. Llama3.3-70B model also doesn't require the "--attn\_batch\_split 2" argument.
-
+</details>
 
