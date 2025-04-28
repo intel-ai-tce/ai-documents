@@ -1,3 +1,9 @@
+# Table of contents
+
+1. [Setup Instructions](#setup-instructions)
+2. [Build and Run the Benchmark Docker instance](#build-and-run-the-benchmark-docker-instance)
+3. [Run Benchmark with Benchmark.py](#run-benchmark-with-benchmarkpy)
+
 # Setup Instructions
 
 Please make sure to follow [Driver Installation](https://docs.habana.ai/en/latest/Installation_Guide/Driver_Installation.html) to install the Gaudi driver on the system.  
