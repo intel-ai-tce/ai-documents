@@ -1,5 +1,5 @@
 # Table of contents
-
+The measurements in the table above are based on the Optimum-Habana for Intel Gaudi 2 accelerators with Hugging Face* model using the latest Intel Gaudi software release version 1.20.0. To reproduce the results, follow these steps:
 1. [Setup Instructions](#setup-instructions)
 2. [Build and Run the Benchmark Docker instance](#build-and-run-the-benchmark-docker-instance)
 3. [Run Benchmark with Benchmark.py](#run-benchmark-with-benchmarkpy)
