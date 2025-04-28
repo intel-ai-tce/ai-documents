@@ -24,11 +24,10 @@ After building the Docker image, users can use the command below to run a Docker
 ```bash
 docker run -it --runtime=habana -e HABANA_VISIBLE_DEVICES=all -e OMPI_MCA_btl_vader_single_copy_mechanism=none   --cap-add=ALL --privileged=true  --net=host --ipc=host optimum-habana-text-gen:latest
 ```
-> [!NOTE]
-> The Huggingface model file size might be large. Using an external disk to house the Huggingface hub folder is recommended. \
-> Please export HF_HOME environment variable pointing to the external disk housing Huggingface hub folder. \
-> In the meantime, export the mount point of the external disk into docker instance. \
-> ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
+{:.note} The Huggingface model file size might be large. Using an external disk to house the Huggingface hub folder is recommended. \
+Please export HF_HOME environment variable pointing to the external disk housing Huggingface hub folder. \
+In the meantime, export the mount point of the external disk into docker instance. \
+ex: "-e HF_HOME=/mnt/huggingface -v /mnt:/mnt"
 
 # Run Benchmark with Benchmark.py
 The benchmark script will run all the models with different input len, output len and batch size and generate a report to compare all published numbers in [Gaudi Model Performance](https://www.intel.com/content/www/us/en/developer/platform/gaudi/model-performance.html).  
