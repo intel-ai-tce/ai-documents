@@ -25,6 +25,9 @@ To build the image from the Dockerfile, please use the command below to create t
 ```bash
 docker build --no-cache -t optimum-habana-text-gen:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy -f Dockerfile .
 ```
+
+{:.note} For 1.19 release, please use Dockerfile.1-19 instead.   
+
 ### Docker Run
 After building the Docker image, users can use the command below to run a Docker instance, which will place them in the text-generation folder within the instance.
 ```bash
