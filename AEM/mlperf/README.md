@@ -30,10 +30,12 @@ optimized Docker images and the prepared scripts.
 |Core Prefetchers|Hardware,Adjacent Cache,DCU Streamer,DCU IP
 |LLC Prefetch|Disable
 |CPU Power and Perf Policy|Performance
-|NUMA-based Cluster|SNC2
+|NUMA-based Cluster|SNC2/SNC3
 |Hardware P State|Native (based on OS guidance)
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
+
+> Note : for NUMA-based Cluster, suggest to set SNC3 for 6980P and 6987P, and SNC2 for other SKUs.
 
 ## Verified OS configurations:
 
