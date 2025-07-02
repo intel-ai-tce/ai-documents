@@ -17,7 +17,7 @@ optimized Docker images and the prepared scripts.
 | --------------- | ------------------------------------ |
 | CPU             | The Intel® Xeon® 6980P, 6987P, 6972P and 6787P Processor (GNR)   
 | Memory          | 2304GB (24x96GB [8800MT/s])          |
-| Disk            | 1TB NVMe                             |
+| Disk            | 1.6 TB NVMe                             |
 
 
 
