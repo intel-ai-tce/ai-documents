@@ -105,7 +105,8 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
-| r1                 |  dlrmv2, retinanet, rgat(offline only), whisper(offline only), llama3.1_8b  |
+| r2                 |   rgat(offline only) |
+| r1                 |  dlrmv2, retinanet, whisper(offline only), llama3.1_8b  |
 
 > Note : You need to do "docker login -u keithachornintel" before pulling below docker images, and the password is provided in the Team Channel. 
 
