@@ -105,13 +105,13 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
-| r1                 |  dlrmv2, retinanet, rgat, whisper(offline only)  |
+| r1                 |  dlrmv2, retinanet, rgat, whisper(offline only), llama3.1_8b  |
 
 > Note : You need to do "docker login -u keithachornintel" before pulling below docker images, and the password is provided in the Team Channel. 
 
 ```
 export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.1-<model>-r1"
-# Please choose <model> from model={retinanet,dlrmv2, rgat}
+# Please choose <model> from model={retinanet,dlrmv2, rgat, whisper, llama3.1_8b}
 ```
 
 e.g.
