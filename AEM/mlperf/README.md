@@ -105,7 +105,7 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
-| r1                 |  dlrmv2, retinanet, rgat, whisper(offline only), llama3.1_8b  |
+| r1                 |  dlrmv2, retinanet, rgat(offline only), whisper(offline only), llama3.1_8b  |
 
 > Note : You need to do "docker login -u keithachornintel" before pulling below docker images, and the password is provided in the Team Channel. 
 
@@ -124,6 +124,8 @@ docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
         -e http_proxy=${http_proxy} \
         -e https_proxy=${https_proxy} \
+        -e HTTP_PROXY=${http_proxy} \
+        -e HTTPS_PROXY=${https_proxy} \
         -e no_proxy=${no_proxy} \
         -v ${DATA_DIR}:/data \
         -v ${MODEL_DIR}:/model \
