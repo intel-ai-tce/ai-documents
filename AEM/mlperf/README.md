@@ -124,6 +124,7 @@ docker run --privileged -it --rm \
         --ipc=host --net=host --cap-add=ALL \
         -e http_proxy=${http_proxy} \
         -e https_proxy=${https_proxy} \
+        -e no_proxy=${no_proxy} \
         -v ${DATA_DIR}:/data \
         -v ${MODEL_DIR}:/model \
         -v ${LOG_DIR}:/logs \
@@ -138,12 +139,16 @@ Run this step inside the Docker container.  This is a one-time operation which w
 bash scripts/download_model.sh
 ```
 
+> Note : For Llama3.1 8b model, users need to follow [MLcomm instructions](https://github.com/mlcommons/inference/tree/master/language/llama3.1-8b#mlcommons-members-download-recommended-for-official-submission) instead.
+
 ### Download the Dataset [one-time operation]
 
 Run this step inside the Docker container.  This is a one-time operation which will preserve the dataset on the host system using the volume mapping above.
 ```
 bash scripts/download_dataset.sh
 ```
+
+> Note : For Llama3.1 8b model, users need to follow [MLcomm instructions](https://github.com/mlcommons/inference/tree/master/language/llama3.1-8b#mlcommons-members-download-recommended-for-official-submission) instead.
 
 ### Calibrate the Model [one-time operation]
 
