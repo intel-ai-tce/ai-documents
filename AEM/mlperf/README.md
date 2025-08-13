@@ -37,6 +37,8 @@ optimized Docker images and the prepared scripts.
 
 > Note : for NUMA-based Cluster, suggest to set SNC3 for 6980P and 6987P, and SNC2 for other SKUs.
 
+Please also refer to [Intel® Xeon® 6 Processors - Birch Stream Platform Performance and Power Optimization Guide](https://www.intel.com/content/www/us/en/secure/content-details/819861/intel-xeon-6-processors-birch-stream-platform-performance-and-power-optimization-guide.html?wapkw=performance%20and%20power%20optimization%20guide&DocID=819861) for more details.  
+
 ## Verified OS configurations:
 
 ### Xeon
@@ -442,6 +444,8 @@ optimized Docker images and the prepared scripts.
 |Hardware P State|Native (based on OS guidance)
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
+
+Please also refer to [5th Gen Intel® Xeon® Scalable Family (Emerald Rapids) Eagle Stream - Platform Performance and Power Optimization Guide](https://www.intel.com/content/www/us/en/secure/content-details/782683/5th-gen-intel-xeon-scalable-family-emerald-rapids-eagle-stream-platform-performance-and-power-optimization-guide.html?wapkw=performance%20and%20power%20optimization%20guide&DocID=782683) for more details.  
 
 ## Verified OS configurations:
 
