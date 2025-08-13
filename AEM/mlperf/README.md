@@ -227,8 +227,8 @@ In this document, we'll show how to run Intel MLPerf v5.0 submission with Intel
 optimized Docker images and the prepared scripts.
 
 ## Publications 
-[MLPerf 5.0 on Dell Poweredge R670](https://infohub.delltechnologies.com/en-us/p/mlperf-tm-inference-v5-0-performance-on-dell-poweredge-r670-with-intel-r-6th-gen-p-core-cpus/)
-[MLPerf 5.0 on Cisco UCS C240](https://www.cisco.com/c/en/us/products/collateral/servers-unified-computing/ucs-c-series-rack-servers/ai-performance-ucs-c240-wp.html)
+[MLPerf 5.0 on Dell Poweredge R670](https://infohub.delltechnologies.com/en-us/p/mlperf-tm-inference-v5-0-performance-on-dell-poweredge-r670-with-intel-r-6th-gen-p-core-cpus/)  
+[MLPerf 5.0 on Cisco UCS C240](https://www.cisco.com/c/en/us/products/collateral/servers-unified-computing/ucs-c-series-rack-servers/ai-performance-ucs-c240-wp.html)  
 
 ## Verified HW configuration:
 ### Xeon
