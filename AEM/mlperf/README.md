@@ -250,6 +250,8 @@ optimized Docker images and the prepared scripts.
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
 
+Please also refer to [Intel® Xeon® 6 Processors - Birch Stream Platform Performance and Power Optimization Guide](https://www.intel.com/content/www/us/en/secure/content-details/819861/intel-xeon-6-processors-birch-stream-platform-performance-and-power-optimization-guide.html?wapkw=performance%20and%20power%20optimization%20guide&DocID=819861) for more details.  
+
 ## Verified OS configurations:
 
 ### Xeon
