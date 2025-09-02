@@ -142,7 +142,7 @@ Run this step inside the Docker container.  This is a one-time operation which w
 bash scripts/download_model.sh
 ```
 
-> Note : For Llama3.1 8b model, users need to follow [MLcomm instructions](https://github.com/mlcommons/inference/tree/master/language/llama3.1-8b#mlcommons-members-download-recommended-for-official-submission) instead.
+> Note : For Llama3.1 8b model, users can also follow [MLcomm instructions](https://github.com/mlcommons/inference/tree/master/language/llama3.1-8b#mlcommons-members-download-recommended-for-official-submission) instead.
 
 ### Download the Dataset [one-time operation]
 
