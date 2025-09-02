@@ -8,7 +8,7 @@ workloads and as a fair and useful way to compare the performance of different
 machine learning systems.
 
 
-In this document, we'll show how to run Intel MLPerf v5.0 submission with Intel
+In this document, we'll show how to run Intel MLPerf v5.1 submission with Intel
 optimized Docker images and the prepared scripts.
 
 ## Verified HW configuration:
