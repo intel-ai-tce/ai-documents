@@ -247,7 +247,7 @@ optimized Docker images and the prepared scripts.
 |Core Prefetchers|Hardware,Adjacent Cache,DCU Streamer,DCU IP
 |LLC Prefetch|Disable
 |CPU Power and Perf Policy|Performance
-|NUMA-based Cluster|SNC2
+|NUMA-based Cluster|SNC Enabled
 |Hardware P State|Native (based on OS guidance)
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
@@ -444,7 +444,7 @@ optimized Docker images and the prepared scripts.
 |Core Prefetchers|Hardware,Adjacent Cache,DCU Streamer,DCU IP
 |LLC Prefetch|Disable
 |CPU Power and Perf Policy|Performance
-|NUMA-based Cluster|SNC2
+|NUMA-based Cluster|SNC Enabled
 |Hardware P State|Native (based on OS guidance)
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
@@ -632,7 +632,7 @@ optimized Docker images and the automation scripts.
 |Core Prefetchers|Hardware,Adjacent Cache,DCU Streamer,DCU IP
 |LLC Prefetch|Disable
 |CPU Power and Perf Policy|Performance
-|NUMA-based Cluster|SNC2
+|NUMA-based Cluster|SNC Enabled
 |Hardware P State|Native (based on OS guidance)
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
