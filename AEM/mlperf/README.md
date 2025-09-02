@@ -105,10 +105,9 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 
 #### Xeon
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
-| Release Version     | Models                 |
-| ------------------- | ---------------------- |
-| r2                 |   ) |
-| r1                 |  dlrmv2, retinanet, llama3.1_8b_cpu, whisper, rgat |
+| Models                 |
+| ---------------------- |
+|  dlrmv2, retinanet, llama3.1_8b_cpu, whisper, rgat |
 
 
 ```
