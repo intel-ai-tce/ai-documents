@@ -30,7 +30,7 @@ optimized Docker images and the prepared scripts.
 |Core Prefetchers|Hardware,Adjacent Cache,DCU Streamer,DCU IP
 |LLC Prefetch|Disable
 |CPU Power and Perf Policy|Performance
-|NUMA-based Cluster|SNC2/SNC3
+|NUMA-based Cluster|SNC Enabled
 |Hardware P State|Native (based on OS guidance)
 |Energy Perf Bias|OS Controls EPB
 |Energy Efficient Turbo|Disabled
@@ -107,19 +107,18 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
 | Release Version     | Models                 |
 | ------------------- | ---------------------- |
-| r2                 |   rgat(offline only) |
-| r1                 |  dlrmv2, retinanet, whisper(offline only), llama3.1_8b  |
+| r2                 |   ) |
+| r1                 |  dlrmv2, retinanet, llama3.1_8b_cpu, whisper, rgat |
 
-> Note : You need to do "docker login -u keithachornintel" before pulling below docker images, and the password is provided in the Team Channel. 
 
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.1-<model>-r1"
-# Please choose <model> from model={retinanet,dlrmv2, rgat, whisper, llama3.1_8b}
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.1-<model>"
+# Please choose <model> from model={retinanet,dlrmv2, rgat, whisper, llama3.1_8b_cpu}
 ```
 
 e.g.
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-5.1-retinanet-r1"
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.1-retinanet"
 ```
 
 ```
