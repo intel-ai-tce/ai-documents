@@ -12,7 +12,9 @@ In this document, we'll show how to run Intel MLPerf v5.1 submission with Intel
 optimized Docker images and the prepared scripts.
 
 ## Publications
+[MLPerf 5.1 on Dell_PowerRedge R770 with 6th Xeon Processors](https://infohub.delltechnologies.com/en-us/p/dell-poweredge-r770-with-xeon-6-inferencing-using-mlperf-5-1-suite/)  
 [MLPerf 5.1 on Lenovo ThinkSystem SR650 V4 with 6th Xeon Processors](https://lenovopress.lenovo.com/lp2304-thinksystem-sr650-v4-with-intel-xeon-6-proven-ai-performance-in-mlperf-51) 
+
 
 ## Verified HW configuration:
 ### Xeon
