@@ -1,4 +1,4 @@
-# Get Started with Intel MLPerf v5.1 Inference Submission with Intel Optimized Docker Images
+# Get Started with Intel MLPerf v6.0 Inference Submission with Intel Optimized Docker Images
 
 MLPerf is a benchmark for measuring the performance of machine learning
 systems. It provides a set of performance metrics for a variety of machine
@@ -8,13 +8,8 @@ workloads and as a fair and useful way to compare the performance of different
 machine learning systems.
 
 
-In this document, we'll show how to run Intel MLPerf v5.1 submission with Intel
+In this document, we'll show how to run Intel MLPerf v6.0 submission with Intel
 optimized Docker images and the prepared scripts.
-
-## Publications
-[MLPerf 5.1 on Dell_PowerRedge R770 with 6th Xeon Processors](https://infohub.delltechnologies.com/en-us/p/dell-poweredge-r770-with-xeon-6-inferencing-using-mlperf-5-1-suite/)  
-[MLPerf 5.1 on Lenovo ThinkSystem SR650 V4 with 6th Xeon Processors](https://lenovopress.lenovo.com/lp2304-thinksystem-sr650-v4-with-intel-xeon-6-proven-ai-performance-in-mlperf-51) 
-
 
 ## Verified HW configuration:
 ### Xeon
@@ -110,20 +105,23 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 
 #### Xeon
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
-| Models                 |
-| ---------------------- |
-|  dlrmv2, retinanet, llama3.1_8b_cpu, whisper, rgat |
+| Release Version     | Models                 |
+| ------------------- | ---------------------- |
+| r1                  | llama3.1_8b, whisper    |
 
+> Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
 
 ```
-export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.1-<model>"
-# Please choose <model> from model={retinanet,dlrmv2, rgat, whisper, llama3.1_8b_cpu}
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-6.0-<model>-<release-version>"
+# Please choose <model> from model={llama3.1_8b, whisper}
+# Please choose <release-version> from release-version={r1}
 ```
 
-e.g.
+e.g.: 
 ```
-export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-5.1-retinanet"
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-6.0-llama3.1_8b-r1"
 ```
+
 
 ```
 docker run --privileged -it --rm \
