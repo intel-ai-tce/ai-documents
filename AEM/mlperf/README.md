@@ -105,21 +105,19 @@ If retrieving the model or dataset, ensure any necessary proxy settings are run 
 
 #### Xeon
 Here is a table of the currently supported models and release versions. It is recommended to use the latest release for each model.
-| Release Version     | Models                 |
-| ------------------- | ---------------------- |
-| r1                  | llama3.1_8b, whisper    |
+| Models                 |
+| ---------------------- |
+|llama3.1_8b_cpu, whisper_cpu, rgat, retinanet   |
 
-> Note : You need to do "docker login  -u keithachornintel" before pulling below docker images before they are uploaded to docker hub under intel/intel-optimized-pytorch
 
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-6.0-<model>-<release-version>"
-# Please choose <model> from model={llama3.1_8b, whisper}
-# Please choose <release-version> from release-version={r1}
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-6.0-<model>"
+# Please choose <model> from model={llama3.1_8b_cpu, whisper_cpu, rgat, retinanet}
 ```
 
 e.g.: 
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-6.0-llama3.1_8b-r1"
+export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-6.0-llama3.1_8b_cpu"
 ```
 
 
