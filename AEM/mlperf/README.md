@@ -117,7 +117,7 @@ export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-6.0-<model>"
 
 e.g.: 
 ```
-export DOCKER_IMAGE="keithachornintel/mlperf:mlperf-inference-6.0-llama3.1_8b_cpu"
+export DOCKER_IMAGE="intel/intel-optimized-pytorch:mlperf-inference-6.0-llama3.1_8b_cpu"
 ```
 
 
