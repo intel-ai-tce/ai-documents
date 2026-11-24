@@ -183,18 +183,6 @@ The table assumes instrumentation covers the relevant runtime functions in the i
 
 Track unique kernel names, unique specializations, compilation count, JIT dispatches, direct launches, total launches and latency separately. Compiler dump counts are not runtime execution counts. Record software commits, CPU target, cache state and workload for reproducibility.
 
-## 5. Xeon optimization opportunities
-
-| Dimension | PyTorch ATen | vLLM native C++ | Triton-CPU |
-|---|---|---|---|
-| Primary role | General tensor operations | Specialized inference kernels | CPU-targeted programmable kernels |
-| Implementation | C++, optimized libraries | C++, intrinsics | Triton language lowered by CPU backend |
-| Compilation | Build or library-specific JIT | Usually build time | New specializations, typically JIT |
-| Typical operations | GEMM, embedding, elementwise | Attention, RMSNorm, MoE | Sampling, metadata, KV-cache management |
-| Optimization focus | GEMM, threading, NUMA | AMX/AVX-512, fusion, locality | CPU lowering, vectorization, launch overhead |
-
-AMX and AVX-512 use depends on hardware, datatype and actual generated or native implementation. Profile before attributing inference bottlenecks to a particular path.
-
 ## References
 
 - [PyTorch ATen CPU source](https://github.com/pytorch/pytorch/tree/main/aten/src/ATen/native/cpu)
